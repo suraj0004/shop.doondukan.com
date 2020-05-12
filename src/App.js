@@ -1,26 +1,44 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from 'react';
+import {BrowserRouter as Router , Switch, Route } from 'react-router-dom';
+import {ProtectedRoutes} from './ProtectedRoutes';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import Login from './pages/Login';
+import Dashboard from './pages/Dashboard';
+import AddPurchase from './pages/AddPurchase';
+import PurchaseList from './pages/PurchaseList';
+import StockList from "./pages/stockList";
+import SetPrice from './pages/SetPrice'; 
+import GenerateBill from './pages/GenerateBill';
+import BillList from './pages/BillList';
+class App extends Component { 
+  
+     render() {
+          return (
+            
+        
+        <Router>
+          
+           
+                
+                 <Switch>
+                    <ProtectedRoutes exact path='/' component = {Dashboard} />
+                    <ProtectedRoutes exact path='/addPurchase' component = {AddPurchase} />
+                    <ProtectedRoutes exact path='/purchaseList' component = {PurchaseList} />
+                    <ProtectedRoutes exact path='/stockList' component = {StockList} />
+                    <ProtectedRoutes exact path='/setPrice' component = {SetPrice} />
+                    <ProtectedRoutes exact path='/generateBill' component = {GenerateBill} />
+                    <ProtectedRoutes exact path='/billList' component = {BillList} />
+                    <Route exact path='/login' component = {Login} />
+                    <Route path="*" component = { ()=> { return <h1 style={{ textAlign: 'center' }} > 404, PAGE NOT FOUND </h1> } } />
+                 </Switch>
+
+        
+            
+        </Router>
+        
+  
+          );
+     }
 }
 
 export default App;
