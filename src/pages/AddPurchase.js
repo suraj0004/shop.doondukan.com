@@ -4,7 +4,7 @@ import Select from 'react-select';
 import Layout from '../layouts/RetailLayout';
 import auth from '../services/AuthService';
 import UrlService from '../services/UrlService';
-import PageHeader from '../components/PageHeader';
+import PageLoader from '../components/PageLoader';
 class AddPurchase extends Component {
  
   constructor(props){
@@ -25,20 +25,19 @@ class AddPurchase extends Component {
   }
   componentDidMount() {
  
-
-    auth.isValidToken( (success) =>{
-      if(success){
-          auth.afterLogout();
-         this.props.history.push("/login"); 
-      }
-    });
+    // auth.isValidToken( (success) =>{
+    //   if(success){
+    //       auth.afterLogout();
+    //      this.props.history.push("/login"); 
+    //   }
+    // });
     
     axios.get(  UrlService.globalProductListUrl(),{
       headers : auth.apiHeader()
     }).then( res => {
-        //  console.log(res.data);
+
+       if(res.data.success){
         const data = res.data.data;
-        console.log(data);
         let options_main = data.main.map(item => {
             let option = {
               value : "",
@@ -63,11 +62,23 @@ class AddPurchase extends Component {
           options : options_temp.concat(options_main),
           isLoader : false,
         });
+       }else{
+        this.setState({
+            response : res.data.message,
+        });
+       }
+       
     } ).catch( err => {
-      console.log(err);
-      this.setState({
-        isLoader:false
+       err = err.response;
+      if(err.status === 401 || err.statusText === "Unauthorized" )
+       {
+             auth.afterLogout();
+             this.props.history.push("/login");
+       }else{
+        this.setState({
+          response : err.data.message,
       });
+       }
     });
 
     
@@ -188,9 +199,15 @@ class AddPurchase extends Component {
        
       const { selectedOption,options } = this.state;
         return (
-          <Layout pathname={this.props.location.pathname} isLoader={this.state.isLoader} >
-                    <PageHeader page="Add Purchase"/>
-            <div className="card card-info col-md-6 offset-3">
+          <Layout pathname={this.props.location.pathname} page="Add Purchase" >
+                   
+
+                    {
+                  (this.state.isLoader)
+                  ?<PageLoader error={this.state.response}/>
+                  : 
+
+           <div className="card card-info" style={{marginLeft:'5%',marginRight:'5%',padding:'10px'}}>
               <div className="card-header">
                 <h3 className="card-title">Add Stock Purchase</h3>
               </div>
@@ -256,6 +273,7 @@ class AddPurchase extends Component {
                 
               </form>
             </div>
+    }
          
           </Layout>
         );

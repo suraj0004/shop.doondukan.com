@@ -4,7 +4,7 @@ import Select from 'react-select';
 import Layout from '../layouts/RetailLayout';
 import auth from '../services/AuthService';
 import UrlService from '../services/UrlService';
-import PageHeader from '../components/PageHeader';
+import PageLoader from '../components/PageLoader';
 import BuyerDetailForm from './generateBill/BuyerDetailForm';
 
 class GenerateBill extends Component {
@@ -21,6 +21,7 @@ class GenerateBill extends Component {
           buyer_name : "",
           buyer_email : "",
           buyer_mobile : "",
+          isLoader : true,
         };
         
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -30,12 +31,12 @@ class GenerateBill extends Component {
       componentDidMount() {
  
 
-        auth.isValidToken( (success) =>{
-          if(success){
-              auth.afterLogout();
-             this.props.history.push("/login"); 
-          }
-        });
+        // auth.isValidToken( (success) =>{
+        //   if(success){
+        //       auth.afterLogout();
+        //      this.props.history.push("/login"); 
+        //   }
+        // });
         
         axios.get(  UrlService.globalAvailableStockListUrl(),{
           headers : auth.apiHeader()
@@ -46,7 +47,7 @@ class GenerateBill extends Component {
                   value : "",
                   label : "",
                  };
-                option.value = item.id+','+item.price.price+','+item.quantity;
+                option.value = item.id+','+item.price+','+item.quantity;
                 option.label =  item.product.name+' | '+  item.product.weight+' '+ item.product.weight_type +' | '+item.product.brand;
                 return option;
             });
@@ -56,7 +57,7 @@ class GenerateBill extends Component {
                 value : "",
                 label : "",
                };
-               option.value = item.id+','+item.price.price+','+item.quantity;
+               option.value = item.id+','+item.price+','+item.quantity;
                option.label =  item.product.name+' | '+  item.product.weight+' '+ item.product.weight_type +' | '+item.product.brand;
               return option;
           });
@@ -65,6 +66,7 @@ class GenerateBill extends Component {
             this.setState({
               rows : [row],
               options :  options_temp.concat(options_main),
+              isLoader : false
             });
         } ).catch( err => {
           console.log(err);
@@ -235,56 +237,59 @@ class GenerateBill extends Component {
       }
 
        handleSubmit() {
-           var postData = [];
-       postData = this.state.rows.map( item => {
-         return {
-           stock_id : item.stock_id,
-           sell_quantity : item.sell_quantity,
-         };
-       });
-       postData = {
-         sale : postData,
-         buyer : {
-           name : this.state.buyer_name,
-           email : this.state.buyer_email,
-           mobile : this.state.buyer_mobile,
-         }
-       };
-       axios.post(UrlService.generateBillUrl(), postData,
-        {
-          headers: auth.apiHeader(),
-        })
-        .then(res=>{
-          if(res.data.success){
             this.setState({
-              response : "Successfully Generated Bill",
-              responseClass : "text-success",
+              isLoader : true,
               model_show : false,
-              buyer_name : "",
-              buyer_email : "",
-              buyer_mobile : "",
-            });
-          }else{
-            this.setState({
-              response : res.data.message,
-              responseClass : "text-success",
-              model_show : false,
-              buyer_name : "",
-              buyer_email : "",
-              buyer_mobile : "",
-            });
-          }
-       })
-       .catch(e=>{
-        this.setState({
-          response : "Opps Something went wrong, please contact to administrator at 8954836965",
-          responseClass : "text-danger",
-          model_show : false,
-          buyer_name : "",
-          buyer_email : "",
-          buyer_mobile : "",
-        })
-       });
+            }, () => {
+              var postData = [];
+              postData = this.state.rows.map( item => {
+                return {
+                  stock_id : item.stock_id,
+                  sell_quantity : item.sell_quantity,
+                };
+              });
+              postData = {
+                sale : postData,
+                buyer : {
+                  name : this.state.buyer_name,
+                  email : this.state.buyer_email,
+                  mobile : this.state.buyer_mobile,
+                }
+              };
+              axios.post(UrlService.generateBillUrl(), postData,
+               {
+                 headers: auth.apiHeader(),
+               })
+               .then(res=>{
+                 if(res.data.success){
+                  const row =  { options : this.state.options ,  selectedOption: null, stock_id : "", avaliable_quantity : "", price : "", sell_quantity : "" }
+                   this.setState({
+                     response : "Successfully Generated Bill",
+                     responseClass : "text-success",
+                     isLoader : false,
+                     rows : [row],
+                     buyer_name : "",
+                     buyer_email : "",
+                     buyer_mobile : "",
+                   });
+                 }else{
+                   this.setState({
+                     response : res.data.message,
+                     responseClass : "text-danger",
+                     isLoader : false,
+                   });
+                 }
+              })
+              .catch(e=>{
+             
+               this.setState({
+                 response : "Opps Something went wrong, please contact to administrator at 8954836965",
+                 responseClass : "text-danger",
+                 isLoader : false,
+
+               })
+              });
+            })
 
        }
      
@@ -367,9 +372,12 @@ class GenerateBill extends Component {
         });
 
         return (
-            <Layout pathname={this.props.location.pathname} >
+            <Layout pathname={this.props.location.pathname}  page="Generate Bill">
               
-                    <PageHeader page="Generate Bill"/>
+              {
+                  (this.state.isLoader)
+                  ?<PageLoader error={this.state.response}/>
+                  : 
 
             <div className="card card-info" style={{marginLeft:'5%',marginRight:'5%',padding:'10px'}}>
               <div className="card-header">
@@ -408,7 +416,8 @@ class GenerateBill extends Component {
             </div>
          
 
-         <BuyerDetailForm 
+              }
+                  <BuyerDetailForm 
                 show={this.state.model_show} 
                 hideModal={this.hideModal} 
                 handleSaveSubmit={this.handleSaveSubmit}

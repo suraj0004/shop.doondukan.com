@@ -1,48 +1,56 @@
 import React, { Component } from 'react';
 import auth from '../services/AuthService';
 import Layout from '../layouts/RetailLayout';
-import PageHeader from '../components/PageHeader';
+import PageLoader from '../components/PageLoader';
 class Dashboard extends Component {
 
   constructor(props) {
     super(props);
     this.state = {
       isLoader : true,
+      response : "",
     }
   }
   
   
   componentDidMount() {
-    var script = document.createElement("script");
-    script.src = "/asset/dist/js/pages/dashboard.js";
-    script.defer = true;  
-    document.body.appendChild(script);
+  
 
     auth.isValidToken( (success) =>{
       if(success){
           auth.afterLogout();
          this.props.history.push("/login"); 
+        
       }
+
+ 
+      var script = document.createElement("script");
+        script.src = "/asset/dist/js/pages/dashboard.js";
+        script.defer = true;  
+        document.body.appendChild(script);
+      this.setState({
+        isLoader:false
+      });
     });
     
     
-    this.setState({
-      isLoader:false
-    });
+   
     
   }
     render() {
     
         return (
  
-          <Layout pathname={this.props.location.pathname} isLoader={this.state.isLoader} >
+          <Layout pathname={this.props.location.pathname} page="Dashboard" >
              
             
-       <PageHeader page="Dashboard"/>
+   
             
-        
+             {
+                  (this.state.isLoader)
+                  ?<PageLoader error={this.state.response}/>
+                  : 
             
-            <section className="content">
               <div className="container-fluid">
                 
                 <div className="row">
@@ -868,7 +876,7 @@ class Dashboard extends Component {
                 </div>
                 
               </div>
-            </section>
+             }
            
        
               </Layout >

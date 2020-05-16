@@ -4,7 +4,7 @@ import Select from 'react-select';
 import Layout from '../layouts/RetailLayout';
 import auth from '../services/AuthService';
 import UrlService from '../services/UrlService';
-import PageHeader from '../components/PageHeader';
+import PageLoader from '../components/PageLoader';
 class SetPrice extends Component {
     constructor(props){
         super(props);
@@ -91,19 +91,19 @@ class SetPrice extends Component {
       componentDidMount() {
    
     
-        auth.isValidToken( (success) =>{
-          if(success){
-              auth.afterLogout();
-             this.props.history.push("/login"); 
-          }
-        });
+        // auth.isValidToken( (success) =>{
+        //   if(success){
+        //       auth.afterLogout();
+        //      this.props.history.push("/login"); 
+        //   }
+        // });
 
         axios.get( UrlService.globalStockListUrl(), {
           headers : auth.apiHeader(),    
             } ).then( res => {
               const data = res.data.data;
               console.log(data);
-              let options_main = data.map(item => {
+              let options_main = data.main.map(item => {
                   let option = {
                     value : "",
                     label : "",
@@ -114,15 +114,15 @@ class SetPrice extends Component {
               });
       
               let options_temp = [];
-            //   let options_temp = data.temp.map(item => {
-            //     let option = {
-            //       value : "",
-            //       label : "",
-            //      };
-            //     option.value = item.id;
-            //     option.label =  item.product.name+' | '+  item.product.weight+' '+ item.product.weight_type +' | '+item.product.brand;
-            //     return option;
-            // });
+               options_temp = data.temp.map(item => {
+                let option = {
+                  value : "",
+                  label : "",
+                 };
+                option.value = item.id;
+                option.label =  item.product.name+' | '+  item.product.weight+' '+ item.product.weight_type +' | '+item.product.brand;
+                return option;
+            });
       
               this.setState({
                 options : options_temp.concat(options_main),
@@ -145,50 +145,55 @@ class SetPrice extends Component {
     render() {
         const { selectedOption,options } = this.state;
         return (
-          <Layout pathname={this.props.location.pathname} isLoader={this.state.isLoader} >
-                    <PageHeader page="Set Stock Price"/>
-            <div className="card card-info col-md-6 offset-3">
-              <div className="card-header">
-                <h3 className="card-title">Set Stock Selling Price</h3>
-              </div>
-              
-              <div className={ this.state.responseClass } style={{ paddingTop:'5px' }}>  &nbsp; <strong> {this.state.response} </strong> </div>
-              <form className="form-horizontal" onSubmit={this.handleSubmit}>
-                <div className="card-body">
-                  <div className="form-group row">
-                    <label htmlFor="prduct" className="col-sm-4 col-form-label">Select Stock</label>
-                    <div className="col-sm-8" id="prduct">
-         <Select
-         value={selectedOption}
-         onChange={this.handleChange}
-         options={options}
-      />
- 
-
-
-                    </div>
+          <Layout pathname={this.props.location.pathname} page="Set Stock Price"  >
+                {
+                  (this.state.isLoader)
+                  ?<PageLoader error={this.state.response}/>
+                  :  
+                  <div className="card card-info" style={{marginLeft:'5%',marginRight:'5%',padding:'10px'}}>
+                  <div className="card-header">
+                    <h3 className="card-title">Set Stock Selling Price</h3>
                   </div>
-
-
-            
-
-                  <div className="form-group row">
-                  <label htmlFor="price" className="col-sm-4 col-form-label">Set Selling Price</label>
-                    <div className="col-sm-8">
-                      <input value={this.state.price} type="text" className="form-control" name="price" placeholder="Enter Selling Price"  onChange={this.handleInputChange}/>
-                    </div>
-
-                    </div>
-               
-                </div>
+                  
+                  <div className={ this.state.responseClass } style={{ paddingTop:'5px' }}>  &nbsp; <strong> {this.state.response} </strong> </div>
+                  <form className="form-horizontal" onSubmit={this.handleSubmit}>
+                    <div className="card-body">
+                      <div className="form-group row">
+                        <label htmlFor="prduct" className="col-sm-4 col-form-label">Select Stock</label>
+                        <div className="col-sm-8" id="prduct">
+             <Select
+             value={selectedOption}
+             onChange={this.handleChange}
+             options={options}
+          />
+     
+    
+    
+                        </div>
+                      </div>
+    
+    
                 
-                <div className="card-footer">
-                  <button type="reset" className="btn btn-default ">Cancel</button>
-                  <button type="submit" className="btn btn-info float-right">Add</button>
+    
+                      <div className="form-group row">
+                      <label htmlFor="price" className="col-sm-4 col-form-label">Set Selling Price</label>
+                        <div className="col-sm-8">
+                          <input value={this.state.price} type="text" className="form-control" name="price" placeholder="Enter Selling Price"  onChange={this.handleInputChange}/>
+                        </div>
+    
+                        </div>
+                   
+                    </div>
+                    
+                    <div className="card-footer">
+                      <button type="reset" className="btn btn-default ">Cancel</button>
+                      <button type="submit" className="btn btn-info float-right">Add</button>
+                    </div>
+                    
+                  </form>
                 </div>
-                
-              </form>
-            </div>
+                }  
+         
          
           </Layout>
         );

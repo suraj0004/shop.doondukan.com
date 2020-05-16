@@ -22,6 +22,22 @@ class Sidebar extends React.Component {
   
      
   }
+  linkClick = () => {
+   
+      // if(document.body.classList.contains('sidebar-open'))
+      //  {
+      //   document.body.classList.remove('sidebar-open');
+      //   document.body.classList.add('sidebar-closed');
+      //   document.body.classList.add('sidebar-collapse');
+       
+       
+      // }else{
+        
+      //     document.body.classList.add('sidebar-collapse');
+        
+      // }
+    
+  }
   
    render(){
      const props = this.props;
@@ -52,7 +68,7 @@ class Sidebar extends React.Component {
 
 
         <li className="nav-item ">
-        <Link to='/' className={(props.pathname === "/") ? "nav-link active": "nav-link " } >
+        <Link to='/' className={(props.pathname === "/") ? "nav-link active": "nav-link " }  >
               <i className="nav-icon fas fa-tachometer-alt"></i>
               <p>Dashboard</p>
               </Link>

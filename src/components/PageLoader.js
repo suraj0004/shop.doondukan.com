@@ -1,27 +1,43 @@
 import React from 'react';
 
 function PageLoader(props) {
-  const style = {
-               position: 'fixed',
-               top: '0px',
-               left: '0px',
-               bottom: '0px',
-               right: '0px',
-               background: 'black',
-               zIndex: 9999999,
-               opacity: 0.8,
-               textAlign: 'center',
-               paddingTop: '23%',
-           };
+
+  const colors = [
+    "text-primary",
+    "text-secondary",
+    "text-success",
+    "text-danger",
+    "text-warning",
+    "text-info",
+    "text-dark"
+  ];
+
+  if(props.error === ""){
+                        var loaders = colors.map( (color,index) =>
+                                {
+                                return   <div key={index.toString()}
+                                           className={"spinner-grow "+ color} 
+                                           role="status">
+                                               <span 
+                                                  className="sr-only">Loading...
+                                                </span>
+                                         </div>
+                                });
+  }else{
+          var loaders =  <div 
+                           className="text-danger"> 
+                           {props.error} 
+                          </div>
+  }
+ 
            
     return (
-        (props.isLoader)
-        ?<div style={style}>
-          <div class="spinner-border text-light" role="status" >
-             <span class="sr-only">Loading...</span>
-         </div>
+  
+       <div className="text-center">
+           {loaders}
        </div>
-       :<div></div>
+     
+       
     );
 }
 

@@ -20,6 +20,7 @@ function PageHeader(props) {
             </div>
           </div>
         </div>
+        <hr/>
       </div>
     );
 }

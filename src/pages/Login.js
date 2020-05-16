@@ -57,13 +57,10 @@ class Login extends Component {
          auth.login(postData, (response) => {
            console.log(response);
              if(response.success){
-                 this.setState({
-                   error : '',
-                   isLoader : false,
-                 },() => {
+                
                   auth.afterLogin(response,this.state.remember);
                   this.props.history.push('/');
-                 });
+                
                 
              }else{
                this.setState({
@@ -82,7 +79,11 @@ class Login extends Component {
 
         return (
             <div className="hold-transition login-page">
-         <PageLoader isLoader={this.state.isLoader}  />
+              
+              {
+                  (this.state.isLoader)
+                  ?<PageLoader error=""/>
+                  : 
             <div className="login-box">
   <div className="login-logo">
     <a href="/"><b>Meri</b>Dukan</a>
@@ -159,6 +160,7 @@ class Login extends Component {
     
   </div>
 </div>
+}
 </div>
         );
     }

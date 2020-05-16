@@ -11,30 +11,38 @@ class  Header extends React.Component {
     
   }
 
-  handleSidebar = () =>{
-    this.setState( (prev) => (
-      {
-        sidebarCollapse : !prev.sidebarCollapse
-      }
-      ),()=>{
-        if(this.state.sidebarCollapse){
-          document.body.classList.add('sidebar-collapse');
-        }else{
-          document.body.classList.remove('sidebar-collapse');
-        }
-      })
-  }
+  // handleSidebar = () =>{
+   
 
-  handleLogout = () => {
-    auth.logout( (success) =>{
-      if(success){
-          auth.afterLogout();
-          this.props.history.push('/login');
-      }else{
-          alert("Opps! something went wrong.");
-      }
- } );
-  }
+  //       if (document.body.classList.contains('sidebar-closed')) {
+  //     alert("sidebar-closed true");
+  //         document.body.classList.remove('sidebar-closed');
+  //         document.body.classList.remove('sidebar-collapse');
+  //         document.body.classList.add('sidebar-open');
+  //       }else{
+  //         alert("sidebar-closed false");
+  //         if(document.body.classList.contains('sidebar-open'))
+  //          {
+  //           alert("sidebar-open true");
+  //           document.body.classList.add('sidebar-closed');
+  //           document.body.classList.add('sidebar-collapse');
+  //           document.body.classList.remove('sidebar-open');
+           
+  //         }else{
+  //           alert("sidebar-open false");
+  //           if (document.body.classList.contains('sidebar-collapse')) {
+  //             alert("sidebar-collapse true");
+  //             document.body.classList.remove('sidebar-collapse');
+  //           }else{
+  //             alert("sidebar-collapse false");
+  //             document.body.classList.add('sidebar-collapse');
+  //           }
+  //         }
+  //       }
+    
+  // }
+
+
   render(){
 
   
@@ -43,7 +51,7 @@ class  Header extends React.Component {
             
             <ul className="navbar-nav">
               <li className="nav-item">
-                <button onClick={ this.handleSidebar } className="btn nav-link"  type="button"  ><i className="fas fa-bars"></i></button>
+                <button  className="btn nav-link" type="button" role="button" data-widget="pushmenu" ><i className="fas fa-bars"></i></button>
               </li>
               <li className="nav-item d-none d-sm-inline-block">
                 <Link to="/" className="nav-link">Dashboard</Link>
@@ -87,7 +95,7 @@ class  Header extends React.Component {
               </li>
 
               <li className="nav-item d-none d-sm-inline-block">
-                 <button className="btn" onClick={this.handleLogout} > <i className="fa fa-lock-open"></i> </button>
+                 <button className="btn" onClick={this.props.handleLogout} > <i className="fa fa-lock-open"></i> </button>
               </li>
              
             </ul>
