@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import axion from 'axios';
+import axios from 'axios';
 import Layout from '../layouts/RetailLayout';
-
+import Table from './stockList/Table';
 import auth from '../services/AuthService';
 import UrlService from '../services/UrlService';
 
 import PageLoader from '../components/PageLoader';
-class stockList extends Component {
+class StockList extends Component {
     constructor(props){
         super(props);
         this.state = {
@@ -16,7 +16,7 @@ class stockList extends Component {
         }
     }
 
-
+ 
 
     componentDidMount() {
    
@@ -28,9 +28,10 @@ class stockList extends Component {
         //   }
         // });
 
-        axion.get( UrlService.stockListUrl() ,{
+        axios.get( UrlService.stockListUrl() ,{
           headers : auth.apiHeader(),
         } ).then( (res) => {
+          console.log(res);
           this.setState({
             data: res.data.data,
            
@@ -46,7 +47,7 @@ class stockList extends Component {
         } ).catch( (err) => {
             console.log(err);
             this.setState({
-              isLoader : false,
+              response : err.response.data.message
             });
         } );
 
@@ -54,73 +55,18 @@ class stockList extends Component {
      }
 
     render() {
-  const {main,temp} = this.state.data;
+  
         return (
             <Layout pathname={this.props.location.pathname} page="Stock List">
               {
                 (this.state.isLoader)
                 ?<PageLoader error={this.state.response}/>
-                :     <div className="card">
-                       
-                        
-                <div className="card-body">
-                  <table id="my_table" className="table table-bordered table-striped">
-                    <thead>
-                        
-                    <tr>
-                      <th>Sno.</th>
-                      <th>Last purchased date</th>
-                      <th>Product Detail</th>
-                      <th>Total Quantity</th> 
-                      <th>Selling Price</th>  
-                                              
-                    </tr>
-                    </thead>
-                    <tbody>
-                        {
-                            main.map( (item,index) => {
-                              
-                             return (
-                               
-                                <tr key={index.toString() } >
-                                <td> {index + 1 } </td>
-                                <td> { item.last_purchased_at } </td>
-                                <td> { item.product.name + " | " + item.product.weight + item.product.weight_type + " | " +  item.product.brand } </td>
-                                <td> {item.quantity} </td>
-                                <td> {item.price} </td>
-                                
-                              </tr>
-                             );
-                            } )
-                        }
-                      {
-                            temp.map( (item,index) => {
-                              
-                             return (
-                               
-                                <tr key={index.toString() } >
-                                <td> {index + 1 } </td>
-                                <td> { item.last_purchased_at } </td>
-                                <td> { item.product.name + " | " + item.product.weight + item.product.weight_type + " | " +  item.product.brand } </td>
-                                <td> {item.quantity} </td>
-                                <td> {item.price} </td>
-                                
-                              </tr>
-                             );
-                            } )
-                        }
-                   
-                    </tbody>
-                   
-                  </table>
-                </div>
-                
-              </div>
+                :<Table data={this.state.data}/> 
               }
       
-                        </Layout>
+            </Layout>
         );
     }
 }
 
-export default stockList;
+export default StockList;

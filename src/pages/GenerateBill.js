@@ -58,7 +58,7 @@ class GenerateBill extends Component {
                 label : "",
                };
                option.value = item.id+','+item.price+','+item.quantity;
-               option.label =  item.product.name+' | '+  item.product.weight+' '+ item.product.weight_type +' | '+item.product.brand;
+               option.label =  item.temp_product.name+' | '+  item.temp_product.weight+' '+ item.temp_product.weight_type +' | '+item.temp_product.brand;
               return option;
           });
     
@@ -70,6 +70,9 @@ class GenerateBill extends Component {
             });
         } ).catch( err => {
           console.log(err);
+          this.setState({
+            response : err.response.data.message
+          });
         });  
     
       }
@@ -245,7 +248,7 @@ class GenerateBill extends Component {
               postData = this.state.rows.map( item => {
                 return {
                   stock_id : item.stock_id,
-                  sell_quantity : item.sell_quantity,
+                  quantity : item.sell_quantity,
                 };
               });
               postData = {

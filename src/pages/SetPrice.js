@@ -120,7 +120,7 @@ class SetPrice extends Component {
                   label : "",
                  };
                 option.value = item.id;
-                option.label =  item.product.name+' | '+  item.product.weight+' '+ item.product.weight_type +' | '+item.product.brand;
+                option.label =  item.temp_product.name+' | '+  item.temp_product.weight+' '+ item.temp_product.weight_type +' | '+item.temp_product.brand;
                 return option;
             });
       

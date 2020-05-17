@@ -35,11 +35,11 @@ class PurchaseList extends Component {
             this.setState({
               isLoader : false,
             });
-           })
+           });
         } ).catch( err =>{
             console.log(err);
             this.setState({
-              isLoader : false,
+              response : err.response.data.message
             });
         }); 
         

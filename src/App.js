@@ -6,10 +6,11 @@ import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import AddPurchase from './pages/AddPurchase';
 import PurchaseList from './pages/PurchaseList';
-import StockList from "./pages/stockList";
+import StockList from "./pages/StockList";
 import SetPrice from './pages/SetPrice'; 
 import GenerateBill from './pages/GenerateBill';
 import BillList from './pages/BillList';
+import SaleList from "./pages/SaleList";
 class App extends Component { 
   
 
@@ -31,6 +32,7 @@ class App extends Component {
                     <ProtectedRoutes exact path='/setPrice' component = {SetPrice} />
                     <ProtectedRoutes exact path='/generateBill' component = {GenerateBill} />
                     <ProtectedRoutes exact path='/billList' component = {BillList} />
+                    <ProtectedRoutes exact path='/saleList' component = {SaleList} />
                     <Route exact path='/login' component = {Login} />
                     <Route path="*" component = { ()=> { return <h1 style={{ textAlign: 'center' }} > 404, PAGE NOT FOUND </h1> } } />
                  </Switch>

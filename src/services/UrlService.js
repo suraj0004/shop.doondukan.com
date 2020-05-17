@@ -56,7 +56,7 @@ class UrlService{
 
 
     globalAvailableStockListUrl(){
-        const apiUrl = "/retail/globalAvailableStockList";
+        const apiUrl = "/retail/getAvailableGlobalStockList";
         return this.baseUrl + apiUrl;
     }
 
@@ -65,6 +65,15 @@ class UrlService{
         return this.baseUrl + apiUrl;
     }
 
+    saleListUrl(){
+        const apiUrl = "/retail/saleList";
+        return this.baseUrl + apiUrl;
+    }
+
+    billListUrl(){
+        const apiUrl = "/retail/billList";
+        return this.baseUrl + apiUrl;
+    }
 
 
 }

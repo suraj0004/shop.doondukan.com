@@ -128,11 +128,11 @@ class Sidebar extends React.Component {
           </li>
 
 
-          <li className={ (props.pathname === "/generateBill" || props.pathname === "/billList"  || this.state.menu === "sold" )?"nav-item has-treeview menu-open":"nav-item has-treeview" } >
+          <li className={ (props.pathname === "/generateBill" || props.pathname === "/billList" || props.pathname === "/saleList"  || this.state.menu === "sold" )?"nav-item has-treeview menu-open":"nav-item has-treeview" } >
           <a   onClick={ () => this.menuClick("sold") }  className="nav-link " >
               <i className="nav-icon fas fa-chart-pie"></i>
               <p>
-                Bill
+                Bill &amp; Sale
                 <i className="right fas fa-angle-left"></i>
               </p>
               </a>
@@ -147,6 +147,12 @@ class Sidebar extends React.Component {
               <Link to='/billList' className={(props.pathname === "/billList") ? "nav-link active": "nav-link " } >
                   <i className="far fa-circle nav-icon"></i>
                   <p>Bill List</p>
+                 </Link>
+              </li>
+              <li className="nav-item">
+              <Link to='/saleList' className={(props.pathname === "/saleList") ? "nav-link active": "nav-link " } >
+                  <i className="far fa-circle nav-icon"></i>
+                  <p>Sale List</p>
                  </Link>
               </li>
             

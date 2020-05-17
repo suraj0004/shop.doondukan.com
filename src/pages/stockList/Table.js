@@ -1,24 +1,23 @@
 import React from 'react';
 
 function Table(props) {
-  // console.log(props);
-  const {main,temp} = props.data;
+   
+    const {main,temp} = props.data;
     return (
         <div className="card">
-           
-            
+                       
+                        
         <div className="card-body">
           <table id="my_table" className="table table-bordered table-striped">
             <thead>
                 
             <tr>
               <th>Sno.</th>
-              <th>Purchased Date</th>
+              <th>Last purchased date</th>
               <th>Product Detail</th>
-              <th>Purchased Quantity</th>
-              <th>Purchased Price (Per Piece)</th>
-              <th>Total Price</th>
-              
+              <th>Total Quantity</th> 
+              <th>Selling Price</th>  
+                                      
             </tr>
             </thead>
             <tbody>
@@ -29,31 +28,30 @@ function Table(props) {
                        
                         <tr key={index.toString() } >
                         <td> {index + 1 } </td>
-                        <td> { item.created_at } </td>
+                        <td> { item.last_purchased_at } </td>
                         <td> { item.product.name + " | " + item.product.weight + item.product.weight_type + " | " +  item.product.brand } </td>
                         <td> {item.quantity} </td>
                         <td> {item.price} </td>
-                        <td>{item.quantity * item.price } </td>
+                        
                       </tr>
                      );
-                    })
+                    } )
                 }
-
-                {
-                   temp.map( (item,index) => {
-                      console.log(item);
-                    return (
+              {
+                    temp.map( (item,index) => {
                       
-                       <tr key={index.toString() } >
-                       <td> {index + 1 } </td>
-                       <td> { item.created_at } </td>
-                       <td> { item.product_temp.name + " | " + item.product_temp.weight + item.product_temp.weight_type + " | " +  item.product_temp.brand } </td>
-                       <td> {item.quantity} </td>
-                       <td> {item.price} </td>
-                       <td>{item.quantity * item.price } </td>
-                     </tr>
-                    );
-                   })
+                     return (
+                       
+                        <tr key={index.toString() } >
+                        <td> {index + 1 } </td>
+                        <td> { item.last_purchased_at } </td>
+                        <td> { item.temp_product.name + " | " + item.temp_product.weight + item.temp_product.weight_type + " | " +  item.temp_product.brand } </td>
+                        <td> {item.quantity} </td>
+                        <td> {item.price} </td>
+                        
+                      </tr>
+                     );
+                    } )
                 }
            
             </tbody>
