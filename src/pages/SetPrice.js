@@ -21,8 +21,10 @@ class SetPrice extends Component {
 
       handleChange = selectedOption => {
         console.log(`Option selected:`, selectedOption);
-    
-        this.setState({ selectedOption });
+        this.setState({ 
+          selectedOption:selectedOption,
+          price : (selectedOption.value).split(",")[1]
+        });
     
       };
 
@@ -53,28 +55,46 @@ class SetPrice extends Component {
             isLoader : true,
           },()=>{
             const postData = {
-              stock_id : selectedOption.value,
+              stock_id : (selectedOption.value).split(",")[0],
               price :  Number(price) ,
              }
        
              axios.post( UrlService.setPriceUrl(), postData, {
                headers : auth.apiHeader()
              }).then( res => {
-               this.setState({
-                 response : "Successfully Added Selling price, Check your Stock list for details.",
-                 responseClass : "text-success",
-                 selectedOption: null,
-                 price : "", 
-                 isLoader : false,
-               });
+                 if(res.data.success){
+                  this.setState({
+                    response : "Successfully Added Selling price, Check your Stock list for details.",
+                    responseClass : "text-success",
+                    selectedOption: null,
+                    price : "", 
+                    isLoader : false,
+                  });
+                 }else{
+                  this.setState({
+                    response : res.data.message,
+                    responseClass : "text-danger",
+                    selectedOption: null,
+                    price : "",
+                    isLoader : false,
+                  });
+                 }
              } ).catch( err => {
-               this.setState({
-                 response : "Opps something went wrong, please call to administrator at 8954836965",
-                 responseClass : "text-danger",
-                 selectedOption: null,
-                 price : "",
-                 isLoader : false,
+             
+               err = err.response;
+               if(err.status === 401 || err.statusText === "Unauthorized" )
+                {
+                      auth.afterLogout();
+                      this.props.history.push("/login");
+                }else if(err.status === 404){
+                  this.setState({
+                    response : "Opps! Something went wrong, Please call to adminstrator at +91-8954836965",
+                });
+                 }else{
+                 this.setState({
+                   response : err.data.message,
                });
+                }
              } );
           });
     
@@ -90,51 +110,61 @@ class SetPrice extends Component {
 
       componentDidMount() {
    
-    
-        // auth.isValidToken( (success) =>{
-        //   if(success){
-        //       auth.afterLogout();
-        //      this.props.history.push("/login"); 
-        //   }
-        // });
+
 
         axios.get( UrlService.globalStockListUrl(), {
           headers : auth.apiHeader(),    
             } ).then( res => {
-              const data = res.data.data;
-              console.log(data);
-              let options_main = data.main.map(item => {
+               
+              if(res.data.success){
+                const data = res.data.data;
+                console.log(data);
+                let options_main = data.main.map(item => {
+                    let option = {
+                      value : "",
+                      label : "",
+                     };
+                    option.value = item.id + "," + item.price;
+                    option.label =  item.product.name+' | '+  item.product.weight+' '+ item.product.weight_type +' | '+item.product.brand;
+                    return option;
+                });
+        
+                let options_temp = [];
+                 options_temp = data.temp.map(item => {
                   let option = {
                     value : "",
                     label : "",
                    };
-                  option.value = item.id;
-                  option.label =  item.product.name+' | '+  item.product.weight+' '+ item.product.weight_type +' | '+item.product.brand;
+                   option.value = item.id + "," + item.price;
+                  option.label =  item.temp_product.name+' | '+  item.temp_product.weight+' '+ item.temp_product.weight_type +' | '+item.temp_product.brand;
                   return option;
               });
-      
-              let options_temp = [];
-               options_temp = data.temp.map(item => {
-                let option = {
-                  value : "",
-                  label : "",
-                 };
-                option.value = item.id;
-                option.label =  item.temp_product.name+' | '+  item.temp_product.weight+' '+ item.temp_product.weight_type +' | '+item.temp_product.brand;
-                return option;
-            });
-      
-              this.setState({
-                options : options_temp.concat(options_main),
-                isLoader : false,
+        
+                this.setState({
+                  options : options_temp.concat(options_main),
+                  isLoader : false,
+                });
+              }else{
+                this.setState({
+                  response : res.data.message,
               });
+              }
 
             } ).catch(  err => {
-              console.log(err);
-
-              this.setState({
-                isLoader : false,
+              err = err.response;
+              if(err.status === 401 || err.statusText === "Unauthorized" )
+               {
+                     auth.afterLogout();
+                     this.props.history.push("/login");
+               }else if(err.status === 404){
+                this.setState({
+                  response : "Opps! Something went wrong, Please call to adminstrator at +91-8954836965",
               });
+               }else{
+                this.setState({
+                  response : err.data.message,
+              });
+               }
             });
 
 

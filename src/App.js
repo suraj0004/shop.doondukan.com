@@ -11,6 +11,8 @@ import SetPrice from './pages/SetPrice';
 import GenerateBill from './pages/GenerateBill';
 import BillList from './pages/BillList';
 import SaleList from "./pages/SaleList";
+import Invoice from './pages/Invoice';
+import Profile from './pages/Profile';
 class App extends Component { 
   
 
@@ -33,6 +35,8 @@ class App extends Component {
                     <ProtectedRoutes exact path='/generateBill' component = {GenerateBill} />
                     <ProtectedRoutes exact path='/billList' component = {BillList} />
                     <ProtectedRoutes exact path='/saleList' component = {SaleList} />
+                    <ProtectedRoutes exact path='/invoice/:id' component = {Invoice} />
+                    <ProtectedRoutes exact path='/profile' component = {Profile} />
                     <Route exact path='/login' component = {Login} />
                     <Route path="*" component = { ()=> { return <h1 style={{ textAlign: 'center' }} > 404, PAGE NOT FOUND </h1> } } />
                  </Switch>

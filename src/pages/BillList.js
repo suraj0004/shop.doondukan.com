@@ -28,16 +28,35 @@ class BillList extends Component {
       axios.get(UrlService.billListUrl() + `?page=${page}`, {
         headers: auth.apiHeader()
       }).then(res => {
-        console.log(res.data);
-        this.setState({
-          data: res.data,
-          isLoader: false
-        })
+        if (res.data.success) {
+          this.setState({
+            data: res.data.data,
+            isLoader: false
+          })
+        } else {
+          this.setState({
+            response: res.data.message
+          });
+        }
       }).catch(err => {
+
+        err = err.response;
         console.log(err);
-        this.setState({
-          response: err.statusText
-        })
+        if(err.status === 401 || err.statusText === "Unauthorized" )
+         {
+               auth.afterLogout();
+               this.props.history.push("/login");
+         }else if(err.status === 404){
+          this.setState({
+            response : "Opps! Something went wrong, Please call to adminstrator at +91-8954836965",
+        });
+         }
+         else{
+          this.setState({
+            response : err.data.message,
+        });
+         }
+
       });
     })
 

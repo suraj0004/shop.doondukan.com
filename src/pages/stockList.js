@@ -21,34 +21,44 @@ class StockList extends Component {
     componentDidMount() {
    
     
-        // auth.isValidToken( (success) =>{
-        //   if(success){
-        //       auth.afterLogout();
-        //      this.props.history.push("/login"); 
-        //   }
-        // });
 
         axios.get( UrlService.stockListUrl() ,{
           headers : auth.apiHeader(),
         } ).then( (res) => {
-          console.log(res);
-          this.setState({
-            data: res.data.data,
-           
-        }, ()=>{
-         var script = document.createElement("script");
-         script.src = "/asset/dist/js/pages/data_table.js";
-         script.defer = true;  
-         document.body.appendChild(script);
-         this.setState({
-          isLoader : false,
-        });
-        } )
-        } ).catch( (err) => {
-            console.log(err);
-            this.setState({
-              response : err.response.data.message
+            if(res.data.success){
+              console.log(res);
+              this.setState({
+                data: res.data.data,
+               
+            }, ()=>{
+             var script = document.createElement("script");
+             script.src = "/asset/dist/js/pages/data_table.js";
+             script.defer = true;  
+             document.body.appendChild(script);
+             this.setState({
+              isLoader : false,
             });
+            } )
+            }else{
+              this.setState({
+                response : res.data.message,
+            });
+            }
+        }).catch( (err) => {
+          err = err.response;
+          if(err.status === 401 || err.statusText === "Unauthorized" )
+           {
+                 auth.afterLogout();
+                 this.props.history.push("/login");
+           }else if(err.status === 404){
+            this.setState({
+              response : "Opps! Something went wrong, Please call to adminstrator at +91-8954836965",
+          });
+           }else{
+            this.setState({
+              response : err.data.message,
+          });
+           }
         } );
 
 

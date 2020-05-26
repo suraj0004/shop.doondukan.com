@@ -18,9 +18,14 @@ class GenerateBill extends Component {
           options : [],
           model_show : false,
           model_response : "",
-          buyer_name : "",
-          buyer_email : "",
-          buyer_mobile : "",
+         buyer : {
+          name : "",
+          email : "",
+          mobile : "",
+          discount : 0,
+          selectedOption : {value : "rupees" , label : "In Rs."},
+         },
+
           isLoader : true,
         };
         
@@ -29,50 +34,58 @@ class GenerateBill extends Component {
       }
 
       componentDidMount() {
- 
-
-        // auth.isValidToken( (success) =>{
-        //   if(success){
-        //       auth.afterLogout();
-        //      this.props.history.push("/login"); 
-        //   }
-        // });
         
         axios.get(  UrlService.globalAvailableStockListUrl(),{
           headers : auth.apiHeader()
         }).then( res => {
-            const data = res.data.data;
-            let options_main = data.main.map(item => {
-                let option = {
-                  value : "",
-                  label : "",
-                 };
-                option.value = item.id+','+item.price+','+item.quantity;
-                option.label =  item.product.name+' | '+  item.product.weight+' '+ item.product.weight_type +' | '+item.product.brand;
-                return option;
-            });
-    
-            let options_temp = data.temp.map(item => {
-              let option = {
-                value : "",
-                label : "",
-               };
-               option.value = item.id+','+item.price+','+item.quantity;
-               option.label =  item.temp_product.name+' | '+  item.temp_product.weight+' '+ item.temp_product.weight_type +' | '+item.temp_product.brand;
-              return option;
-          });
-    
-          var row =  { options : options_temp.concat(options_main),  selectedOption: null, stock_id : "", avaliable_quantity : "", price : "", sell_quantity : "" }
-            this.setState({
-              rows : [row],
-              options :  options_temp.concat(options_main),
-              isLoader : false
-            });
+               if(res.data.success){
+                const data = res.data.data;
+                let options_main = data.main.map(item => {
+                    let option = {
+                      value : "",
+                      label : "",
+                     };
+                    option.value = item.id+','+item.price+','+item.quantity;
+                    option.label =  item.product.name+' | '+  item.product.weight+' '+ item.product.weight_type +' | '+item.product.brand;
+                    return option;
+                });
+        
+                let options_temp = data.temp.map(item => {
+                  let option = {
+                    value : "",
+                    label : "",
+                   };
+                   option.value = item.id+','+item.price+','+item.quantity;
+                   option.label =  item.temp_product.name+' | '+  item.temp_product.weight+' '+ item.temp_product.weight_type +' | '+item.temp_product.brand;
+                  return option;
+              });
+        
+              var row =  { options : options_temp.concat(options_main),  selectedOption: null, stock_id : "", avaliable_quantity : "", price : "", sell_quantity : "" }
+                this.setState({
+                  rows : [row],
+                  options :  options_temp.concat(options_main),
+                  isLoader : false
+                });
+               }else{
+                this.setState({
+                  response : res.data.message,
+              });
+               }
         } ).catch( err => {
-          console.log(err);
-          this.setState({
-            response : err.response.data.message
+          err = err.response;
+          if(err.status === 401 || err.statusText === "Unauthorized" )
+           {
+                 auth.afterLogout();
+                 this.props.history.push("/login");
+           }else if(err.status === 404){
+            this.setState({
+              response : "Opps! Something went wrong, Please call to adminstrator at +91-8954836965",
           });
+           }else{
+            this.setState({
+              response : err.data.message,
+          });
+           }
         });  
     
       }
@@ -89,6 +102,16 @@ class GenerateBill extends Component {
         this.setState({ 
            rows : rows,
            response : "",
+        });
+    
+      };
+
+      handleDiscountTypeChange = (selectedOption) => {
+
+        var buyer = this.state.buyer;
+        buyer.selectedOption = selectedOption;
+        this.setState({ 
+          buyer : buyer
         });
     
       };
@@ -254,9 +277,11 @@ class GenerateBill extends Component {
               postData = {
                 sale : postData,
                 buyer : {
-                  name : this.state.buyer_name,
-                  email : this.state.buyer_email,
-                  mobile : this.state.buyer_mobile,
+                  name : this.state.buyer.name,
+                  email : this.state.buyer.email,
+                  mobile : this.state.buyer.mobile,
+                  discount : this.state.buyer.discount,
+                  discount_type : this.state.buyer.selectedOption.value,
                 }
               };
               axios.post(UrlService.generateBillUrl(), postData,
@@ -264,33 +289,30 @@ class GenerateBill extends Component {
                  headers: auth.apiHeader(),
                })
                .then(res=>{
+               
                  if(res.data.success){
-                  const row =  { options : this.state.options ,  selectedOption: null, stock_id : "", avaliable_quantity : "", price : "", sell_quantity : "" }
-                   this.setState({
-                     response : "Successfully Generated Bill",
-                     responseClass : "text-success",
-                     isLoader : false,
-                     rows : [row],
-                     buyer_name : "",
-                     buyer_email : "",
-                     buyer_mobile : "",
-                   });
+                  this.props.history.push('/invoice/'+res.data.data);
                  }else{
                    this.setState({
                      response : res.data.message,
-                     responseClass : "text-danger",
-                     isLoader : false,
                    });
                  }
               })
-              .catch(e=>{
-             
-               this.setState({
-                 response : "Opps Something went wrong, please contact to administrator at 8954836965",
-                 responseClass : "text-danger",
-                 isLoader : false,
-
-               })
+              .catch(err=>{
+                err = err.response;
+                if(err.status === 401 || err.statusText === "Unauthorized" )
+                 {
+                       auth.afterLogout();
+                       this.props.history.push("/login");
+                 }else if(err.status === 404){
+                  this.setState({
+                    response : "Opps! Something went wrong, Please call to adminstrator at +91-8954836965",
+                });
+                 }else{
+                  this.setState({
+                    response : err.data.message,
+                });
+                 }
               });
             })
 
@@ -303,38 +325,59 @@ class GenerateBill extends Component {
       }
 
       handleSaveSubmit = () => {
-           if(this.state.buyer_name === "" ){
+           if(this.state.buyer.name === "" ){
              this.setState({
               model_response : "Buyer Name is required"
              });
              return;
            }  
-           if(this.state.buyer_email === "" ){
-            this.setState({
-             model_response : "Buyer Email is required"
-            });
-            return;
-          } 
-          if(this.state.buyer_mobile === "" ){
-            this.setState({
-             model_response : "Buyer Mobile Number is required"
-            });
-            return;
-          } 
+ 
 
           this.handleSubmit();
            
       }
 
       handleSkipSubmit = () => {
-        this.handleSubmit();
+       
+
+        this.setState({
+          buyer : {
+            name : "",
+            email : "",
+            mobile : "",
+            discount : 0,
+            selectedOption : {value : "rupees" , label : "In Rs."},
+           },
+        },()=>{
+          this.handleSubmit();
+        });
       }
 
       handleBuyerDetails = (event) => {
         
+       var buyer = this.state.buyer;
+
+         switch (event.target.name) {
+            case 'buyer_name':
+              buyer.name = event.target.value;
+              break;
+            case 'buyer_email':
+              buyer.email = event.target.value;
+              break;
+            case 'buyer_mobile':
+              buyer.mobile = event.target.value;
+              break;
+            case 'discount':
+              buyer.discount = event.target.value;
+              break;
+           default:
+             break;
+         }
+
          this.setState({
-           [event.target.name] : event.target.value
-         })
+          buyer: buyer,
+         });
+
       }
       
 
@@ -425,11 +468,10 @@ class GenerateBill extends Component {
                 hideModal={this.hideModal} 
                 handleSaveSubmit={this.handleSaveSubmit}
                 handleSkipSubmit={this.handleSkipSubmit}
-                buyer_name={this.state.buyer_name}
-                buyer_email={this.state.buyer_email}
-                buyer_mobile={this.state.buyer_mobile}
+                buyer={this.state.buyer}
                 model_response={this.state.model_response}
                 handleBuyerDetails = {this.handleBuyerDetails}
+                handleDiscountTypeChange = { this.handleDiscountTypeChange }
           />
           </Layout>
         );

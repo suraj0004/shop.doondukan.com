@@ -66,7 +66,10 @@ class  Header extends React.Component {
             
             <ul className="navbar-nav ml-auto">
               
-             
+            <li className="nav-item d-none d-sm-inline-block">
+                 <button className="btn" onClick={this.props.handleLogout} > <i className="fa fa-lock-open"></i> </button>
+              </li>
+              
               <li className="nav-item dropdown">
                 <a className="nav-link" data-toggle="dropdown" href="/">
                   <i className="far fa-bell"></i>
@@ -94,9 +97,7 @@ class  Header extends React.Component {
                 </div>
               </li>
 
-              <li className="nav-item d-none d-sm-inline-block">
-                 <button className="btn" onClick={this.props.handleLogout} > <i className="fa fa-lock-open"></i> </button>
-              </li>
+             
              
             </ul>
           </nav>

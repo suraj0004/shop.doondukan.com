@@ -2,6 +2,18 @@ class UrlService{
 
     constructor(){
         this.baseUrl = "http://localhost/shopinventorymanagement/public/api";
+        this.imagePath = "http://localhost/shopinventorymanagement/public";
+    }
+
+
+    userImageUrl(){
+        const folderName = "/profileimages/";
+        return this.imagePath + folderName;
+    }
+
+    shopImageUrl(){
+        const folderName = "/shopimages/";
+        return this.imagePath + folderName;
     }
 
     loginUrl(){
@@ -74,6 +86,33 @@ class UrlService{
         const apiUrl = "/retail/billList";
         return this.baseUrl + apiUrl;
     }
+
+    profileShopSettingUrl(){
+        const apiUrl = "/retail/updateShopProfile";
+        return this.baseUrl + apiUrl;
+    }
+
+    profileUserSettingUrl(){
+        const apiUrl = "/retail/updateProfile";
+        return this.baseUrl + apiUrl;
+    }
+
+    profilegUrl(){
+        const apiUrl = "/retail/profile";
+        return this.baseUrl + apiUrl;
+    }
+
+    confirmPasswordUrl(){
+        const apiUrl = "/retail/confirmPassword";
+        return this.baseUrl + apiUrl;
+    }
+
+    invoiceUrl(){
+        const apiUrl = "/retail/invoice/";
+        return this.baseUrl + apiUrl;
+    }
+
+
 
 
 }

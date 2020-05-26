@@ -25,12 +25,6 @@ class AddPurchase extends Component {
   }
   componentDidMount() {
  
-    // auth.isValidToken( (success) =>{
-    //   if(success){
-    //       auth.afterLogout();
-    //      this.props.history.push("/login"); 
-    //   }
-    // });
     
     axios.get(  UrlService.globalProductListUrl(),{
       headers : auth.apiHeader()
@@ -74,6 +68,10 @@ class AddPurchase extends Component {
        {
              auth.afterLogout();
              this.props.history.push("/login");
+       }else if(err.status === 404){
+        this.setState({
+          response : "Opps! Something went wrong, Please call to adminstrator at +91-8954836965",
+      });
        }else{
         this.setState({
           response : err.data.message,
@@ -163,29 +161,46 @@ class AddPurchase extends Component {
         axios.post( UrlService.addPurchaseUrl(), postData, {
           headers : auth.apiHeader()
         }).then( res => {
-          this.setState({
-            response : "Successfully Added Product, Check your product list for details.",
-            responseClass : "text-success",
-            selectedOption: null,
-            price_type : "lumsum",
-            price : "",
-            quantity : "",
-            total : 0,
-            isLoader : false,
-          });
+            if(res.data.success){
+              this.setState({
+                response : "Successfully Added Product, Check your product list for details.",
+                responseClass : "text-success",
+                selectedOption: null,
+                price_type : "lumsum",
+                price : "",
+                quantity : "",
+                total : 0,
+                isLoader : false,
+              });
+            }else{
+              this.setState({
+                response : res.data.message,
+                responseClass : "text-danger",
+                selectedOption: null,
+                price_type : "lumsum",
+                price : "",
+                quantity : "",
+                total : 0,
+                isLoader : false,
+              });
+            }
         } ).catch( err => {
-          this.setState({
-            response : "Opps something went wrong, please call to administrator at 8954836965",
-            responseClass : "text-danger",
-            selectedOption: null,
-            price_type : "lumsum",
-            price : "",
-            quantity : "",
-            total : 0,
-            isLoader : false,
+          err = err.response;
+          if(err.status === 401 || err.statusText === "Unauthorized" )
+           {
+                 auth.afterLogout();
+                 this.props.history.push("/login");
+           }else if(err.status === 404){
+            this.setState({
+              response : "Opps! Something went wrong, Please call to adminstrator at +91-8954836965",
           });
-        } );
-      }  );
+           }else{
+            this.setState({
+              response : err.data.message,
+          });
+           }
+        });
+      });
 
      
 

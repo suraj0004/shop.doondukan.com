@@ -1,5 +1,6 @@
 import React from 'react';
 
+import Row from './Row';
 function Table(props) {
   // console.log(props);
   const {main,temp} = props.data;
@@ -25,27 +26,40 @@ function Table(props) {
           
             {
               main.map((sale) => {
-                const {price,quantity,id,date,product} = sale;
-                  return   <tr key={id}>
-                  <td>  <a className="btn btn-default" style={{marginTop:'-5px'}}>  ABCD-{id} <i className="fa fa-file"></i></a> </td>
-                  <td> {date} </td>
-                  <td> { ` ${product.name} | ${product.weight} ${product.weight_type} | ${product.brand} ` } </td>
-              <td>{quantity} Pcs. @ Rs. {price}/- per Pcs </td>
-                  <td> Rs.  {  price*quantity  } /- </td>
-              </tr>
+                const {price,quantity,id,created_at,product,bill_id} = sale;
+                  return(
+                    <Row
+                 key = {id}
+                 bill_id = {bill_id}
+                 date = {created_at}
+                 name = {product.name}
+                 weight = {product.weight}
+                 weight_type = {product.weight_type}
+                 brand = {product.brand}
+                 quantity = {quantity}
+                 price = {price}
+              />
+                  )   
+                      
               })
             }
 
            {
               temp.map((sale) => {
-                const {price,quantity,id,date,product} = sale;
-                  return   <tr key={id}>
-                  <td>  <a className="btn btn-default" style={{marginTop:'-5px'}}>  ABCD-{id} <i className="fa fa-file"></i></a> </td>
-                  <td> {date} </td>
-                  <td> { ` ${product.name} | ${product.weight} ${product.weight_type} | ${product.brand} ` } </td>
-              <td>{quantity} Pcs. @ Rs. {price}/- per Pcs </td>
-                  <td> Rs.  {  price*quantity  } /- </td>
-              </tr>
+                const {price,quantity,id,created_at,temp_product,bill_id} = sale;
+                  return (
+                    <Row
+                    key = {id}
+                    bill_id = {bill_id}
+                    date = {created_at}
+                    name = {temp_product.name}
+                    weight = {temp_product.weight}
+                    weight_type = {temp_product.weight_type}
+                    brand = {temp_product.brand}
+                    quantity = {quantity}
+                    price = {price}
+                 />
+                  )
               })
             }
            
