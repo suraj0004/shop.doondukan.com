@@ -14,6 +14,7 @@ function Table(props) {
                 
             <tr>
               <th>Bill No.</th>
+              <th>Status</th>
               <th>Sale Date</th>
               <th>Product Detail</th>
               <th>Sold Quantity</th>
@@ -38,6 +39,7 @@ function Table(props) {
                  brand = {product.brand}
                  quantity = {quantity}
                  price = {price}
+                 status = "Paid"
               />
                   )   
                       
@@ -58,6 +60,7 @@ function Table(props) {
                     brand = {temp_product.brand}
                     quantity = {quantity}
                     price = {price}
+                    status = "Paid"
                  />
                   )
               })

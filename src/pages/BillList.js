@@ -14,6 +14,8 @@ class BillList extends Component {
     super(props);
     this.state = {
       data: null,
+      status: "",
+      search : "",
       isLoader: true,
       response: ""
     }
@@ -21,12 +23,17 @@ class BillList extends Component {
     this.getBills = this.getBills.bind(this);
   }
 
-  getBills(page = 1) {
+  getBills(page = 1,loader = true) {
     this.setState({
-      isLoader: true,
+      isLoader: loader,
     }, () => {
-      axios.get(UrlService.billListUrl() + `?page=${page}`, {
-        headers: auth.apiHeader()
+      axios.get(UrlService.billListUrl(), {
+        headers: auth.apiHeader(),
+        params: {
+          page : page,
+          status: this.state.status,
+          search : this.state.search,
+        },
       }).then(res => {
         if (res.data.success) {
           this.setState({
@@ -72,6 +79,23 @@ class BillList extends Component {
 
   }
 
+  handleStatusChange = (event) => {
+    this.setState({
+        status : event.target.value,
+        isLoader : true
+    },()=>{
+      this.getBills(1);
+    });
+}
+
+handleSearchChange = (event) => {
+  this.setState({
+    search : event.target.value,
+    // isLoader : true
+},()=>{
+  this.getBills(1,false);
+});
+}
 
   render() {
 
@@ -82,7 +106,36 @@ class BillList extends Component {
         {
           (this.state.isLoader)
             ? <PageLoader error={this.state.response} />
-            : <PaginatedData data={this.state.data} getBills={this.getBills} />
+            : <React.Fragment>
+              <div className="row">
+                <div className="col-md-6">
+                <div className="form-group" style={{ width: "125px" }} >
+                                <select 
+                                  className="custom-select" 
+                                  value={this.state.status}
+                                  onChange={this.handleStatusChange} >
+                                    <option value="">All</option>
+                                    <option value="paid">Paid</option>
+                                    <option value="unpaid">Un Paid</option>
+                                </select>
+                   </div>
+                </div>
+
+                <div className="col-md-6">
+                <div className="form-group float-right" style={{ width: "200px" }} >
+                <input 
+                   type="text" 
+                   class="form-control"
+                   placeholder="Search Bill No." 
+                   value={this.state.search}
+                   onChange={this.handleSearchChange}
+                   />
+                   </div>
+                </div>
+
+              </div>
+              <PaginatedData data={this.state.data} getBills={this.getBills} />
+            </React.Fragment>
         }
       </Layout>
     );

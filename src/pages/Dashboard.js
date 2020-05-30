@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import auth from '../services/AuthService';
 import Layout from '../layouts/RetailLayout';
 import PageLoader from '../components/PageLoader';
+import CanvasJSReact from '../assets/canvasjs.react';
+var CanvasJSChart = CanvasJSReact.CanvasJSChart;
+
 class Dashboard extends Component {
 
   constructor(props) {
@@ -38,6 +41,26 @@ class Dashboard extends Component {
     
   }
     render() {
+
+      const options = {
+        title: {
+          text: "Basic Column Chart"
+        },
+        animationEnabled: true,
+        data: [
+        {
+          // Change type to "doughnut", "line", "splineArea", etc.
+          type: "column",
+          dataPoints: [
+            { label: "Apple",  y: 10  },
+            { label: "Orange", y: 15  },
+            { label: "Banana", y: 25  },
+            { label: "Mango",  y: 30  },
+            { label: "Grape",  y: 28  }
+          ]
+        }
+        ]
+      }
     
         return (
  
@@ -122,7 +145,7 @@ class Dashboard extends Component {
                       <div className="card-header">
                         <h5 className="card-title">Monthly Recap Report</h5>
         
-                        <div className="card-tools">
+                        {/* <div className="card-tools">
                           <button type="button" className="btn btn-tool" data-card-widget="collapse">
                             <i className="fas fa-minus"></i>
                           </button>
@@ -141,7 +164,7 @@ class Dashboard extends Component {
                           <button type="button" className="btn btn-tool" data-card-widget="remove">
                             <i className="fas fa-times"></i>
                           </button>
-                        </div>
+                        </div> */}
                       </div>
                       
                       <div className="card-body">
@@ -152,8 +175,8 @@ class Dashboard extends Component {
                             </p>
         
                             <div className="chart">
+                            <CanvasJSChart options = {options}  />
                               
-                              <canvas id="salesChart" height="180" style={{height: '180px'}}></canvas>
                             </div>
                             
                           </div>

@@ -74,7 +74,7 @@ class Sidebar extends React.Component {
               </Link>
           </li>
 
-          <li className="nav-header">OPERATIONS</li>
+          <li className="nav-header">Operations</li>
 
           <li className={ (props.pathname === "/addPurchase" || props.pathname === "/purchaseList" || this.state.menu === "purchase" )?"nav-item has-treeview menu-open":"nav-item has-treeview" } >
           <a  onClick={ () => this.menuClick("purchase") } className="nav-link " >
@@ -158,6 +158,146 @@ class Sidebar extends React.Component {
             
             </ul>
           </li>
+
+
+
+
+
+          <li className="nav-header">Reports/Charts</li>
+
+<li className={
+   (
+      props.pathname === "/top-highest-selling-products" ||
+      props.pathname === "/top-profitable-products" || 
+      props.pathname === "/top-lowest-selling-products" || 
+      props.pathname === "/top-less-profitable-products"  || 
+      props.pathname === "/top-loosely-products" 
+      || this.state.menu === "products" 
+     )?"nav-item has-treeview menu-open":"nav-item has-treeview"
+    } >
+<a  onClick={ () => this.menuClick("products") } className="nav-link " >
+    <i className="nav-icon fas fa-chart-pie"></i>
+    <p>
+      Products
+      <i className="right fas fa-angle-left"></i>
+    </p>
+    </a>
+  <ul className="nav nav-treeview ">
+    <li className="nav-item">
+    <Link to='/top-highest-selling-products' className={(props.pathname === "/top-highest-selling-products") ? "nav-link active": "nav-link " } >
+        <i className="far fa-circle nav-icon"></i>
+        <p>Highest Selling</p>
+       </Link>
+    </li>
+
+    <li className="nav-item">
+    <Link to='/top-profitable-products' className={(props.pathname === "/top-profitable-products") ? "nav-link active": "nav-link " } >
+        <i className="far fa-circle nav-icon"></i>
+        <p>profitable</p>
+       </Link>
+    </li>
+
+    <li className="nav-item">
+    <Link to='/top-lowest-selling-products' className={(props.pathname === "/top-lowest-selling-products") ? "nav-link active": "nav-link " } >
+        <i className="far fa-circle nav-icon"></i>
+        <p>Lowest Selling</p>
+       </Link>
+    </li>
+  
+    <li className="nav-item">
+    <Link to='/top-less-profitable-products' className={(props.pathname === "/top-less-profitable-products") ? "nav-link active": "nav-link " } >
+        <i className="far fa-circle nav-icon"></i>
+        <p>Less Profitable</p>
+       </Link>
+    </li>
+
+    <li className="nav-item">
+    <Link to='/top-loosely-products' className={(props.pathname === "/top-loosely-products") ? "nav-link active": "nav-link " } >
+        <i className="far fa-circle nav-icon"></i>
+        <p>Loosely</p>
+       </Link>
+    </li>
+  </ul>
+</li>
+
+
+
+
+<li className={
+   (
+      props.pathname === "/sale-vs-profit" ||
+      props.pathname === "/all-in-one"
+      || this.state.menu === "comparison" 
+     )?"nav-item has-treeview menu-open":"nav-item has-treeview"
+    } >
+<a  onClick={ () => this.menuClick("comparison") } className="nav-link " >
+    <i className="nav-icon fas fa-chart-pie"></i>
+    <p>
+    Comparison
+      <i className="right fas fa-angle-left"></i>
+    </p>
+    </a>
+  <ul className="nav nav-treeview ">
+    <li className="nav-item">
+    <Link to='/sale-vs-profit' className={(props.pathname === "/sale-vs-profit") ? "nav-link active": "nav-link " } >
+        <i className="far fa-circle nav-icon"></i>
+        <p>Sale Vs Profit</p>
+       </Link>
+    </li>
+
+    <li className="nav-item">
+    <Link to='/all-in-one' className={(props.pathname === "/all-in-one") ? "nav-link active": "nav-link " } >
+        <i className="far fa-circle nav-icon"></i>
+        <p>All In 1</p>
+       </Link>
+    </li>
+
+  
+  </ul>
+</li>
+
+
+<li className={
+   (
+      props.pathname === "/sale-growth" ||
+      props.pathname === "/purchase-growth" ||
+      props.pathname === "/profit-growth"
+      || this.state.menu === "growth" 
+     )?"nav-item has-treeview menu-open":"nav-item has-treeview"
+    } >
+<a  onClick={ () => this.menuClick("growth") } className="nav-link " >
+    <i className="nav-icon fas fa-chart-pie"></i>
+    <p>
+    Growth
+      <i className="right fas fa-angle-left"></i>
+    </p>
+    </a>
+  <ul className="nav nav-treeview ">
+    <li className="nav-item">
+    <Link to='/sale-growth' className={(props.pathname === "/sale-growth") ? "nav-link active": "nav-link " } >
+        <i className="far fa-circle nav-icon"></i>
+        <p>Sale</p>
+       </Link>
+    </li>
+
+    <li className="nav-item">
+    <Link to='/purchase-growth' className={(props.pathname === "/purchase-growth") ? "nav-link active": "nav-link " } >
+        <i className="far fa-circle nav-icon"></i>
+        <p>purchase</p>
+       </Link>
+    </li>
+
+
+    <li className="nav-item">
+    <Link to='/profit-growth' className={(props.pathname === "/profit-growth") ? "nav-link active": "nav-link " } >
+        <i className="far fa-circle nav-icon"></i>
+        <p>Profit</p>
+       </Link>
+    </li>
+
+  
+  </ul>
+</li>
          
           
           

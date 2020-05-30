@@ -13,6 +13,7 @@ import BillList from './pages/BillList';
 import SaleList from "./pages/SaleList";
 import Invoice from './pages/Invoice';
 import Profile from './pages/Profile';
+import HighestSelling from './pages/reports/products/Highest Selling';
 class App extends Component { 
   
 
@@ -37,6 +38,7 @@ class App extends Component {
                     <ProtectedRoutes exact path='/saleList' component = {SaleList} />
                     <ProtectedRoutes exact path='/invoice/:id' component = {Invoice} />
                     <ProtectedRoutes exact path='/profile' component = {Profile} />
+                    <ProtectedRoutes exact path='/top-highest-selling-products' component = {HighestSelling} />
                     <Route exact path='/login' component = {Login} />
                     <Route path="*" component = { ()=> { return <h1 style={{ textAlign: 'center' }} > 404, PAGE NOT FOUND </h1> } } />
                  </Switch>

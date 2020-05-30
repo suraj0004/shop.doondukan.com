@@ -6,6 +6,7 @@ function PageHeader(props) {
     li = <li className="breadcrumb-item"><Link to="/">Dashboard</Link></li>
   }
     return (
+        (props.page === "")?<hr/>:
         <div className="content-header">
         <div className="container-fluid">
           <div className="row mb-2">
