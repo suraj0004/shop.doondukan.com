@@ -34,6 +34,8 @@ class Invoice extends Component {
     axios.get(UrlService.invoiceUrl() + this.state.id, {
       headers: auth.apiHeader()
     }).then(res => {
+    try {
+      console.log("hitting API");
       if (res.data.success) {
 
         console.log(res);
@@ -47,17 +49,19 @@ class Invoice extends Component {
             bill_id: (res.data.data.id).toString(),
           },
           from: {
-            name: res.data.data.store.name,
-            email: res.data.data.store.email,
-            mobile: res.data.data.store.mobile,
-            address: res.data.data.store.address,
-            logo: UrlService.shopImageUrl() + res.data.data.store.user_id + '/' + res.data.data.store.logo,
+            name: (res.data.data.store)? res.data.data.store.name:"Not-Specified",
+            email: (res.data.data.store)? res.data.data.store.email:"Not-Specified",
+            mobile: (res.data.data.store)? res.data.data.store.mobile:"Not-Specified",
+            address: (res.data.data.store)? res.data.data.store.address:"Not-Specified",
+            logo: (res.data.data.store)? UrlService.shopImageUrl() + res.data.data.store.user_id + '/' + res.data.data.store.logo:"Not-Specified",
           },
           sales: res.data.data.sales,
           discount: {
             type: res.data.data.discount_type,
             amount: res.data.data.discount,
-          }
+          },
+          id : res.data.data.id,
+          status : (res.data.data.status === 'unpaid')?"Un-Paid":"Paid",
 
         })
 
@@ -66,6 +70,9 @@ class Invoice extends Component {
           response: res.data.message,
         });
       }
+    } catch (error) {
+      console.log(error);
+    }
 
     }).catch(err => {
       err = err.response;
@@ -85,9 +92,46 @@ class Invoice extends Component {
   }
 
   handlePaid = () => {
+  
     this.setState({
-      status: "Paid"
+      isLoader : true
+    }, () => {
+      const postData = {
+        billId : this.state.id,
+      };
+     axios.post( UrlService.setStatusPaidUrl(), postData ,{
+       headers : auth.apiHeader()
+     } ).then(res => {
+        if(res.data.success){
+          this.setState({
+            status: "Paid",
+            isLoader:false,
+          });
+        }else{
+          console.log(res.data.message);
+          this.setState({
+            response: res.data.message,
+          });
+        }
+     }).catch(err  => {
+       
+    err = err.response;
+        if (err.status === 401 || err.statusText === "Unauthorized") {
+          auth.afterLogout();
+          this.props.history.push("/login");
+        } else if (err.status === 404) {
+          this.setState({
+            response: "Opps! Something went wrong, Please call to adminstrator at +91-8954836965",
+          });
+        } else {
+          this.setState({
+            response: err.data.message,
+          });
+        }
+    
+     });
     });
+   
   }
 
 
@@ -145,7 +189,7 @@ class Invoice extends Component {
 
                     Status: &nbsp;
                       <span className={(this.state.status === "Paid") ? "text-success" : "text-warning"}>
-                      {(this.state.status !== "Paid") ? <i class="fas fa-exclamation-triangle"></i> : <i className="fa fa-rupee-sign"></i>}  {this.state.status}
+                      {(this.state.status !== "Paid") ? <i className="fas fa-exclamation-triangle"></i> : <i className="fa fa-rupee-sign"></i>}  {this.state.status}
                     </span>
 
                   </b>

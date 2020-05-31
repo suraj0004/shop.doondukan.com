@@ -112,6 +112,11 @@ class UrlService{
         return this.baseUrl + apiUrl;
     }
 
+    setStatusPaidUrl(){
+        const apiUrl = '/retail/setStatusPaid';
+        return this.baseUrl + apiUrl;
+    }
+
 
 
 

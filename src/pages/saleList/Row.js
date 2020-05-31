@@ -3,10 +3,10 @@ import {Link} from 'react-router-dom';
 function Row(props) {
     const {bill_id,date,name,weight,weight_type,brand,quantity,price,status} = props;
     var statusHtml;
-    if(status === "Paid"){
-     statusHtml = <span className=" text-success"><b>  <i className="fa fa-rupee-sign"></i> Paid </b></span>
+    if(status === "paid"){
+     statusHtml = <span className="badge badge-success">Paid</span>
     }else{
-         statusHtml = <span className=" text-warning"><b>   <i class="fas fa-exclamation-triangle"></i> Un-Paid </b></span>
+         statusHtml = <span className="badge badge-warning">Un-Paid</span>
     }
     return (
         <tr>
