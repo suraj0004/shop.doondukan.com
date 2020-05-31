@@ -205,84 +205,77 @@ class HighestSelling extends Component {
                     
                     <div className="card">
                       <div className="card-header border-transparent">
-                        <h3 className="card-title">Latest Orders</h3>
+                        <h3 className="card-title">Top 20 Highest Selling Products</h3>
         
-                        <div className="card-tools">
-                          <button type="button" className="btn btn-tool" data-card-widget="collapse">
-                            <i className="fas fa-minus"></i>
-                          </button>
-                          <button type="button" className="btn btn-tool" data-card-widget="remove">
-                            <i className="fas fa-times"></i>
-                          </button>
-                        </div>
+                       
                       </div>
                       
                       <div className="card-body p-0">
                         <div className="table-responsive">
-                          <table className="table m-0">
+                          <table className="table m- table-hover table-striped">
                             <thead>
-                            <tr>
-                              <th>Order ID</th>
-                              <th>Item</th>
-                              <th>Status</th>
-                              <th>Popularity</th>
+                            <tr className="text-center">
+                              <th>Sno.</th>
+                              <th>Product</th>
+                              <th>Qty Sold per week</th>
+                              <th>Stock Available</th>
                             </tr>
                             </thead>
                             <tbody>
-                            <tr>
-                              <td><a href="/">OR9842</a></td>
-                              <td>Call of Duty IV</td>
-                              <td><span className="badge badge-success">Shipped</span></td>
+                            <tr className="text-center">
+                              <td>1</td>
+                              <td>coca cola</td>
+                              <td>80</td>
                               <td>
-                                <div className="sparkbar" data-color="#00a65a" data-height="20">90,80,90,-70,61,-83,63</div>
+                                890
                               </td>
                             </tr>
-                            <tr>
-                              <td><a href="/">OR1848</a></td>
-                              <td>Samsung Smart TV</td>
-                              <td><span className="badge badge-warning">Pending</span></td>
+                            <tr className="text-center">
+                              <td>1</td>
+                              <td>coca cola</td>
+                              <td>80</td>
                               <td>
-                                <div className="sparkbar" data-color="#f39c12" data-height="20">90,80,-90,70,61,-83,68</div>
+                                890
                               </td>
                             </tr>
-                            <tr>
-                              <td><a href="/">OR7429</a></td>
-                              <td>iPhone 6 Plus</td>
-                              <td><span className="badge badge-danger">Delivered</span></td>
+                            <tr className="text-center">
+                              <td>1</td>
+                              <td>coca cola</td>
+                              <td>80</td>
                               <td>
-                                <div className="sparkbar" data-color="#f56954" data-height="20">90,-80,90,70,-61,83,63</div>
+                                890
                               </td>
                             </tr>
-                            <tr>
-                              <td><a href="/">OR7429</a></td>
-                              <td>Samsung Smart TV</td>
-                              <td><span className="badge badge-info">Processing</span></td>
+                            <tr className="text-center">
+                              <td>1</td>
+                              <td>coca cola</td>
+                              <td>80</td>
                               <td>
-                                <div className="sparkbar" data-color="#00c0ef" data-height="20">90,80,-90,70,-61,83,63</div>
+                                890
                               </td>
                             </tr>
-                            <tr>
-                              <td><a href="/">OR1848</a></td>
-                              <td>Samsung Smart TV</td>
-                              <td><span className="badge badge-warning">Pending</span></td>
+                            <tr className="text-center">
+                              <td>1</td>
+                              <td>coca cola</td>
+                              <td>80</td>
                               <td>
-                                <div className="sparkbar" data-color="#f39c12" data-height="20">90,80,-90,70,61,-83,68</div>
+                                890
                               </td>
                             </tr>
-                            <tr>
-                              <td><a href="/">OR7429</a></td>
-                              <td>iPhone 6 Plus</td>
-                              <td><span className="badge badge-danger">Delivered</span></td>
+                            <tr className="text-center">
+                              <td>1</td>
+                              <td>coca cola</td>
+                              <td>80</td>
                               <td>
-                                <div className="sparkbar" data-color="#f56954" data-height="20">90,-80,90,70,-61,83,63</div>
+                                890
                               </td>
                             </tr>
-                            <tr>
-                              <td><a href="/">OR9842</a></td>
-                              <td>Call of Duty IV</td>
-                              <td><span className="badge badge-success">Shipped</span></td>
+                            <tr className="text-center">
+                              <td>1</td>
+                              <td>coca cola</td>
+                              <td>80</td>
                               <td>
-                                <div className="sparkbar" data-color="#00a65a" data-height="20">90,80,90,-70,61,-83,63</div>
+                                890
                               </td>
                             </tr>
                             </tbody>
@@ -291,10 +284,6 @@ class HighestSelling extends Component {
                         
                       </div>
                       
-                      <div className="card-footer clearfix">
-                        <a href="/" className="btn btn-sm btn-info float-left">Place New Order</a>
-                        <a href="/" className="btn btn-sm btn-secondary float-right">View All Orders</a>
-                      </div>
                       
                     </div>
                     
@@ -307,8 +296,8 @@ class HighestSelling extends Component {
                       <span className="info-box-icon"><i className="fas fa-tag"></i></span>
         
                       <div className="info-box-content">
-                        <span className="info-box-text">Inventory</span>
-                        <span className="info-box-number">5,200</span>
+                        <span className="info-box-text">Products</span>
+                        <span className="info-box-number">5,00,200</span>
                       </div>
                       
                     </div>
@@ -317,28 +306,38 @@ class HighestSelling extends Component {
                       <span className="info-box-icon"><i className="far fa-heart"></i></span>
         
                       <div className="info-box-content">
-                        <span className="info-box-text">Mentions</span>
+                        <span className="info-box-text">In Stock</span>
                         <span className="info-box-number">92,050</span>
                       </div>
                       
                     </div>
-                    
-                    <div className="info-box mb-3 bg-danger">
-                      <span className="info-box-icon"><i className="fas fa-cloud-download-alt"></i></span>
+
+                    <div className="info-box mb-3 bg-primary">
+                      <span className="info-box-icon"><i className="fa fa-arrow-right"></i></span>
         
                       <div className="info-box-content">
-                        <span className="info-box-text">Downloads</span>
-                        <span className="info-box-number">114,381</span>
+                        <span className="info-box-text">Item Sold Today</span>
+                        <span className="info-box-number">1,381</span>
+                      </div>
+                      
+                    </div>
+
+                    <div className="info-box mb-3 bg-danger">
+                      <span className="info-box-icon"><i className="fa fa-user"></i></span>
+        
+                      <div className="info-box-content">
+                        <span className="info-box-text">Today Sale</span>
+                        <span className="info-box-number">Rs. 914,381 /-</span>
                       </div>
                       
                     </div>
                     
                     <div className="info-box mb-3 bg-info">
-                      <span className="info-box-icon"><i className="far fa-comment"></i></span>
+                      <span className="info-box-icon"><i className="fa fa-rupee-sign"></i></span>
         
                       <div className="info-box-content">
-                        <span className="info-box-text">Direct Messages</span>
-                        <span className="info-box-number">163,921</span>
+                        <span className="info-box-text">Today Profit</span>
+                        <span className="info-box-number">Rs. 163,921 /-</span>
                       </div>
                       
                     </div>
