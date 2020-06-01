@@ -5,16 +5,23 @@ function PaginatedData(props) {
 
     var { data, current_page, per_page, total } = props.data;
 
-
+    const cards =   data.map((bill) => {
+        return <Card key={bill.id} bill={bill} />
+    });
     return (
         <div className="card card-solid">
+            {
+                (props.response !== '')
+                ?<h5 className="text-danger text-center mt-3"> {props.response}</h5>
+                :null
+            }
             <div className="card-body pb-0">
                 <div className="row d-flex align-items-stretch">
 
                     {
-                        data.map((bill) => {
-                            return <Card key={bill.id} bill={bill} />
-                        })
+                      (props.response === "")
+                      ? cards
+                      :null
                     }
 
                 </div>

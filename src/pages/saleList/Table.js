@@ -27,7 +27,7 @@ function Table(props) {
           
             {
               main.map((sale) => {
-                const {price,quantity,id,created_at,product,bill_id} = sale;
+                const {price,quantity,id,created_at,product,bill_id, bill} = sale;
                   return(
                     <Row
                  key = {id}
@@ -39,7 +39,7 @@ function Table(props) {
                  brand = {product.brand}
                  quantity = {quantity}
                  price = {price}
-                 status = "Paid"
+                 status = {bill.status}
               />
                   )   
                       

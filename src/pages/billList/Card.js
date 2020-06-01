@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 function Card(props) {
-    const { customer_name, customer_email, customer_mobile, id } = props.bill;
+    const { customer_name, customer_email, customer_mobile, id, sales_count, sales_price_sum  } = props.bill;
      
     if(props.bill.status && props.bill.status === "paid"){
         var status = <span className="text-right text-success float-right"><b>  <i className="fa fa-rupee-sign"></i> Paid </b></span>
@@ -22,8 +22,8 @@ function Card(props) {
                     <p className="text-muted border-bottom-0">  {(customer_email !== null) ? customer_email : "Not-Specified"} </p>
                     <p className="text-muted border-bottom-0">  {(customer_mobile !== null) ? customer_mobile : "Not-Specified"}</p>
                     <hr />
-                    <p className="text-muted text-sm"><b>Total Item Sold: </b> 5 Products</p>
-                    <p className="text-muted text-sm"><b>Total Price: </b> Rs. 250 /- </p>
+                    <p className="text-muted text-sm"><b>Total Item Sold: </b> {sales_count} Products</p>
+                    <p className="text-muted text-sm"><b>Total Price: </b> Rs. {sales_price_sum} /- </p>
                     
                 </div>
                 <div className="card-footer">

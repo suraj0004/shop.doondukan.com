@@ -27,23 +27,39 @@ class BillList extends Component {
     this.setState({
       isLoader: loader,
     }, () => {
+      var search = this.state.search;
+
+      search = search.replace('#000','');
+      search = search.replace('#00','');
+      search = search.replace('#0','');
+      search = search.replace('#','');
+
       axios.get(UrlService.billListUrl(), {
         headers: auth.apiHeader(),
         params: {
           page : page,
           status: this.state.status,
-          search : this.state.search,
+          search : search,
         },
       }).then(res => {
         if (res.data.success) {
           this.setState({
             data: res.data.data,
-            isLoader: false
+            isLoader: false,
+            response : "",
           })
         } else {
-          this.setState({
-            response: res.data.message
-          });
+          if(this.state.status === "" && this.state.search === ""){
+            this.setState({
+              response: res.data.message
+            });
+          }else{
+            this.setState({
+              isLoader : false,
+              response: res.data.message
+            });
+          }
+         
         }
       }).catch(err => {
 
@@ -82,7 +98,8 @@ class BillList extends Component {
   handleStatusChange = (event) => {
     this.setState({
         status : event.target.value,
-        isLoader : true
+        response : "",
+        // isLoader : true
     },()=>{
       this.getBills(1);
     });
@@ -91,10 +108,16 @@ class BillList extends Component {
 handleSearchChange = (event) => {
   this.setState({
     search : event.target.value,
-    // isLoader : true
-},()=>{
-  this.getBills(1,false);
+    response : "",
+},() => {
+  if(this.state.search === ""){
+    this.getBills(1);
+  }
 });
+}
+
+handleSearch = () =>{
+  this.getBills(1);
 }
 
   render() {
@@ -123,18 +146,34 @@ handleSearchChange = (event) => {
 
                 <div className="col-md-6">
                 <div className="form-group float-right" style={{ width: "200px" }} >
-                <input 
+                {/* <input 
                    type="text" 
                    class="form-control"
                    placeholder="Search Bill No." 
                    value={this.state.search}
                    onChange={this.handleSearchChange}
-                   />
+                   /> */}
+                     <div className="input-group input-group-sm">
+                  <input 
+                     type="text" 
+                     className="form-control"
+                     placeholder="Search Bill No." 
+                     value={this.state.search}
+                     onChange={this.handleSearchChange}
+                     />
+                  <span className="input-group-append">
+                    <button 
+                      type="button" 
+                      className="btn btn-info btn-flat"
+                      onClick={this.handleSearch}
+                      >Go!</button>
+                  </span>
+                </div>
                    </div>
                 </div>
 
               </div>
-              <PaginatedData data={this.state.data} getBills={this.getBills} />
+              <PaginatedData data={this.state.data} getBills={this.getBills} response={this.state.response} />
             </React.Fragment>
         }
       </Layout>
