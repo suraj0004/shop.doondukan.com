@@ -1,8 +1,10 @@
-import React from 'react';
+import React,{useEffect} from 'react';
 
 import Row from './Row';
 function Table(props) {
-  // console.log(props);
+  useEffect(()=>{
+    window.setDataTable();
+  },[]);
   const {main,temp} = props.data;
     return (
         <div className="card">

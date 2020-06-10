@@ -154,7 +154,7 @@ class AddPurchase extends Component {
         const postData = {
          product_id : Number(product[0]),
          product_source : product[1],
-         price :  Number((price_type === "lumsum")?( price/quantity ):price) ,
+         price :  Number((price_type === "lumsum")?( price/quantity ).toFixed(8):price) ,
          quantity : Number(quantity),
         }
   

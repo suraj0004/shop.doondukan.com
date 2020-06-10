@@ -74,11 +74,20 @@ class Sidebar extends React.Component {
               </Link>
           </li>
 
+
+          <li className="nav-item ">
+        <Link to='/generateBill' className={(props.pathname === "/generateBill") ? "nav-link active": "nav-link " }  >
+              <i className="nav-icon fas fa-cash-register"></i>
+              <p>Generate Bill</p>
+              </Link>
+          </li>
+
+
           <li className="nav-header">Operations</li>
 
           <li className={ (props.pathname === "/addPurchase" || props.pathname === "/purchaseList" || this.state.menu === "purchase" )?"nav-item has-treeview menu-open":"nav-item has-treeview" } >
           <a  onClick={ () => this.menuClick("purchase") } className="nav-link " >
-              <i className="nav-icon fas fa-chart-pie"></i>
+              <i className="nav-icon fas fa-money-bill-alt"></i>
               <p>
                 Purchases
                 <i className="right fas fa-angle-left"></i>
@@ -87,13 +96,13 @@ class Sidebar extends React.Component {
             <ul className="nav nav-treeview ">
               <li className="nav-item">
               <Link to='/addPurchase' className={(props.pathname === "/addPurchase") ? "nav-link active": "nav-link " } >
-                  <i className="far fa-circle nav-icon"></i>
+                  <i className="nav-icon fa fa-plus"></i>
                   <p>Add Purchase</p>
                  </Link>
               </li>
               <li className="nav-item">
               <Link to='/purchaseList' className={(props.pathname === "/purchaseList") ? "nav-link active": "nav-link " } >
-                  <i className="far fa-circle nav-icon"></i>
+                  <i className="nav-icon fa fa-clipboard-list"></i>
                   <p>Purchase List</p>
                  </Link>
               </li>
@@ -104,7 +113,7 @@ class Sidebar extends React.Component {
 
             <li className={ (props.pathname === "/setPrice" || props.pathname === "/stockList"  || this.state.menu === "stock" )?"nav-item has-treeview menu-open":"nav-item has-treeview" } >
           <a  onClick={ () => this.menuClick("stock") }  className="nav-link " >
-              <i className="nav-icon fas fa-chart-pie"></i>
+              <i className="nav-icon fas fa-boxes"></i>
               <p>
                 Stock
                 <i className="right fas fa-angle-left"></i>
@@ -113,13 +122,13 @@ class Sidebar extends React.Component {
             <ul className="nav nav-treeview ">
               <li className="nav-item">
               <Link to='/setPrice' className={(props.pathname === "/setPrice") ? "nav-link active": "nav-link " } >
-                  <i className="far fa-circle nav-icon"></i>
+                  <i className="fa fa-tags nav-icon"></i>
                   <p>Set Selling Price</p>
                  </Link>
               </li>
               <li className="nav-item">
               <Link to='/stockList' className={(props.pathname === "/stockList") ? "nav-link active": "nav-link " } >
-                  <i className="far fa-circle nav-icon"></i>
+                  <i className="fa fa-warehouse nav-icon"></i>
                   <p>Stock List</p>
                  </Link>
               </li>
@@ -127,37 +136,18 @@ class Sidebar extends React.Component {
             </ul>
           </li>
 
-
-          <li className={ (props.pathname === "/generateBill" || props.pathname === "/billList" || props.pathname === "/saleList"  || this.state.menu === "sold" )?"nav-item has-treeview menu-open":"nav-item has-treeview" } >
-          <a   onClick={ () => this.menuClick("sold") }  className="nav-link " >
-              <i className="nav-icon fas fa-chart-pie"></i>
-              <p>
-                Bill &amp; Sale
-                <i className="right fas fa-angle-left"></i>
-              </p>
-              </a>
-            <ul className="nav nav-treeview ">
-              <li className="nav-item">
-              <Link to='/generateBill' className={(props.pathname === "/generateBill") ? "nav-link active": "nav-link " } >
-                  <i className="far fa-circle nav-icon"></i>
-                  <p>Generate Bill</p>
-                 </Link>
-              </li>
-              <li className="nav-item">
+          <li className="nav-item">
               <Link to='/billList' className={(props.pathname === "/billList") ? "nav-link active": "nav-link " } >
-                  <i className="far fa-circle nav-icon"></i>
+                  <i className="nav-icon fa fa-file-invoice-dollar"></i>
                   <p>Bill List</p>
                  </Link>
               </li>
               <li className="nav-item">
               <Link to='/saleList' className={(props.pathname === "/saleList") ? "nav-link active": "nav-link " } >
-                  <i className="far fa-circle nav-icon"></i>
+                  <i className="nav-icon fa fa-layer-group"></i>
                   <p>Sale List</p>
                  </Link>
               </li>
-            
-            </ul>
-          </li>
 
 
 

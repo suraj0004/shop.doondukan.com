@@ -31,11 +31,8 @@ class StockList extends Component {
                 data: res.data.data,
                
             }, ()=>{
-             var script = document.createElement("script");
-             script.src = "/asset/dist/js/pages/data_table.js";
-             script.defer = true;  
-             document.body.appendChild(script);
-             this.setState({
+              window.setDataTable();
+              this.setState({
               isLoader : false,
             });
             } )

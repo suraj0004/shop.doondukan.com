@@ -7,7 +7,7 @@ class Footer extends Component {
             <strong>Copyright &copy; 2020-2021 <a href="https://disc-in.com">Disc-in.com</a>.</strong>
             All rights reserved.
             <div className="float-right d-none d-sm-inline-block">
-              <b>Version</b> 1.0
+              <b>Version</b> 0
             </div>
           </footer>
         );

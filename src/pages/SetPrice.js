@@ -125,7 +125,7 @@ class SetPrice extends Component {
                       label : "",
                      };
                     option.value = item.id + "," + item.price;
-                    option.label =  item.product.name+' | '+  item.product.weight+' '+ item.product.weight_type +' | '+item.product.brand;
+                    option.label =  `${item.product.name} |  ${ item.product.weight} ${item.product.weight_type}  | ${item.product.brand}, (Purchased at Rs. ${item.purchase_price.price} /- Per Pec)`;
                     return option;
                 });
         

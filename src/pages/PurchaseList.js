@@ -30,14 +30,7 @@ class PurchaseList extends Component {
                 console.log(res);
                 this.setState({
                     data: res.data.data,
-                }, ()=>{
-                 var script = document.createElement("script");
-                 script.src = "/asset/dist/js/pages/data_table.js";
-                 script.defer = true;  
-                 document.body.appendChild(script);
-                 this.setState({
-                   isLoader : false,
-                 });
+                    isLoader : false,
                 });
              }else{
                 this.setState({

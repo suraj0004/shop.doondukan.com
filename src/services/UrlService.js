@@ -117,8 +117,18 @@ class UrlService{
         return this.baseUrl + apiUrl;
     }
 
+    topHighestSellingProductsUrl(){
+        const apiUrl = '/retail/report/top-highest-selling-products';
+        return this.baseUrl + apiUrl;
+    }
+
+    percentageAndMoreUrl(){
+        const apiUrl = '/retail/report/percentage';
+        return this.baseUrl + apiUrl;
+    }
 
 
+    
 
 }
 export default new UrlService();

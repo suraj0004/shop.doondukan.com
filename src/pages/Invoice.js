@@ -9,6 +9,9 @@ import axios from 'axios';
 import UrlService from '../services/UrlService';
 import auth from '../services/AuthService';
 
+import Moment from 'react-moment';
+import 'moment-timezone';
+
 class Invoice extends Component {
   constructor(props) {
     super(props);
@@ -165,7 +168,11 @@ class Invoice extends Component {
                 <div className="col-12">
                   <h4>
                     <i className="fas fa-building"></i> {this.state.from.name}
-                    <small className="float-right">Date: {this.state.to.date}</small>
+                    <small className="float-right">Date:  <Moment                              
+                                 local
+                                 format="D MMM, YYYY h:mm a"
+                                 date= {this.state.to.date} 
+                                 /> </small>
                   </h4>
                 </div>
 

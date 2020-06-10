@@ -45,7 +45,7 @@
     
     <title>Meri Dukan</title>
   </head>
-  <body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
+  <body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed sidebar-collapse">
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root" ></div>
     <!--
@@ -95,6 +95,13 @@
 <!-- PAGE SCRIPTS -->
 <!-- <script src="%PUBLIC_URL%/asset/dist/js/pages/dashboard2.js"></script> -->
 <!-- <script src="%PUBLIC_URL%/asset/dist/js/adminlte.min.js"></script> -->
-
+<script  type="text/javascript">
+function setDataTable() {
+  $("#my_table").DataTable({
+      "responsive": true,
+      "autoWidth": false,
+    });
+}
+</script>
   </body>
 </html>

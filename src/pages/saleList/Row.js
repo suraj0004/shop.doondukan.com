@@ -1,5 +1,7 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
+import Moment from 'react-moment';
+import 'moment-timezone';
 function Row(props) {
     const {bill_id,date,name,weight,weight_type,brand,quantity,price,status} = props;
     var statusHtml;
@@ -12,7 +14,13 @@ function Row(props) {
         <tr>
         <td>  <Link to={"/invoice/"+bill_id} className="btn btn-default" style={{marginTop:'-5px'}}> #{(bill_id).toString().padStart("4","0")} <i className="fa fa-file"></i></Link> </td>
         <td> {statusHtml} </td>
-        <td> {date} </td>
+      
+        <td> <Moment                              
+                                 local
+                                 format="D MMM, YYYY h:mm a"
+                                 date={ date }
+                                 />
+                            </td>
         <td> { ` ${name} | ${weight} ${weight_type} | ${brand} ` } </td>
     <td>{quantity} Pcs. @ Rs. {price}/- per Pcs </td>
         <td> Rs.  {  price*quantity  } /- </td>

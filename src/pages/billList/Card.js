@@ -1,8 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import Moment from 'react-moment';
+import 'moment-timezone';
 
 function Card(props) {
-    const { customer_name, customer_email, customer_mobile, id, sales_count, sales_price_sum  } = props.bill;
+    const { customer_name, customer_email, customer_mobile, id, sales_count, sales_price,created_at  } = props.bill;
      
     if(props.bill.status && props.bill.status === "paid"){
         var status = <span className="text-right text-success float-right"><b>  <i className="fa fa-rupee-sign"></i> Paid </b></span>
@@ -18,12 +20,19 @@ function Card(props) {
                 </div>
                 <div className="card-body text-left" style={{paddingBottom : '0px'}}>
 
+ <p className="text-muted text-sm"> <strong>
+ <Moment                              
+                                 local
+                                 format="D MMM, YYYY h:mm a"
+                                 date={ created_at }
+                                 />
+     </strong> </p>
                     <p className="text-muted border-bottom-0"> {(customer_name !== null) ? customer_name : "Not-Specified"} </p>
                     <p className="text-muted border-bottom-0">  {(customer_email !== null) ? customer_email : "Not-Specified"} </p>
                     <p className="text-muted border-bottom-0">  {(customer_mobile !== null) ? customer_mobile : "Not-Specified"}</p>
                     <hr />
-                    <p className="text-muted text-sm"><b>Total Item Sold: </b> {sales_count} Products</p>
-                    <p className="text-muted text-sm"><b>Total Price: </b> Rs. {sales_price_sum} /- </p>
+                    <p className="text-muted text-sm"><strong>Total Item Sold: </strong> {sales_count} Products</p>
+                    <p className="text-muted text-sm"><strong>Total Price: </strong> Rs. {sales_price} /- </p>
                     
                 </div>
                 <div className="card-footer">

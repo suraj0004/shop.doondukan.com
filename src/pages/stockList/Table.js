@@ -1,7 +1,10 @@
-import React from 'react';
-
+import React,{useEffect} from 'react';
+import Moment from 'react-moment';
+import 'moment-timezone';
 function Table(props) {
-   
+  useEffect(()=>{
+    window.setDataTable();
+  },[]);
     const {main,temp} = props.data;
     return (
         <div className="card">
@@ -28,7 +31,13 @@ function Table(props) {
                        
                         <tr key={index.toString() } >
                         <td> {index + 1 } </td>
-                        <td> { item.last_purchased_at } </td>
+                        <td> <Moment                              
+                                 local
+                                 format="D MMM, YYYY h:mm a"
+                                 date={ item.last_purchased_at }
+                                 />
+                            </td>
+                      
                         <td> { item.product.name + " | " + item.product.weight + item.product.weight_type + " | " +  item.product.brand } </td>
                         <td> {item.quantity} </td>
                         <td> {item.price} </td>
