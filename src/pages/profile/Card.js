@@ -1,17 +1,27 @@
-import React from 'react';
+import React,{useRef} from 'react';
 import UrlService from '../../services/UrlService';
 function Card(props) {
     const {userImage,userName,shopImage,shopName,type} = props.data;
-  
-    var image,name = 'sas';
+    var image,name;
     
     if(type === 'retailer'){
          image = UrlService.userImageUrl()+userImage;
          name = userName; 
+    
+       
     }else{
          image = UrlService.shopImageUrl()+shopImage;
          name = shopName;
+       
     }
+
+    const imageRef = useRef();
+    const setErrorImage = () => {
+      imageRef.current.src = "/asset/dist/img/user2-160x160.jpg";
+    }
+   
+
+ 
 
     return (
         <div className="card card-primary card-outline">
@@ -19,6 +29,8 @@ function Card(props) {
           <div className="text-center">
             <img className="profile-user-img img-fluid img-circle"
                  src={image}
+                 ref={imageRef}
+                 onError={() => setErrorImage()}
                  alt="User profile picture"
                  style={{height:"120px",width:"120px"}}
                  />

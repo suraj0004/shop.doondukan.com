@@ -67,10 +67,10 @@ class  Header extends React.Component {
             <ul className="navbar-nav ml-auto">
               
             <li className="nav-item d-none d-sm-inline-block">
-                 <button className="btn" onClick={this.props.handleLogout} > <i className="fa fa-lock-open"></i> </button>
+                 <button className="btn" onClick={this.props.handleLogout} > <i className="fa fa-sign-out-alt"></i> </button>
               </li>
               
-              <li className="nav-item dropdown">
+              {/* <li className="nav-item dropdown">
                 <a className="nav-link" data-toggle="dropdown" href="/">
                   <i className="far fa-bell"></i>
                   <span className="badge badge-warning navbar-badge">15</span>
@@ -95,7 +95,7 @@ class  Header extends React.Component {
                   <div className="dropdown-divider"></div>
                   <a href="/" className="dropdown-item dropdown-footer">See All Notifications</a>
                 </div>
-              </li>
+              </li> */}
 
              
              

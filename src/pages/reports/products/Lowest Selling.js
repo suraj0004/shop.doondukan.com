@@ -13,7 +13,7 @@ import MoreDetails from '../MoreDetails';
 
 var CanvasJSChart = CanvasJSReact.CanvasJSChart;
 
-class HighestSelling extends Component {
+class LowestSelling extends Component {
 
   constructor(props) {
     super(props);
@@ -48,7 +48,7 @@ class HighestSelling extends Component {
 
 
   renderChart() {
-    axios.get(UrlService.topHighestSellingProductsUrl(), {
+    axios.get(UrlService.topLowestSellingProductsUrl(), {
       params: {
         top: this.state.top,
         range: this.state.range
@@ -128,7 +128,7 @@ class HighestSelling extends Component {
 
     const options = {
       title: {
-        text: `Top ${this.state.top} Highest Selling Products`,
+        text: `${this.state.top} Lowest Selling Products`,
       },
       animationEnabled: true,
       data: [
@@ -143,7 +143,7 @@ class HighestSelling extends Component {
     }
 
 
-    var table_label = `Top ${this.state.top} Highest Selling Products - `;
+    var table_label = `${this.state.top} Lowest Selling Products - `;
     switch (this.state.range) {
       case 'week':
         table_label += `Last Week `;
@@ -299,6 +299,7 @@ class HighestSelling extends Component {
                             <tr className="text-center">
                               <th>Sno.</th>
                               <th>Product</th>
+                              <th>Available Qty</th>
                               <th>Qty Sold</th>
                             </tr>
                           </thead>
@@ -309,7 +310,8 @@ class HighestSelling extends Component {
                                 return <tr className="text-center" key={item.product_id}>
                                   <td> {index + 1} </td>
                                   <td> { `${item.product.name} | ${item.product.weight}${item.product.weight_type} | ${item.product.brand}` } </td>
-                                  <td> {item.qty} </td>
+                                  <td> { item.available} </td>
+                                  <td> {(item.qty)?item.qty:0} </td>
                                 </tr>
                               })
                             }
@@ -341,4 +343,4 @@ class HighestSelling extends Component {
   }
 }
 
-export default HighestSelling;
+export default LowestSelling;

@@ -19,7 +19,8 @@ function ConfirmPassword(props) {
           <div className="form-group row">
             <label  className="col-sm-1 col-form-label"> <i className="fa fa-lock"></i> </label>
             <div className="col-sm-11">
-              <input value={props.password} type="password" className="form-control" name="password" placeholder="Enter Your Password" onChange={props.handleConfirmPasswordChnage} />
+              <input value={props.password} type="password" className="form-control" name="password" placeholder="Enter Your Password" onChange={props.handleConfirmPasswordChnage}
+              autoFocus />
             </div>
           </div>
           

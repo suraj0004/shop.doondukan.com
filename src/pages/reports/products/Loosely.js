@@ -9,11 +9,10 @@ import axios from 'axios';
 import Moment from 'react-moment';
 import 'moment-timezone';
 import Percentage from '../Percentage';
-import MoreDetails from '../MoreDetails';
 
 var CanvasJSChart = CanvasJSReact.CanvasJSChart;
 
-class HighestSelling extends Component {
+class Loosely extends Component {
 
   constructor(props) {
     super(props);
@@ -48,7 +47,7 @@ class HighestSelling extends Component {
 
 
   renderChart() {
-    axios.get(UrlService.topHighestSellingProductsUrl(), {
+    axios.get(UrlService.topLooselyProductsUrl(), {
       params: {
         top: this.state.top,
         range: this.state.range
@@ -126,24 +125,61 @@ class HighestSelling extends Component {
 
   render() {
 
+
     const options = {
-      title: {
-        text: `Top ${this.state.top} Highest Selling Products`,
-      },
-      animationEnabled: true,
-      data: [
-        {
-          // Change type to "doughnut", "line", "splineArea", etc.
-          type: "column",
-          dataPoints: this.state.data.map(item => {
-            return { label: item.product.name, y: Number(item.qty) }
-          })
-        }
-      ]
-    }
+			animationEnabled: true,
+			colorSet: "colorSet2",
+			title: {
+        text: `Top ${this.state.top} Loosely Products`,
+			},
+			axisX: {
+				// valueFormatString: "MMMM"
+			},
+			axisY: {
+				// prefix: "$",
+				// labelFormatter: this.addSymbols
+			},
+			toolTip: {
+				shared: true
+			},
+			legend: {
+				cursor: "pointer",
+				// itemclick: this.toggleDataSeries,
+				verticalAlign: "top"
+			},
+			data: [{
+				type: "column",
+				name: "Total Loss",
+				showInLegend: true,
+				// xValueFormatString: "MMMM YYYY",
+				// yValueFormatString: "$#,##0",
+				dataPoints: this.state.data.map(item => {
+          return { label: item.product.name, y: Number(item.loss) }
+        })
+			},{
+				type: "line",
+				name: "Expected Selling Price Per Item",
+				showInLegend: true,
+				// yValueFormatString: "$#,##0",
+				dataPoints: this.state.data.map(item => {
+          return { label: item.product.name, y: Math.round((item.purchase_price + (item.purchase_price * 0.08) )) }
+        })
+			},{
+				type: "area",
+				name: "Selling Price Per Item",
+				markerBorderColor: "white",
+				markerBorderThickness: 2,
+				showInLegend: true,
+				// yValueFormatString: "$#,##0",
+        dataPoints: this.state.data.map(item => {
+          return { label: item.product.name, y: Number(item.price) }
+        })
+			}]
+		}
+    
 
 
-    var table_label = `Top ${this.state.top} Highest Selling Products - `;
+    var table_label = `Top ${this.state.top} Loosely Products - `;
     switch (this.state.range) {
       case 'week':
         table_label += `Last Week `;
@@ -262,7 +298,7 @@ class HighestSelling extends Component {
 
               <div className="row">
 
-                <div className="col-md-8">
+                <div className="col-md-12">
 
 
 
@@ -299,7 +335,13 @@ class HighestSelling extends Component {
                             <tr className="text-center">
                               <th>Sno.</th>
                               <th>Product</th>
+                              <th>Available Qty</th>
                               <th>Qty Sold</th>
+                              <th>Margin</th>
+                              <th>Loss</th>
+                              <th> Selling Price <br/> Per Item</th>
+                              <th>Expected Selling Price  <br/> Per Item</th>
+                             
                             </tr>
                           </thead>
                           <tbody>
@@ -309,7 +351,13 @@ class HighestSelling extends Component {
                                 return <tr className="text-center" key={item.product_id}>
                                   <td> {index + 1} </td>
                                   <td> { `${item.product.name} | ${item.product.weight}${item.product.weight_type} | ${item.product.brand}` } </td>
-                                  <td> {item.qty} </td>
+                                  <td>  {item.available?item.available:0}</td>
+                                  <td>  {item.qty?item.qty:0}</td>
+                                  <td> Rs. {item.margin?item.margin:0} /- </td>
+                                  <td className={item.loss < 0?"bg-danger":"bg-warning"}>  <strong>Rs. {item.loss?item.loss:0} /-</strong>  </td>
+                                  <td> Rs. {item.price?item.price:0} /- </td>
+                                  <td> Rs. {item.purchase_price + Math.round(item.purchase_price * 0.08)} /- </td>
+                                  
                                 </tr>
                               })
                             }
@@ -327,7 +375,7 @@ class HighestSelling extends Component {
                 </div>
 
 
-  <MoreDetails more={this.state.more} />
+
 
               </div>
 
@@ -341,4 +389,4 @@ class HighestSelling extends Component {
   }
 }
 
-export default HighestSelling;
+export default Loosely;

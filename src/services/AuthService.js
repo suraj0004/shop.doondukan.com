@@ -62,6 +62,9 @@ class AuthService {
        }
        
        CookieService.set('token',response.data.accessToken,options);
+       CookieService.set('name',response.data.name,options);
+       const image = response.data.id + '/' +response.data.image;
+       CookieService.set('image',image,options);
        this.authenticated = true;
        return true;
    }

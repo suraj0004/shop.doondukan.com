@@ -13,7 +13,7 @@ import MoreDetails from '../MoreDetails';
 
 var CanvasJSChart = CanvasJSReact.CanvasJSChart;
 
-class HighestSelling extends Component {
+class LessProfitable extends Component {
 
   constructor(props) {
     super(props);
@@ -48,7 +48,7 @@ class HighestSelling extends Component {
 
 
   renderChart() {
-    axios.get(UrlService.topHighestSellingProductsUrl(), {
+    axios.get(UrlService.topLessProfitableProductsUrl(), {
       params: {
         top: this.state.top,
         range: this.state.range
@@ -127,23 +127,29 @@ class HighestSelling extends Component {
   render() {
 
     const options = {
-      title: {
-        text: `Top ${this.state.top} Highest Selling Products`,
-      },
-      animationEnabled: true,
-      data: [
-        {
-          // Change type to "doughnut", "line", "splineArea", etc.
-          type: "column",
-          dataPoints: this.state.data.map(item => {
-            return { label: item.product.name, y: Number(item.qty) }
-          })
-        }
-      ]
+			animationEnabled: true,
+			theme: "light2",
+			title:{
+			  text: `Top ${this.state.top} Less Profitable Products`,
+			},
+			axisX: {
+				title: "Products",
+				reversed: true,
+			},
+			axisY: {
+				title: "Profit Earn in Rs.",
+				// labelFormatter: this.addSymbols
+			},
+			data: [{
+				type: "bar",
+				dataPoints: this.state.data.map(item => {
+          return { label: item.product.name, y: Number(item.profit) }
+        })
+			}]
     }
 
 
-    var table_label = `Top ${this.state.top} Highest Selling Products - `;
+    var table_label = `Top ${this.state.top} Less Profitable Products - `;
     switch (this.state.range) {
       case 'week':
         table_label += `Last Week `;
@@ -300,6 +306,8 @@ class HighestSelling extends Component {
                               <th>Sno.</th>
                               <th>Product</th>
                               <th>Qty Sold</th>
+                              <th>Profit Margin</th>
+                              <th>Profit</th>
                             </tr>
                           </thead>
                           <tbody>
@@ -309,7 +317,10 @@ class HighestSelling extends Component {
                                 return <tr className="text-center" key={item.product_id}>
                                   <td> {index + 1} </td>
                                   <td> { `${item.product.name} | ${item.product.weight}${item.product.weight_type} | ${item.product.brand}` } </td>
-                                  <td> {item.qty} </td>
+                                  <td>  {item.qty}</td>
+                                  <td> Rs. {item.margin} /- </td>
+                                  <td className="bg-warning">  <strong>Rs. {item.profit} /-</strong>  </td>
+                                  
                                 </tr>
                               })
                             }
@@ -341,4 +352,4 @@ class HighestSelling extends Component {
   }
 }
 
-export default HighestSelling;
+export default LessProfitable;

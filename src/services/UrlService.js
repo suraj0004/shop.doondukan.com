@@ -117,15 +117,39 @@ class UrlService{
         return this.baseUrl + apiUrl;
     }
 
-    topHighestSellingProductsUrl(){
-        const apiUrl = '/retail/report/top-highest-selling-products';
-        return this.baseUrl + apiUrl;
-    }
 
     percentageAndMoreUrl(){
         const apiUrl = '/retail/report/percentage';
         return this.baseUrl + apiUrl;
     }
+
+    
+    topHighestSellingProductsUrl(){
+        const apiUrl = '/retail/report/top-highest-selling-products';
+        return this.baseUrl + apiUrl;
+    }
+
+    topLowestSellingProductsUrl(){
+        const apiUrl = '/retail/report/top-lowest-selling-products';
+        return this.baseUrl + apiUrl;
+    }
+
+    topProfitableProductsUrl(){
+        const apiUrl = '/retail/report/top-profitable-products';
+        return this.baseUrl + apiUrl;
+    }
+
+    topLessProfitableProductsUrl(){
+        const apiUrl = '/retail/report/top-less-profitable-products';
+        return this.baseUrl + apiUrl;
+    }
+
+    topLooselyProductsUrl(){
+        const apiUrl = '/retail/report/top-loosely-products';
+        return this.baseUrl + apiUrl;
+    }
+
+  
 
 
     
