@@ -242,7 +242,9 @@ class Sidebar extends React.Component {
 <li className={
    (
       props.pathname === "/sale-vs-profit" ||
-      props.pathname === "/all-in-one"
+      props.pathname === "/all-in-one" || 
+      props.pathname === "/quantity-vs-sale" || 
+      props.pathname === "/quantity-vs-profit" 
       || this.state.menu === "comparison" 
      )?"nav-item has-treeview menu-open":"nav-item has-treeview"
     } >
@@ -260,6 +262,21 @@ class Sidebar extends React.Component {
         <p>Sale Vs Profit</p>
        </Link>
     </li>
+
+    <li className="nav-item">
+    <Link to='/quantity-vs-sale' className={(props.pathname === "/quantity-vs-sale") ? "nav-link active": "nav-link " } >
+        <i className="fa fa-compress-alt nav-icon"></i>
+        <p>Quantity Vs Sale</p>
+       </Link>
+    </li>
+
+    <li className="nav-item">
+    <Link to='/quantity-vs-profit' className={(props.pathname === "/quantity-vs-profit") ? "nav-link active": "nav-link " } >
+        <i className="fa fa-compress-arrows-alt nav-icon"></i>
+        <p>Quantity Vs Profit</p>
+       </Link>
+    </li>
+
 
     <li className="nav-item">
     <Link to='/all-in-one' className={(props.pathname === "/all-in-one") ? "nav-link active": "nav-link " } >

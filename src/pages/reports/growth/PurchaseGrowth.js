@@ -13,14 +13,14 @@ import MoreDetails from '../MoreDetails';
 
 var CanvasJSChart = CanvasJSReact.CanvasJSChart;
 
-class HighestSelling extends Component {
+class PurchaseGrowth extends Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      isLoader: true,
+      isLoader: false,
       response: "",
-      top: 20,
+      type: 'rupees',
       range: 'week',
       data: [],
       from: null,
@@ -48,9 +48,9 @@ class HighestSelling extends Component {
 
 
   renderChart() {
-    axios.get(UrlService.topHighestSellingProductsUrl(), {
+    axios.get(UrlService.purchaseGrowthUrl(), {
       params: {
-        top: this.state.top,
+        type: this.state.type,
         range: this.state.range
       },
       headers: auth.apiHeader()
@@ -126,36 +126,45 @@ class HighestSelling extends Component {
 
   render() {
 
+
     const options = {
-      title: {
-        text: `Top ${this.state.top} Highest Selling Products`,
-      },
-      animationEnabled: true,
-      data: [
-        {
-          // Change type to "doughnut", "line", "splineArea", etc.
-          type: "column",
-          dataPoints: this.state.data.map(item => {
-            return { label: item.product.name, y: Number(item.qty) }
-          })
-        }
-      ]
-    }
+			theme: "light2",
+			animationEnabled: true,
+			exportEnabled: true,
+			title: {
+				text: "Purchase Growth " +( (this.state.type === "quantity")?"By Quantity":"By Rupees")
+			},
+			axisY: {
+				title: (this.state.type === "quantity")?"Item Bought":"Purchase in Rs.",
+				includeZero: false,
+			},
+			data: [
+			{
+				type: "area",
+				xValueFormatString: "YYYY",
+				yValueFormatString: "#,##0.##",
+				dataPoints: this.state.data.map(item=>{
+          return {label : item.created_at, y : (this.state.type === "quantity")?Number(item.data):item.data};
+        })
+			}
+			]
+		}
+    
 
 
-    var table_label = `Top ${this.state.top} Highest Selling Products - `;
+    var table_label = `Purchase Growth -`;
     switch (this.state.range) {
       case 'week':
-        table_label += `Last Week `;
+        table_label += `Last 7 Days `;
         break;
         case 'month':
         table_label += `Last Month `;
         break;
         case 'months':
-        table_label += `Last Six Months `;
+        table_label += `By Months `;
         break;
-        case 'now':
-        table_label += `Till Now `;
+        case 'year':
+        table_label += `By Year `;
         break;
       default:
         break;
@@ -190,14 +199,13 @@ class HighestSelling extends Component {
                         <div className="form-group float-left" style={{ width: "100px" }} >
                           <select
                             className="custom-select"
-                            name="top"
-                            value={this.state.top}
+                            name="type"
+                            value={this.state.type}
                             onChange={this.handleDropdownChange}
                           >
-                            <option value="20">Top 20</option>
-                            <option value="30">Top 30</option>
-                            <option value="40">Top 40</option>
-                            <option value="50">Top 50</option>
+                            <option value="quantity">By Qty</option>
+                            <option value="rupees">By Rs.</option>
+                          
                           </select>
 
 
@@ -210,10 +218,10 @@ class HighestSelling extends Component {
                             value={this.state.range}
                             onChange={this.handleDropdownChange}
                           >
-                            <option value="week">Last week</option>
+                            <option value="week">Last 7 Days</option>
                             <option value="month">Last Month</option>
-                            <option value="months">Last Six Months</option>
-                            <option value="now">Till Now</option>
+                            <option value="months">All Month</option>
+                            <option value="year">All year</option>
                           </select>
 
 
@@ -298,20 +306,23 @@ class HighestSelling extends Component {
                           <thead>
                             <tr className="text-center">
                               <th>Sno.</th>
-                              <th>Product</th>
-                              <th>Available Qty</th>
-                              <th>Qty Sold</th>
+                              <th> { table_label.split("-")[1] } </th>
+                              <th> { this.state.type === "quantity" ? "Item Bought":"Purchase in Rs" } </th>
                             </tr>
                           </thead>
                           <tbody>
                             {
                               this.state.data.map((item, index) => {
-                                // console.log(item);
-                                return <tr className="text-center" key={item.product_id}>
+                                
+                                return <tr className="text-center" key={index}>
                                   <td> {index + 1} </td>
-                                  <td> { `${item.product.name} | ${item.product.weight}${item.product.weight_type} | ${item.product.brand}` } </td>
-                                  <td> {item.qty} </td>
-                                  <td> {item.stock.quantity} </td>
+                                  <td> {item.created_at} </td>
+                                  {
+                                    (this.state.type === "quantity")
+                                    ? <td> {item.data} </td>
+                                    : <td> Rs. {item.data} /- </td>
+                                  }
+                                 
                                 </tr>
                               })
                             }
@@ -343,4 +354,4 @@ class HighestSelling extends Component {
   }
 }
 
-export default HighestSelling;
+export default PurchaseGrowth;

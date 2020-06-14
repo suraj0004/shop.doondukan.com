@@ -4,7 +4,7 @@ function MoreDetails(props) {
     return (
         <div className="col-md-4">
 
-        <div className="info-box mb-3 bg-warning">
+        <div className="info-box mb-3 bg-dark">
           <span className="info-box-icon"><i className="fas fa-tag"></i></span>
 
           <div className="info-box-content">
@@ -14,7 +14,7 @@ function MoreDetails(props) {
 
         </div>
 
-        <div className="info-box mb-3 bg-success">
+        <div className="info-box mb-3 bg-primary">
           <span className="info-box-icon"><i className="far fa-heart"></i></span>
 
           <div className="info-box-content">
@@ -24,7 +24,7 @@ function MoreDetails(props) {
 
         </div>
 
-        <div className="info-box mb-3 bg-primary">
+        <div className="info-box mb-3 bg-secondary">
           <span className="info-box-icon"><i className="fa fa-arrow-right"></i></span>
 
           <div className="info-box-content">
@@ -34,7 +34,7 @@ function MoreDetails(props) {
 
         </div>
 
-        <div className="info-box mb-3 bg-danger">
+        <div className="info-box mb-3 bg-info">
           <span className="info-box-icon"><i className="fa fa-user"></i></span>
 
           <div className="info-box-content">
@@ -44,7 +44,7 @@ function MoreDetails(props) {
 
         </div>
 
-        <div className="info-box mb-3 bg-info">
+        <div className="info-box mb-3 bg-success">
           <span className="info-box-icon"><i className="fa fa-rupee-sign"></i></span>
 
           <div className="info-box-content">

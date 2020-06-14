@@ -13,18 +13,16 @@ import MoreDetails from '../MoreDetails';
 
 var CanvasJSChart = CanvasJSReact.CanvasJSChart;
 
-class HighestSelling extends Component {
+class QuantityVsProfit extends Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      isLoader: true,
+      isLoader: false,
       response: "",
-      top: 20,
-      range: 'week',
+      range: 'month',
       data: [],
-      from: null,
-      to: null,
+      year: "",
       percentage : {
         purchase:0,
         sale : 0,
@@ -43,14 +41,15 @@ class HighestSelling extends Component {
         profit : 0,
       }
     }
+
+    this.toggleDataSeries = this.toggleDataSeries.bind(this);
   }
 
 
 
   renderChart() {
-    axios.get(UrlService.topHighestSellingProductsUrl(), {
+    axios.get(UrlService.quantityVsProfitUrl(), {
       params: {
-        top: this.state.top,
         range: this.state.range
       },
       headers: auth.apiHeader()
@@ -59,11 +58,10 @@ class HighestSelling extends Component {
       if (res.data.success) {
         this.setState({
           data: res.data.data,
-          from: res.data.from,
-          to: res.data.to,
+          year: res.data.year,
           isLoader: false
         },()=>{
-          window.setDataTable();
+          // window.setDataTable();
         });
       } else {
         this.setState({
@@ -123,43 +121,91 @@ class HighestSelling extends Component {
 
   }
 
+  toggleDataSeries(e){
+		if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
+			e.dataSeries.visible = false;
+		}
+		else{
+			e.dataSeries.visible = true;
+		}
+		this.chart.render();
+  }
+  
 
   render() {
 
     const options = {
-      title: {
-        text: `Top ${this.state.top} Highest Selling Products`,
-      },
-      animationEnabled: true,
-      data: [
-        {
-          // Change type to "doughnut", "line", "splineArea", etc.
-          type: "column",
-          dataPoints: this.state.data.map(item => {
-            return { label: item.product.name, y: Number(item.qty) }
-          })
-        }
-      ]
-    }
+			theme: "light2",
+			animationEnabled: true,
+			title:{
+				text: "Item Sold VS Profit"
+			},
+			subtitles: [{
+				text: "Click Legend to Hide or Unhide Data Series"
+			}],
+			axisX: {
+				title: "States"
+			},
+			axisY: {
+				title: "Item Sold",
+				titleFontColor: "#6D78AD",
+				lineColor: "#6D78AD",
+				labelFontColor: "#6D78AD",
+				tickColor: "#6D78AD",
+				includeZero: false
+			},
+			axisY2: {
+				title: "Profit in Rs.",
+				titleFontColor: "#51CDA0",
+				lineColor: "#51CDA0",
+				labelFontColor: "#51CDA0",
+				tickColor: "#51CDA0",
+				includeZero: false
+			},
+			toolTip: {
+				shared: true
+			},
+			legend: {
+				cursor: "pointer",
+				itemclick: this.toggleDataSeries
+			},
+			data: [{
+				type: "spline",
+				name: "Item Sold",
+				showInLegend: true,
+				xValueFormatString: "MMM YYYY",
+				yValueFormatString: "#,##0 Units",
+				dataPoints: this.state.data.map(item=>{
+          return {label : item.created_at, y : Number(item.item)};
+        })
+			},
+			{
+				type: "spline",
+				name: "Profit",
+				axisYType: "secondary",
+				showInLegend: true,
+				xValueFormatString: "MMM YYYY",
+				yValueFormatString: "₹#,##0.#",
+        dataPoints: this.state.data.map(item=>{
+          return {label : item.created_at, y : item.profit};
+        })
+			}]
+		}
+    
 
 
-    var table_label = `Top ${this.state.top} Highest Selling Products - `;
+    var table_label = `Quantity Sold Vs Profit - `;
     switch (this.state.range) {
-      case 'week':
-        table_label += `Last Week `;
-        break;
         case 'month':
-        table_label += `Last Month `;
+        table_label += `By Month `;
         break;
-        case 'months':
-        table_label += `Last Six Months `;
-        break;
-        case 'now':
-        table_label += `Till Now `;
+        case 'year':
+        table_label += `By Year `;
         break;
       default:
         break;
     }
+    table_label += this.state.year;
 
     return (
 
@@ -187,21 +233,7 @@ class HighestSelling extends Component {
 
                     <div className="card-body">
                       <h5 className="row">
-                        <div className="form-group float-left" style={{ width: "100px" }} >
-                          <select
-                            className="custom-select"
-                            name="top"
-                            value={this.state.top}
-                            onChange={this.handleDropdownChange}
-                          >
-                            <option value="20">Top 20</option>
-                            <option value="30">Top 30</option>
-                            <option value="40">Top 40</option>
-                            <option value="50">Top 50</option>
-                          </select>
-
-
-                        </div>
+                       
 
                         <div className="form-group float-left ml-3" style={{ width: "150px" }} >
                           <select
@@ -210,10 +242,10 @@ class HighestSelling extends Component {
                             value={this.state.range}
                             onChange={this.handleDropdownChange}
                           >
-                            <option value="week">Last week</option>
-                            <option value="month">Last Month</option>
-                            <option value="months">Last Six Months</option>
-                            <option value="now">Till Now</option>
+                            
+                            <option value="month">By Month</option>
+                            <option value="year">By Year</option>
+                            
                           </select>
 
 
@@ -221,24 +253,11 @@ class HighestSelling extends Component {
                       </h5>
                       <div className="row">
                         <div className="col-md-12">
-                          <p className="text-center">
-                            <strong>Sales: &nbsp;
-                              <Moment
-                                local
-                                format="D MMM, YYYY"
-                                date={this.state.from}
-                              />
-                                 &nbsp;-&nbsp;
-                                 <Moment
-                                local
-                                format="D MMM, YYYY"
-                                date={this.state.to}
-                              />
-                            </strong>
-                          </p>
+                         
 
                           <div className="chart">
-                            <CanvasJSChart options={options} />
+                            <CanvasJSChart options={options}
+                             onRef={ref => this.chart = ref} />
 
                           </div>
 
@@ -273,19 +292,7 @@ class HighestSelling extends Component {
                     <div className="card-header border-transparent">
                       <h3 className="card-title"> 
                          {table_label} 
-                         <strong>( Sales: &nbsp;
-                              <Moment
-                                local
-                                format="D MMM, YYYY"
-                                date={this.state.from}
-                              />
-                                 &nbsp;-&nbsp;
-                                 <Moment
-                                local
-                                format="D MMM, YYYY"
-                                date={this.state.to}
-                              />
-                         ) </strong>
+                        
                          
                           </h3>
 
@@ -298,20 +305,22 @@ class HighestSelling extends Component {
                           <thead>
                             <tr className="text-center">
                               <th>Sno.</th>
-                              <th>Product</th>
-                              <th>Available Qty</th>
-                              <th>Qty Sold</th>
+                              <th>By {this.state.range}</th>
+                              <th>Item Sold</th>
+                              <th>Profit in Rs.</th>
                             </tr>
                           </thead>
                           <tbody>
                             {
                               this.state.data.map((item, index) => {
+                               
                                 // console.log(item);
-                                return <tr className="text-center" key={item.product_id}>
+                                return <tr className="text-center" key={item.month}>
                                   <td> {index + 1} </td>
-                                  <td> { `${item.product.name} | ${item.product.weight}${item.product.weight_type} | ${item.product.brand}` } </td>
-                                  <td> {item.qty} </td>
-                                  <td> {item.stock.quantity} </td>
+                                  <td> {item.created_at} </td>
+                                  <td> {item.item} </td>
+                                  <td className={ (item.profit <= 0)?( (item.profit == 0)?"bg-warning":"bg-danger" ):"" } > Rs. {item.profit} /-</td>
+                                 
                                 </tr>
                               })
                             }
@@ -343,4 +352,4 @@ class HighestSelling extends Component {
   }
 }
 
-export default HighestSelling;
+export default QuantityVsProfit;

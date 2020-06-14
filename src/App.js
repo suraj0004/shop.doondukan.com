@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import './App.css';
 import {BrowserRouter as Router , Switch, Route } from 'react-router-dom';
 import {ProtectedRoutes} from './ProtectedRoutes';
 
@@ -18,6 +19,14 @@ import LowestSelling from './pages/reports/products/Lowest Selling';
 import Profitable from './pages/reports/products/Profitable';
 import LessProfitable from './pages/reports/products/LessProfitable';
 import Loosely from './pages/reports/products/Loosely';
+import SaleVsProfit from './pages/reports/comparison/SaleVsProfit';
+import ALL_inOne from './pages/reports/comparison/ALL_inOne';
+import QuantityVsSale from './pages/reports/comparison/QuantityVsSale';
+import QuantityVsProfit from './pages/reports/comparison/QuantityVsProfit';
+import SaleGrowth from './pages/reports/growth/SaleGrowth';
+import ProfitGrowth from './pages/reports/growth/ProfitGrowth';
+import PurchaseGrowth from './pages/reports/growth/PurchaseGrowth';
+
 class App extends Component { 
   
 
@@ -48,6 +57,18 @@ class App extends Component {
                     <ProtectedRoutes exact path='/top-profitable-products' component = {Profitable} />
                     <ProtectedRoutes exact path='/top-less-profitable-products' component = {LessProfitable} />
                     <ProtectedRoutes exact path='/top-loosely-products' component = {Loosely} />
+
+                    <ProtectedRoutes exact path='/sale-vs-profit' component = {SaleVsProfit} />
+                    <ProtectedRoutes exact path='/quantity-vs-sale' component = {QuantityVsSale} />
+                    <ProtectedRoutes exact path='/quantity-vs-profit' component = {QuantityVsProfit} />
+                    <ProtectedRoutes exact path='/all-in-one' component = {ALL_inOne} />
+
+                    <ProtectedRoutes exact path='/sale-growth' component = {SaleGrowth} />
+                    <ProtectedRoutes exact path='/profit-growth' component = {ProfitGrowth} />
+                    <ProtectedRoutes exact path='/purchase-growth' component = {PurchaseGrowth} />
+
+
+                    
                     <Route exact path='/login' component = {Login} />
                     <Route path="*" component = { ()=> { return <h1 style={{ textAlign: 'center' }} > 404, PAGE NOT FOUND </h1> } } />
                  </Switch>

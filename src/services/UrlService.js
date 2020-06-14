@@ -149,6 +149,44 @@ class UrlService{
         return this.baseUrl + apiUrl;
     }
 
+
+    saleVsProfitUrl(){
+        const apiUrl = '/retail/report/sale-vs-profit';
+        return this.baseUrl + apiUrl;
+    }
+
+    quantityVsSaleUrl(){
+        const apiUrl = '/retail/report/quantity-vs-sale';
+        return this.baseUrl + apiUrl;
+    }
+
+    quantityVsProfitUrl(){
+        const apiUrl = '/retail/report/quantity-vs-profit';
+        return this.baseUrl + apiUrl;
+    }
+
+    ALL_inOneUrl(){
+        const apiUrl = '/retail/report/all-in-one';
+        return this.baseUrl + apiUrl;
+    }
+
+
+
+    saleGrowthUrl(){
+        const apiUrl = '/retail/report/sale-growth';
+        return this.baseUrl + apiUrl;
+    }
+
+    purchaseGrowthUrl(){
+        const apiUrl = '/retail/report/purchase-growth';
+        return this.baseUrl + apiUrl;
+    }
+
+    profitGrowthUrl(){
+        const apiUrl = '/retail/report/profit-growth';
+        return this.baseUrl + apiUrl;
+    }
+
   
 
 

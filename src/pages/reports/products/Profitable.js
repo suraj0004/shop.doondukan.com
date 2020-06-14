@@ -307,6 +307,7 @@ class Profitable extends Component {
                             <tr className="text-center">
                               <th>Sno.</th>
                               <th>Product</th>
+                               <th>Available Qty</th>
                               <th>Qty Sold</th>
                               <th>Profit Margin</th>
                               <th>Profit</th>
@@ -319,6 +320,7 @@ class Profitable extends Component {
                                 return <tr className="text-center" key={item.product_id}>
                                   <td> {index + 1} </td>
                                   <td> { `${item.product.name} | ${item.product.weight}${item.product.weight_type} | ${item.product.brand}` } </td>
+                                  <td>  {item.stock.quantity}</td>
                                   <td>  {item.qty}</td>
                                   <td> Rs. {item.margin} /- </td>
                                   <td className="bg-success">  <strong>Rs. {item.profit} /-</strong>  </td>
