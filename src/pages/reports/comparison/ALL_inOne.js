@@ -126,10 +126,10 @@ class ALL_inOne extends Component {
 			theme: "light2",
 			animationEnabled: true,
 			title: {
-				text: "Comparison of Purchase / Sales / Profit "+this.state.year
+				text: "Comparison of Sales / Cost / Profit "+this.state.year
 			},
 			subtitles: [{
-				text: "purchase Vs Sales Vs Profit "
+				text: "Sales Vs Cost Vs Profit "
 			}],
 			axisY: {
 				includeZero: false,
@@ -154,7 +154,7 @@ class ALL_inOne extends Component {
 			},{
 				type: "area",
         name: "Cost",
-        color : "#99A0C5",
+        color : "#ffc107",
 				showInLegend: true,
 				xValueFormatString: "MMM YYYY",
 				yValueFormatString: "₹#,##0.##",
@@ -165,7 +165,7 @@ class ALL_inOne extends Component {
 			{
 				type: "area",
         name: "Profit",
-        color : "#67C0AB",
+        color : "#28a745",
 				showInLegend: true,
 				xValueFormatString: "MMM YYYY",
 				yValueFormatString: "₹#,##0.##",
@@ -178,7 +178,7 @@ class ALL_inOne extends Component {
     
 
 
-    var table_label = `Purchase Vs Save Vs Profit - `;
+    var table_label = `Sales Vs Cost Vs Profit - `;
     switch (this.state.range) {
         case 'month':
         table_label += `By Month `;

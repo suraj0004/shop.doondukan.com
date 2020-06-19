@@ -127,6 +127,9 @@ class LowestSelling extends Component {
   render() {
 
     const options = {
+      animationEnabled: true,
+      exportEnabled: true,
+      theme: "light2", //"light1", "dark1", "dark2"
       title: {
         text: `${this.state.top} Lowest Selling Products`,
       },

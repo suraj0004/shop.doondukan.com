@@ -71,10 +71,22 @@ class HighestSelling extends Component {
         });
       }
     }).catch(err => {
-      console.log(err.response);
-      this.setState({
-        response: "Opps Something went wrong",
+      err = err.response;
+      console.log(err);
+      if(err.status === 401 || err.statusText === "Unauthorized" )
+       {
+             auth.afterLogout();
+             this.props.history.push("/login");
+       }else if(err.status === 404){
+        this.setState({
+          response : "Opps! Something went wrong, Please call to adminstrator at +91-8954836965",
       });
+       }
+       else{
+        this.setState({
+          response : err.data.message,
+      });
+       }
     });
   }
 
@@ -107,7 +119,22 @@ class HighestSelling extends Component {
           });
         }
     }).catch(err=>{
-
+      err = err.response;
+      console.log(err);
+      if(err.status === 401 || err.statusText === "Unauthorized" )
+       {
+             auth.afterLogout();
+             this.props.history.push("/login");
+       }else if(err.status === 404){
+        this.setState({
+          response : "Opps! Something went wrong, Please call to adminstrator at +91-8954836965",
+      });
+       }
+       else{
+        this.setState({
+          response : err.data.message,
+      });
+       }
     });
   }
 
@@ -127,6 +154,9 @@ class HighestSelling extends Component {
   render() {
 
     const options = {
+      animationEnabled: true,
+      exportEnabled: true,
+      theme: "light2", //"light1", "dark1", "dark2"
       title: {
         text: `Top ${this.state.top} Highest Selling Products`,
       },

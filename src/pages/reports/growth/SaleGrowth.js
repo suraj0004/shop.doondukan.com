@@ -234,13 +234,13 @@ class SaleGrowth extends Component {
                               <Moment
                                 local
                                 format="D MMM, YYYY"
-                                date={this.state.from}
+                                date={this.state.to}
                               />
                                  &nbsp;-&nbsp;
                                  <Moment
                                 local
                                 format="D MMM, YYYY"
-                                date={this.state.to}
+                                date={this.state.from}
                               />
                             </strong>
                           </p>
@@ -282,16 +282,16 @@ class SaleGrowth extends Component {
                       <h3 className="card-title"> 
                          {table_label} 
                          <strong>( Sales: &nbsp;
-                              <Moment
-                                local
-                                format="D MMM, YYYY"
-                                date={this.state.from}
-                              />
-                                 &nbsp;-&nbsp;
                                  <Moment
                                 local
                                 format="D MMM, YYYY"
                                 date={this.state.to}
+                              />
+                                   &nbsp;-&nbsp;
+                                <Moment
+                                local
+                                format="D MMM, YYYY"
+                                date={this.state.from}
                               />
                          ) </strong>
                          

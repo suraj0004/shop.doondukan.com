@@ -3,7 +3,7 @@ import React from 'react';
 function Percentage(props) {
     
     return (
-        <div className="card-footer">
+        <div className="card-footer bg-dark">
         <div className="row">
 
           <div className="col-sm-4 col-6">

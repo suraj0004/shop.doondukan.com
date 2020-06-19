@@ -1,8 +1,17 @@
 import React, { Component } from 'react';
+import {Link} from 'react-router-dom';
 import auth from '../services/AuthService';
+import UrlService from '../services/UrlService';
 import Layout from '../layouts/RetailLayout';
 import PageLoader from '../components/PageLoader';
 import CanvasJSReact from '../assets/canvasjs.react';
+
+import axios from 'axios';
+import Moment from 'react-moment';
+import 'moment-timezone';
+
+import Percentage from './reports/Percentage';
+import MoreDetails from './reports/MoreDetails';
 var CanvasJSChart = CanvasJSReact.CanvasJSChart;
 
 class Dashboard extends Component {
@@ -10,57 +19,449 @@ class Dashboard extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isLoader : true,
+      isLoader : false,
       response : "",
+      data : [],
+      purchase : [],
+      bill : [],
+      percentage : {
+        purchase:0,
+        sale : 0,
+        profit : 0,
+      },
+      amount : {
+        purchase:0,
+        sale : 0,
+        profit : 0,
+      },
+      more : {
+        products : 0,
+        stocks : 0,
+        item_sold : 0,
+        sales : 0,
+        profit : 0,
+      },
+      type: 'rupees',
+      purchase_type: 'rupees',
+      today : {
+        purchase : 0,
+        item_purchase : 0,
+        item_sold : 0,
+        sale : 0,
+        profit : 0,
+        cost : 0,
+      }
     }
   }
   
+
+  renderChart() {
+    axios.get(UrlService.DashboardUrl(), {
+      headers: auth.apiHeader()
+    }).then(res => {
+      console.log(res);
+      if (res.data.success) {
+        this.setState({
+          data: res.data.sale_and_profit,
+          purchase : res.data.purchase,
+          bill : res.data.bill,
+          today : res.data.today,
+          isLoader: false
+        },()=>{
+          // window.setDataTable();
+        });
+      } else {
+        this.setState({
+          response: res.data.message,
+        });
+      }
+    }).catch(err => {
+      err = err.response;
+      console.log(err);
+      if(err.status === 401 || err.statusText === "Unauthorized" )
+       {
+             auth.afterLogout();
+             this.props.history.push("/login");
+       }else if(err.status === 404){
+        this.setState({
+          response : "Opps! Something went wrong, Please call to adminstrator at +91-8954836965",
+      });
+       }
+       else{
+        this.setState({
+          response : err.data.message,
+      });
+       }
+    });
+  }
+
   
   componentDidMount() {
-  
 
-    auth.isValidToken( (success) =>{
-      if(success){
-          auth.afterLogout();
-         this.props.history.push("/login"); 
-        
-      }
-
- 
-      var script = document.createElement("script");
-        script.src = "/asset/dist/js/pages/dashboard.js";
-        script.defer = true;  
-        document.body.appendChild(script);
-      this.setState({
-        isLoader:false
-      });
-    });
-    
-    
-   
-    
-  }
-    render() {
-
-      const options = {
-        title: {
-          text: "Basic Column Chart"
-        },
-        animationEnabled: true,
-        data: [
-        {
-          // Change type to "doughnut", "line", "splineArea", etc.
-          type: "column",
-          dataPoints: [
-            { label: "Apple",  y: 10  },
-            { label: "Orange", y: 15  },
-            { label: "Banana", y: 25  },
-            { label: "Mango",  y: 30  },
-            { label: "Grape",  y: 28  }
-          ]
+    this.renderChart();
+    axios.get(UrlService.percentageAndMoreUrl(),{
+      headers : auth.apiHeader()
+    }).then(res=>{
+        if(res.data.success){
+          this.setState({
+            percentage : {
+              purchase : res.data.percentage.purchase,
+              sale : res.data.percentage.sale,
+              profit :  res.data.percentage.profit,  
+               },
+               amount : {
+                purchase : res.data.amount.purchase,
+                sale : res.data.amount.sale,
+                profit :  res.data.amount.profit,  
+                 },
+                 more : {
+                  products : res.data.more.products,
+                  stocks : res.data.more.stocks,
+                  item_sold : res.data.more.item_sold,
+                  sales : res.data.more.sales,
+                  profit : res.data.more.profit,
+                }
+          });
         }
-        ]
+    }).catch(err=>{
+      err = err.response;
+      console.log(err);
+      if(err.status === 401 || err.statusText === "Unauthorized" )
+       {
+             auth.afterLogout();
+             this.props.history.push("/login");
+       }else if(err.status === 404){
+        this.setState({
+          response : "Opps! Something went wrong, Please call to adminstrator at +91-8954836965",
+      });
+       }
+       else{
+        this.setState({
+          response : err.data.message,
+      });
+       }
+    });
+  }
+
+  handleDropdownChange = (event) => {
+
+    this.setState({
+      [event.target.name]: event.target.value,
+      // isLoader: true,
+    }, () => {
+      // this.renderChart();
+    });
+
+  }
+
+
+
+    render() {
+var options;
+      if(this.state.type === "rupees"){
+         options = {
+          theme: "light2",
+    animationEnabled: true,
+    exportEnabled: true,
+          title:{
+            text: "Today Sale"
+          },
+          axisX: {
+            // valueFormatString: "hh:mm tt"
+          },
+          axisY: {
+            title: "Sale in Rs.",
+            prefix: "₹",
+            includeZero: false
+          },
+          data: [{
+            yValueFormatString: "₹#,###",
+            // xValueFormatString: "hh:mm tt",
+            type: "spline",
+            dataPoints : this.state.data.map(item=>{
+              var label = Number(item.hour);
+              if(label === 12){
+                label = "12 noon - 1 pm";
+              }else if(label === 0){
+                label = " 12 mid-night - 1 am";
+              }
+              else if(label === 11){
+                label = " 11:00 am - 12:00 noon";
+              }
+              else if(label === 23){
+                label = " 11 pm - 12 mid-night";
+              }
+             else if(label < 11){
+                label = label + ":00 am - " + (label + 1)+":00 am";
+             }
+              else{
+                label = label - 12;
+                 label = label + ":00 pm - " + (label + 1) + ":00 pm";
+              }
+              return { label: label, y: item.sale };
+            })
+         
+          }]
+        }
+      }else{
+         options = {
+          theme: "light2",
+    animationEnabled: true,
+    exportEnabled: true,
+          title:{
+            text: "Item Sold Today"
+          },
+          axisX: {
+            // valueFormatString: "hh:mm tt"
+          },
+          axisY: {
+            title: "Sale in Quantity",
+            // prefix: "₹",
+            includeZero: false
+          },
+          data: [{
+            // yValueFormatString: "₹#,###",
+            // xValueFormatString: "hh:mm tt",
+            type: "spline",
+            dataPoints : this.state.data.map(item=>{
+              var label = Number(item.hour);
+              if(label === 12){
+                label = "12 noon - 1 pm";
+              }else if(label === 0){
+                label = " 12 mid-night - 1 am";
+              }
+              else if(label === 11){
+                label = " 11:00 am - 12:00 noon";
+              }
+              else if(label === 23){
+                label = " 11 pm - 12 mid-night";
+              }
+             else if(label < 11){
+                label = label + ":00 am - " + (label + 1)+":00 am";
+             }
+              else{
+                label = label - 12;
+                 label = label + ":00 pm - " + (label + 1) + ":00 pm";
+              }
+              return { label: label, y: Number(item.quantity) };
+            })
+         
+          }]
+        }
       }
+
+
+
+
+
+
+
+
+   const  profitChartOptions = {
+    theme: "light2",
+    animationEnabled: true,
+    exportEnabled: true,
+    title:{
+      text: "Profit Earn Today"
+    },
+    axisY:{
+      title: "Profit in Rs.",
+      prefix: "₹",
+      includeZero: false
+    },
+    data: [{
+      type: "spline",
+      // xValueFormatString: "MMM YYYY",
+      // markerSize: 5,
+      dataPoints: this.state.data.map(item=>{
+        var label = Number(item.hour);
+              if(label === 12){
+                label = "12 noon - 1 pm";
+              }else if(label === 0){
+                label = " 12 mid-night - 1 am";
+              }
+              else if(label === 11){
+                label = " 11:00 am - 12:00 noon";
+              }
+              else if(label === 23){
+                label = " 11 pm - 12 mid-night";
+              }
+             else if(label < 11){
+                label = label + ":00 am - " + (label + 1)+":00 am";
+             }
+              else{
+                label = label - 12;
+                 label = label + ":00 pm - " + (label + 1) + ":00 pm";
+              }
+              return { label: label, y: Number(item.profit) };
+      })
+    }]
+  }
+
+
+
+
+
+
+
+  var purchase_options;
+      if(this.state.purchase_type === "rupees"){
+         purchase_options = {
+          theme: "light2",
+    animationEnabled: true,
+    exportEnabled: true,
+          title:{
+            text: "Today Purchase"
+          },
+          axisX: {
+            // valueFormatString: "hh:mm tt"
+          },
+          axisY: {
+            title: "Purchase in Rs.",
+            prefix: "₹",
+            includeZero: false
+          },
+          data: [{
+            yValueFormatString: "₹#,###",
+            // xValueFormatString: "hh:mm tt",
+            type: "spline",
+            dataPoints : this.state.purchase.map(item=>{
+              var label = Number(item.hour);
+              if(label === 12){
+                label = "12 noon - 1 pm";
+              }else if(label === 0){
+                label = " 12 mid-night - 1 am";
+              }
+              else if(label === 11){
+                label = " 11:00 am - 12:00 noon";
+              }
+              else if(label === 23){
+                label = " 11 pm - 12 mid-night";
+              }
+             else if(label < 11){
+                label = label + ":00 am - " + (label + 1)+":00 am";
+             }
+              else{
+                label = label - 12;
+                 label = label + ":00 pm - " + (label + 1) + ":00 pm";
+              }
+              return { label: label, y: item.purchase };
+            })
+         
+          }]
+        }
+      }else{
+         purchase_options = {
+          theme: "light2",
+    animationEnabled: true,
+    exportEnabled: true,
+          title:{
+            text: "Item Bought Today"
+          },
+          axisX: {
+            // valueFormatString: "hh:mm tt"
+          },
+          axisY: {
+            title: "Purchase in Quantity",
+            // prefix: "₹",
+            includeZero: false
+          },
+          data: [{
+            // yValueFormatString: "₹#,###",
+            // xValueFormatString: "hh:mm tt",
+            type: "spline",
+            dataPoints : this.state.purchase.map(item=>{
+              var label = Number(item.hour);
+              if(label === 12){
+                label = "12 noon - 1 pm";
+              }else if(label === 0){
+                label = " 12 mid-night - 1 am";
+              }
+              else if(label === 11){
+                label = " 11:00 am - 12:00 noon";
+              }
+              else if(label === 23){
+                label = " 11 pm - 12 mid-night";
+              }
+             else if(label < 11){
+                label = label + ":00 am - " + (label + 1)+":00 am";
+             }
+              else{
+                label = label - 12;
+                 label = label + ":00 pm - " + (label + 1) + ":00 pm";
+              }
+              return { label: label, y: Number(item.quantity) };
+            })
+         
+          }]
+        }
+      }
+
+
+      const quantity_comparision = {
+        animationEnabled: true,
+
+        theme: "light2", //"light1", "dark1", "dark2"
+        title:{
+          text: "Quantity Comparision"
+        },
+        data: [{
+          type: "column", //change type to bar, line, area, pie, etc
+          dataPoints: [
+            { label:"Purchase", y: this.state.today.item_purchase ,color:"#B0A2BF"},
+            { label:"Sale", y: this.state.today.item_sold, color:"#6D78AD" }
+          ]
+        }]
+      }
+
+      const cost_sale_profit = {
+        animationEnabled: true,
+
+        theme: "light2", 
+        title:{
+          text: "Cost/Sale/profit"
+        },
+        axisY: {
+          prefix: "₹",
+          includeZero: false
+        },
+        data: [{
+         
+          yValueFormatString: "₹#,###",
+          type: "column", //change type to bar, line, area, pie, etc
+          dataPoints: [
+            { label:"Cost", y: this.state.today.cost,color:"#E9A19B" },
+            { label:"Sale", y: this.state.today.sale , color:"#6D78AD"},
+            { label:"Profit", y: this.state.today.profit, color : "#86DCBD" }
+          ]
+        }]
+      }
+
+      const cost_percentage = (this.state.today.cost/this.state.today.sale)*100;
+      const profit_percentage = (this.state.today.profit/this.state.today.sale)*100;
+
+      const pie_chart = {
+        animationEnabled: true,
+        theme: "light2", 
+        title: {
+          text: "Cost VS Profit"
+        },
+        data: [{
+          type: "pie",
+          startAngle: 75,
+          toolTipContent: "<b>{label}</b>: {y}%",
+          showInLegend: "true",
+          legendText: "{label}",
+          indexLabelFontSize: 16,
+          indexLabel: "{label} - {y}%",
+          dataPoints: [
+            { y: cost_percentage, label: "Cost",color:"#E9A19B" },
+            { y: profit_percentage, label: "Profit", color:"#86DCBD" }
+           
+          ]
+        }]
+      }
+  
     
         return (
  
@@ -82,10 +483,9 @@ class Dashboard extends Component {
                       <span className="info-box-icon bg-info elevation-1"><i className="fas fa-cog"></i></span>
         
                       <div className="info-box-content">
-                        <span className="info-box-text">CPU Traffic</span>
+                        <span className="info-box-text">Today Purchase</span>
                         <span className="info-box-number">
-                          10
-                          <small>%</small>
+                         {this.state.today.purchase} &#8377;
                         </span>
                       </div>
                       
@@ -98,8 +498,8 @@ class Dashboard extends Component {
                       <span className="info-box-icon bg-danger elevation-1"><i className="fas fa-thumbs-up"></i></span>
         
                       <div className="info-box-content">
-                        <span className="info-box-text">Likes</span>
-                        <span className="info-box-number">41,410</span>
+                        <span className="info-box-text">Item Sold Today</span>
+             <span className="info-box-number"> {this.state.today.item_sold} </span>
                       </div>
                       
                     </div>
@@ -115,8 +515,8 @@ class Dashboard extends Component {
                       <span className="info-box-icon bg-success elevation-1"><i className="fas fa-shopping-cart"></i></span>
         
                       <div className="info-box-content">
-                        <span className="info-box-text">Sales</span>
-                        <span className="info-box-number">760</span>
+                        <span className="info-box-text">Today Sales</span>
+                        <span className="info-box-number"> {this.state.today.sale}  &#8377;</span>
                       </div>
                       
                     </div>
@@ -128,8 +528,8 @@ class Dashboard extends Component {
                       <span className="info-box-icon bg-warning elevation-1"><i className="fas fa-users"></i></span>
         
                       <div className="info-box-content">
-                        <span className="info-box-text">New Members</span>
-                        <span className="info-box-number">2,000</span>
+                        <span className="info-box-text">Today Profit</span>
+                        <span className="info-box-number"> {this.state.today.profit}  &#8377;</span>
                       </div>
                       
                     </div>
@@ -138,554 +538,115 @@ class Dashboard extends Component {
                   
                 </div>
                 
-        
+                <hr/>
                 <div className="row">
                   <div className="col-md-12">
                     <div className="card">
-                      <div className="card-header">
-                        <h5 className="card-title">Monthly Recap Report</h5>
-        
-                        {/* <div className="card-tools">
-                          <button type="button" className="btn btn-tool" data-card-widget="collapse">
-                            <i className="fas fa-minus"></i>
-                          </button>
-                          <div className="btn-group">
-                            <button type="button" className="btn btn-tool dropdown-toggle" data-toggle="dropdown">
-                              <i className="fas fa-wrench"></i>
-                            </button>
-                            <div className="dropdown-menu dropdown-menu-right" role="menu">
-                              <a href="/" className="dropdown-item">Action</a>
-                              <a href="/" className="dropdown-item">Another action</a>
-                              <a href="/" className="dropdown-item">Something else here</a>
-                              <span className="dropdown-divider"> </span>
-                              <a href="/" className="dropdown-item">Separated link</a>
-                            </div>
-                          </div>
-                          <button type="button" className="btn btn-tool" data-card-widget="remove">
-                            <i className="fas fa-times"></i>
-                          </button>
-                        </div> */}
-                      </div>
+                     
                       
                       <div className="card-body">
-                        <div className="row">
-                          <div className="col-md-8">
-                            <p className="text-center">
-                              <strong>Sales: 1 Jan, 2014 - 30 Jul, 2014</strong>
-                            </p>
-        
-                            <div className="chart">
-                            <CanvasJSChart options = {options}  />
-                              
-                            </div>
-                            
-                          </div>
+                      <h5 className="row">
+                        <div className="form-group float-left" style={{ width: "100px" }} >
+                          <select
+                            className="custom-select"
+                            name="type"
+                            value={this.state.type}
+                            onChange={this.handleDropdownChange}
+                          >
+                            <option value="quantity">By Qty</option>
+                            <option value="rupees">By Rs.</option>
                           
-                          <div className="col-md-4">
-                            <p className="text-center">
-                              <strong>Goal Completion</strong>
-                            </p>
-        
-                            <div className="progress-group">
-                              Add Products to Cart
-                              <span className="float-right"><b>160</b>/200</span>
-                              <div className="progress progress-sm">
-                                <div className="progress-bar bg-primary" style={{width: '80%'}}></div>
-                              </div>
-                            </div>
-                            
-        
-                            <div className="progress-group">
-                              Complete Purchase
-                              <span className="float-right"><b>310</b>/400</span>
-                              <div className="progress progress-sm">
-                                <div className="progress-bar bg-danger" style={{width: '75'}}></div>
-                              </div>
-                            </div>
-        
-                            
-                            <div className="progress-group">
-                              <span className="progress-text">Visit Premium Page</span>
-                              <span className="float-right"><b>480</b>/800</span>
-                              <div className="progress progress-sm">
-                                <div className="progress-bar bg-success" style={{width: '60'}}></div>
-                              </div>
-                            </div>
-        
-                            
-                            <div className="progress-group">
-                              Send Inquiries
-                              <span className="float-right"><b>250</b>/500</span>
-                              <div className="progress progress-sm">
-                                <div className="progress-bar bg-warning" style={{width: '50'}}></div>
-                              </div>
-                            </div>
-                            
-                          </div>
-                          
+                          </select>
+
+
                         </div>
-                        
-                      </div>
-                      
-                      <div className="card-footer">
-                        <div className="row">
-                          <div className="col-sm-3 col-6">
-                            <div className="description-block border-right">
-                              <span className="description-percentage text-success"><i className="fas fa-caret-up"></i> 17%</span>
-                              <h5 className="description-header">$35,210.43</h5>
-                              <span className="description-text">TOTAL REVENUE</span>
-                            </div>
-                            
+
+                   
+                      </h5>
+                      <div className="row">
+                        <div className="col-md-12">
+
+                          <div className="chart">
+                            <CanvasJSChart options={options} />
+
                           </div>
-                          
-                          <div className="col-sm-3 col-6">
-                            <div className="description-block border-right">
-                              <span className="description-percentage text-warning"><i className="fas fa-caret-left"></i> 0%</span>
-                              <h5 className="description-header">$10,390.90</h5>
-                              <span className="description-text">TOTAL COST</span>
-                            </div>
-                            
-                          </div>
-                          
-                          <div className="col-sm-3 col-6">
-                            <div className="description-block border-right">
-                              <span className="description-percentage text-success"><i className="fas fa-caret-up"></i> 20%</span>
-                              <h5 className="description-header">$24,813.53</h5>
-                              <span className="description-text">TOTAL PROFIT</span>
-                            </div>
-                            
-                          </div>
-                          
-                          <div className="col-sm-3 col-6">
-                            <div className="description-block">
-                              <span className="description-percentage text-danger"><i className="fas fa-caret-down"></i> 18%</span>
-                              <h5 className="description-header">1200</h5>
-                              <span className="description-text">GOAL COMPLETIONS</span>
-                            </div>
-                            
-                          </div>
+
                         </div>
-                        
+
+
+
                       </div>
+
+                    </div>
                       
+                     
+
                     </div>
                     
                   </div>
                   
                 </div>
                 
-        
+                <hr/>
                 
                 <div className="row">
                   
                   <div className="col-md-8">
                     
-                    <div className="card">
-                      <div className="card-header">
-                        <h3 className="card-title">US-Visitors Report</h3>
-        
-                        <div className="card-tools">
-                          <button type="button" className="btn btn-tool" data-card-widget="collapse">
-                            <i className="fas fa-minus"></i>
-                          </button>
-                          <button type="button" className="btn btn-tool" data-card-widget="remove">
-                            <i className="fas fa-times"></i>
-                          </button>
-                        </div>
-                      </div>
-                      
-                      <div className="card-body p-0">
-                        <div className="d-md-flex">
-                          <div className="p-1 flex-fill" style={{overflow: 'hidden'}}>
-                            
-                            <div id="world-map-markers" style={{height: '325px', overflow: 'hidden'}}>
-                              <div className="map"></div>
-                            </div>
-                          </div>
-                          <div className="card-pane-right bg-success pt-2 pb-2 pl-4 pr-4">
-                            <div className="description-block mb-4">
-                              <div className="sparkbar pad" data-color="#fff">90,70,90,70,75,80,70</div>
-                              <h5 className="description-header">8390</h5>
-                              <span className="description-text">Visits</span>
-                            </div>
-                            
-                            <div className="description-block mb-4">
-                              <div className="sparkbar pad" data-color="#fff">90,50,90,70,61,83,63</div>
-                              <h5 className="description-header">30%</h5>
-                              <span className="description-text">Referrals</span>
-                            </div>
-                            
-                            <div className="description-block">
-                              <div className="sparkbar pad" data-color="#fff">90,50,90,70,61,83,63</div>
-                              <h5 className="description-header">70%</h5>
-                              <span className="description-text">Organic</span>
-                            </div>
-                            
-                          </div>
-                        </div>
-                      </div>
-                      
-                    </div>
+                   
                     
-                    <div className="row">
-                      <div className="col-md-6">
-                        
-                        <div className="card direct-chat direct-chat-warning">
-                          <div className="card-header">
-                            <h3 className="card-title">Direct Chat</h3>
-        
-                            <div className="card-tools">
-                              <span data-toggle="tooltip" title="3 New Messages" className="badge badge-warning">3</span>
-                              <button type="button" className="btn btn-tool" data-card-widget="collapse"><i className="fas fa-minus"></i>
-                              </button>
-                              <button type="button" className="btn btn-tool" data-toggle="tooltip" title="Contacts"
-                                      data-widget="chat-pane-toggle">
-                                <i className="fas fa-comments"></i></button>
-                              <button type="button" className="btn btn-tool" data-card-widget="remove"><i className="fas fa-times"></i>
-                              </button>
-                            </div>
-                          </div>
-                          
-                          <div className="card-body">
-                            
-                            <div className="direct-chat-messages">
-                              
-                              <div className="direct-chat-msg">
-                                <div className="direct-chat-infos clearfix">
-                                  <span className="direct-chat-name float-left">Alexander Pierce</span>
-                                  <span className="direct-chat-timestamp float-right">23 Jan 2:00 pm</span>
-                                </div>
-                                
-                                <img className="direct-chat-img" src="asset/dist/img/user1-128x128.jpg" alt="message user Img"/>
-                                
-                                <div className="direct-chat-text">
-                                  Is this template really for free? That's unbelievable!
-                                </div>
-                                
-                              </div>
-                              
-        
-                              
-                              <div className="direct-chat-msg right">
-                                <div className="direct-chat-infos clearfix">
-                                  <span className="direct-chat-name float-right">Sarah Bullock</span>
-                                  <span className="direct-chat-timestamp float-left">23 Jan 2:05 pm</span>
-                                </div>
-                                
-                                <img className="direct-chat-img" src="asset/dist/img/user3-128x128.jpg" alt="message user Img"/>
-                                
-                                <div className="direct-chat-text">
-                                  You better believe it!
-                                </div>
-                                
-                              </div>
-                              
-        
-                              
-                              <div className="direct-chat-msg">
-                                <div className="direct-chat-infos clearfix">
-                                  <span className="direct-chat-name float-left">Alexander Pierce</span>
-                                  <span className="direct-chat-timestamp float-right">23 Jan 5:37 pm</span>
-                                </div>
-                                
-                                <img className="direct-chat-img" src="asset/dist/img/user1-128x128.jpg" alt="message user imag"/>
-                                
-                                <div className="direct-chat-text">
-                                  Working with AdminLTE on a great new app! Wanna join?
-                                </div>
-                                
-                              </div>
-                              
-        
-                              
-                              <div className="direct-chat-msg right">
-                                <div className="direct-chat-infos clearfix">
-                                  <span className="direct-chat-name float-right">Sarah Bullock</span>
-                                  <span className="direct-chat-timestamp float-left">23 Jan 6:10 pm</span>
-                                </div>
-                                
-                                <img className="direct-chat-img" src="asset/dist/img/user3-128x128.jpg" alt="message user ima"/>
-                                
-                                <div className="direct-chat-text">
-                                  I would love to.
-                                </div>
-                                
-                              </div>
-                              
-        
-                            </div>
-                            
-        
-                            
-                            <div className="direct-chat-contacts">
-                              <ul className="contacts-list">
-                                <li>
-                                  <a href="/">
-                                    <img className="contacts-list-img"  src="asset/dist/img/user1-128x128.jpg" alt=""/>
-        
-                                    <div className="contacts-list-info">
-                                      <span className="contacts-list-name">
-                                        Count Dracula
-                                        <small className="contacts-list-date float-right">2/28/2015</small>
-                                      </span>
-                                      <span className="contacts-list-msg">How have you been? I was...</span>
-                                    </div>
-                                    
-                                  </a>
-                                </li>
-                                
-                                <li>
-                                  <a href="/">
-                                    <img className="contacts-list-img"  alt="" src="asset/dist/img/user7-128x128.jpg"/>
-        
-                                    <div className="contacts-list-info">
-                                      <span className="contacts-list-name">
-                                        Sarah Doe
-                                        <small className="contacts-list-date float-right">2/23/2015</small>
-                                      </span>
-                                      <span className="contacts-list-msg">I will be waiting for...</span>
-                                    </div>
-                                    
-                                  </a>
-                                </li>
-                                
-                                <li>
-                                  <a href="/">
-                                    <img className="contacts-list-img"  alt="" src="asset/dist/img/user3-128x128.jpg"/>
-        
-                                    <div className="contacts-list-info">
-                                      <span className="contacts-list-name">
-                                        Nadia Jolie
-                                        <small className="contacts-list-date float-right">2/20/2015</small>
-                                      </span>
-                                      <span className="contacts-list-msg">I'll call you back at...</span>
-                                    </div>
-                                    
-                                  </a>
-                                </li>
-                                
-                                <li>
-                                  <a href="/">
-                                    <img className="contacts-list-img"  alt="" src="asset/dist/img/user5-128x128.jpg"/>
-        
-                                    <div className="contacts-list-info">
-                                      <span className="contacts-list-name">
-                                        Nora S. Vans
-                                        <small className="contacts-list-date float-right">2/10/2015</small>
-                                      </span>
-                                      <span className="contacts-list-msg">Where is your new...</span>
-                                    </div>
-                                    
-                                  </a>
-                                </li>
-                                
-                                <li>
-                                  <a href="/">
-                                    <img className="contacts-list-img"  alt="" src="asset/dist/img/user6-128x128.jpg"/>
-        
-                                    <div className="contacts-list-info">
-                                      <span className="contacts-list-name">
-                                        John K.
-                                        <small className="contacts-list-date float-right">1/27/2015</small>
-                                      </span>
-                                      <span className="contacts-list-msg">Can I take a look at...</span>
-                                    </div>
-                                    
-                                  </a>
-                                </li>
-                                
-                                <li>
-                                  <a href="/">
-                                    <img className="contacts-list-img"  alt="" src="asset/dist/img/user8-128x128.jpg"/>
-        
-                                    <div className="contacts-list-info">
-                                      <span className="contacts-list-name">
-                                        Kenneth M.
-                                        <small className="contacts-list-date float-right">1/4/2015</small>
-                                      </span>
-                                      <span className="contacts-list-msg">Never mind I found...</span>
-                                    </div>
-                                    
-                                  </a>
-                                </li>
-                                
-                              </ul>
-                              
-                            </div>
-                            
-                          </div>
-                          
-                          <div className="card-footer">
-                            <form action="/" method="post">
-                              <div className="input-group">
-                                <input type="text" name="message" placeholder="Type Message ..." className="form-control"/>
-                                <span className="input-group-append">
-                                  <button type="button" className="btn btn-warning">Send</button>
-                                </span>
-                              </div>
-                            </form>
-                          </div>
-                          
-                        </div>
-                        
-                      </div>
-                      
-        
-                      <div className="col-md-6">
-                        
-                        <div className="card">
-                          <div className="card-header">
-                            <h3 className="card-title">Latest Members</h3>
-        
-                            <div className="card-tools">
-                              <span className="badge badge-danger">8 New Members</span>
-                              <button type="button" className="btn btn-tool" data-card-widget="collapse"><i className="fas fa-minus"></i>
-                              </button>
-                              <button type="button" className="btn btn-tool" data-card-widget="remove"><i className="fas fa-times"></i>
-                              </button>
-                            </div>
-                          </div>
-                          
-                          <div className="card-body p-0">
-                            <ul className="users-list clearfix">
-                              <li>
-                                <img src="asset/dist/img/user1-128x128.jpg" alt="User Imag"/>
-                                <a className="users-list-name" href="/">Alexander Pierce</a>
-                                <span className="users-list-date">Today</span>
-                              </li>
-                              <li>
-                                <img src="asset/dist/img/user8-128x128.jpg" alt="User Imag"/>
-                                <a className="users-list-name" href="/">Norman</a>
-                                <span className="users-list-date">Yesterday</span>
-                              </li>
-                              <li>
-                                <img src="asset/dist/img/user7-128x128.jpg" alt="User Imag"/>
-                                <a className="users-list-name" href="/">Jane</a>
-                                <span className="users-list-date">12 Jan</span>
-                              </li>
-                              <li>
-                                <img src="asset/dist/img/user6-128x128.jpg" alt="User Imag"/>
-                                <a className="users-list-name" href="/">John</a>
-                                <span className="users-list-date">12 Jan</span>
-                              </li>
-                              <li>
-                                <img src="asset/dist/img/user2-160x160.jpg" alt="User Imag"/>
-                                <a className="users-list-name" href="/">Alexander</a>
-                                <span className="users-list-date">13 Jan</span>
-                              </li>
-                              <li>
-                                <img src="asset/dist/img/user5-128x128.jpg" alt="User Imag"/>
-                                <a className="users-list-name" href="/">Sarah</a>
-                                <span className="users-list-date">14 Jan</span>
-                              </li>
-                              <li>
-                                <img src="asset/dist/img/user4-128x128.jpg" alt="User Imag"/>
-                                <a className="users-list-name" href="/">Nora</a>
-                                <span className="users-list-date">15 Jan</span>
-                              </li>
-                              <li>
-                                <img src="asset/dist/img/user3-128x128.jpg" alt="User Imag"/>
-                                <a className="users-list-name" href="/">Nadia</a>
-                                <span className="users-list-date">15 Jan</span>
-                              </li>
-                            </ul>
-                            
-                          </div>
-                          
-                          <div className="card-footer text-center">
-                            <a href="/">View All Users</a>
-                          </div>
-                          
-                        </div>
-                        
-                      </div>
-                      
-                    </div>
+                   
                     
         
                     
                     <div className="card">
-                      <div className="card-header border-transparent">
-                        <h3 className="card-title">Latest Orders</h3>
+                      <div className="card-header border-transparen text-center">
+                        <h3>Today Latest Bill's</h3>
         
-                        <div className="card-tools">
-                          <button type="button" className="btn btn-tool" data-card-widget="collapse">
-                            <i className="fas fa-minus"></i>
-                          </button>
-                          <button type="button" className="btn btn-tool" data-card-widget="remove">
-                            <i className="fas fa-times"></i>
-                          </button>
-                        </div>
+                      
                       </div>
                       
                       <div className="card-body p-0">
                         <div className="table-responsive">
-                          <table className="table m-0">
+                          <table className="table m-0 text-center">
                             <thead>
                             <tr>
-                              <th>Order ID</th>
-                              <th>Item</th>
+                              <th>Bill ID</th>                             
                               <th>Status</th>
-                              <th>Popularity</th>
+                              <th>Time</th>
+                              <th>Bill Amount</th>
                             </tr>
                             </thead>
                             <tbody>
-                            <tr>
-                              <td><a href="/">OR9842</a></td>
-                              <td>Call of Duty IV</td>
-                              <td><span className="badge badge-success">Shipped</span></td>
-                              <td>
-                                <div className="sparkbar" data-color="#00a65a" data-height="20">90,80,90,-70,61,-83,63</div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td><a href="/">OR1848</a></td>
-                              <td>Samsung Smart TV</td>
-                              <td><span className="badge badge-warning">Pending</span></td>
-                              <td>
-                                <div className="sparkbar" data-color="#f39c12" data-height="20">90,80,-90,70,61,-83,68</div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td><a href="/">OR7429</a></td>
-                              <td>iPhone 6 Plus</td>
-                              <td><span className="badge badge-danger">Delivered</span></td>
-                              <td>
-                                <div className="sparkbar" data-color="#f56954" data-height="20">90,-80,90,70,-61,83,63</div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td><a href="/">OR7429</a></td>
-                              <td>Samsung Smart TV</td>
-                              <td><span className="badge badge-info">Processing</span></td>
-                              <td>
-                                <div className="sparkbar" data-color="#00c0ef" data-height="20">90,80,-90,70,-61,83,63</div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td><a href="/">OR1848</a></td>
-                              <td>Samsung Smart TV</td>
-                              <td><span className="badge badge-warning">Pending</span></td>
-                              <td>
-                                <div className="sparkbar" data-color="#f39c12" data-height="20">90,80,-90,70,61,-83,68</div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td><a href="/">OR7429</a></td>
-                              <td>iPhone 6 Plus</td>
-                              <td><span className="badge badge-danger">Delivered</span></td>
-                              <td>
-                                <div className="sparkbar" data-color="#f56954" data-height="20">90,-80,90,70,-61,83,63</div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td><a href="/">OR9842</a></td>
-                              <td>Call of Duty IV</td>
-                              <td><span className="badge badge-success">Shipped</span></td>
-                              <td>
-                                <div className="sparkbar" data-color="#00a65a" data-height="20">90,80,90,-70,61,-83,63</div>
-                              </td>
-                            </tr>
+                              {
+                                this.state.bill.map(item=>{
+                                  var statusHtml;
+                                  if(item.status === "paid"){
+                                   statusHtml = <span className="badge badge-success">Paid</span>
+                                  }else{
+                                       statusHtml = <span className="badge badge-warning">Un-Paid</span>
+                                  }
+
+                                  return  <tr>
+                                  <td>  <Link to={"/invoice/"+item.id} className="btn btn-default" style={{marginTop:'-5px'}}> #{(item.id).toString().padStart("4","0")} <i className="fa fa-file"></i></Link> </td>
+
+                                  <td> {statusHtml} </td>
+
+                                  <td> <Moment                              
+                                 local
+                                //  format="D MMM, YYYY h:mm a"
+                                fromNow
+                                 date={ item.created_at }
+                                 />
+                            </td>
+
+                            <td> Rs. {item.sales_price} /-</td>
+                                 
+                                  
+                                </tr>;
+                                })
+                              }
+                           
                             </tbody>
                           </table>
                         </div>
@@ -693,8 +654,8 @@ class Dashboard extends Component {
                       </div>
                       
                       <div className="card-footer clearfix">
-                        <a href="/" className="btn btn-sm btn-info float-left">Place New Order</a>
-                        <a href="/" className="btn btn-sm btn-secondary float-right">View All Orders</a>
+                        <Link to="/generateBill" className="btn btn-sm btn-info float-left">Generate New Bill</Link>
+                        <Link to="/billList" className="btn btn-sm btn-secondary float-right">View All Bills</Link>
                       </div>
                       
                     </div>
@@ -702,203 +663,116 @@ class Dashboard extends Component {
                   </div>
                   
         
-                  <div className="col-md-4">
-                    
-                    <div className="info-box mb-3 bg-warning">
-                      <span className="info-box-icon"><i className="fas fa-tag"></i></span>
-        
-                      <div className="info-box-content">
-                        <span className="info-box-text">Inventory</span>
-                        <span className="info-box-number">5,200</span>
-                      </div>
-                      
-                    </div>
-                    
-                    <div className="info-box mb-3 bg-success">
-                      <span className="info-box-icon"><i className="far fa-heart"></i></span>
-        
-                      <div className="info-box-content">
-                        <span className="info-box-text">Mentions</span>
-                        <span className="info-box-number">92,050</span>
-                      </div>
-                      
-                    </div>
-                    
-                    <div className="info-box mb-3 bg-danger">
-                      <span className="info-box-icon"><i className="fas fa-cloud-download-alt"></i></span>
-        
-                      <div className="info-box-content">
-                        <span className="info-box-text">Downloads</span>
-                        <span className="info-box-number">114,381</span>
-                      </div>
-                      
-                    </div>
-                    
-                    <div className="info-box mb-3 bg-info">
-                      <span className="info-box-icon"><i className="far fa-comment"></i></span>
-        
-                      <div className="info-box-content">
-                        <span className="info-box-text">Direct Messages</span>
-                        <span className="info-box-number">163,921</span>
-                      </div>
-                      
-                    </div>
-                    
-        
+                  <MoreDetails more={this.state.more} />
+                  
+                </div>
+                <hr/>
+                <div className="row">
+<div className="col-md-12 card">
+
+ <div className="card-body">
+ <div className="chart">
+    <CanvasJSChart options={profitChartOptions} />
+
+  </div>
+ </div>
+
+</div>
+
+
+
+</div>
+<hr/>
+<div className="card">
+    <div className="card-header text-center">
+    <h3>Quick Report Of Today</h3>
+    </div>
+    <div className="card-body">
+    <div className="row">
+  <div className="col-md-3" style={{borderRight:'1px solid grey'}}>
+  <div className="chart">
+                            <CanvasJSChart options={quantity_comparision} />
+
+                          </div>
+  </div>
+  <div className="col-md-5" style={{borderRight:'1px solid grey'}}>
+                  <div className="chart">
+                            <CanvasJSChart options={cost_sale_profit} />
+
+                          </div>
+    </div>
+    <div className="col-md-4">
+    <div className="chart">
+                            <CanvasJSChart options={pie_chart} />
+
+                          </div>
+    </div>
+</div>
+    </div>
+</div>
+                
+                <hr/>
+
+                <div className="row">
+                  <div className="col-md-12">
                     <div className="card">
-                      <div className="card-header">
-                        <h3 className="card-title">Browser Usage</h3>
-        
-                        <div className="card-tools">
-                          <button type="button" className="btn btn-tool" data-card-widget="collapse"><i className="fas fa-minus"></i>
-                          </button>
-                          <button type="button" className="btn btn-tool" data-card-widget="remove"><i className="fas fa-times"></i>
-                          </button>
-                        </div>
-                      </div>
+                     
                       
                       <div className="card-body">
-                        <div className="row">
-                          <div className="col-md-8">
-                            <div className="chart-responsive">
-                              <canvas id="pieChart" height="150"></canvas>
-                            </div>
-                            
-                          </div>
+                      <h5 className="row">
+                        <div className="form-group float-left" style={{ width: "100px" }} >
+                          <select
+                            className="custom-select"
+                            name="purchase_type"
+                            value={this.state.purchase_type}
+                            onChange={this.handleDropdownChange}
+                          >
+                            <option value="quantity">By Qty</option>
+                            <option value="rupees">By Rs.</option>
                           
-                          <div className="col-md-4">
-                            <ul className="chart-legend clearfix">
-                              <li><i className="far fa-circle text-danger"></i> Chrome</li>
-                              <li><i className="far fa-circle text-success"></i> IE</li>
-                              <li><i className="far fa-circle text-warning"></i> FireFox</li>
-                              <li><i className="far fa-circle text-info"></i> Safari</li>
-                              <li><i className="far fa-circle text-primary"></i> Opera</li>
-                              <li><i className="far fa-circle text-secondary"></i> Navigator</li>
-                            </ul>
-                          </div>
-                          
+                          </select>
+
+
                         </div>
-                        
+
+                   
+                      </h5>
+                      <div className="row">
+                        <div className="col-md-12">
+
+                          <div className="chart">
+                            <CanvasJSChart options={purchase_options} />
+
+                          </div>
+
+                        </div>
+
+
+
                       </div>
-                      
-                      <div className="card-footer bg-white p-0">
-                        <ul className="nav nav-pills flex-column">
-                          <li className="nav-item">
-                            <a href="/" className="nav-link">
-                              United States of America
-                              <span className="float-right text-danger">
-                                <i className="fas fa-arrow-down text-sm"></i>
-                                12%</span>
-                            </a>
-                          </li>
-                          <li className="nav-item">
-                            <a href="/" className="nav-link">
-                              India
-                              <span className="float-right text-success">
-                                <i className="fas fa-arrow-up text-sm"></i> 4%
-                              </span>
-                            </a>
-                          </li>
-                          <li className="nav-item">
-                            <a href="/" className="nav-link">
-                              China
-                              <span className="float-right text-warning">
-                                <i className="fas fa-arrow-left text-sm"></i> 0%
-                              </span>
-                            </a>
-                          </li>
-                        </ul>
-                      </div>
-                      
+
                     </div>
-                    
-        
-                    
-                    <div className="card">
-                      <div className="card-header">
-                        <h3 className="card-title">Recently Added Products</h3>
-        
-                        <div className="card-tools">
-                          <button type="button" className="btn btn-tool" data-card-widget="collapse">
-                            <i className="fas fa-minus"></i>
-                          </button>
-                          <button type="button" className="btn btn-tool" data-card-widget="remove">
-                            <i className="fas fa-times"></i>
-                          </button>
-                        </div>
-                      </div>
                       
-                      <div className="card-body p-0">
-                        <ul className="products-list product-list-in-card pl-2 pr-2">
-                          <li className="item">
-                            <div className="product-img">
-                              <img src="asset/dist/img/default-150x150.png" alt="Product Imag" className="img-size-50"/>
-                            </div>
-                            <div className="product-info">
-                              <a href="/" className="product-title">Samsung TV
-                                <span className="badge badge-warning float-right">$1800</span></a>
-                              <span className="product-description">
-                                Samsung 32" 1080p 60Hz LED Smart HDTV.
-                              </span>
-                            </div>
-                          </li>
-                          
-                          <li className="item">
-                            <div className="product-img">
-                              <img src="asset/dist/img/default-150x150.png" alt="Product Imag" className="img-size-50"/>
-                            </div>
-                            <div className="product-info">
-                              <a href="/" className="product-title">Bicycle
-                                <span className="badge badge-info float-right">$700</span></a>
-                              <span className="product-description">
-                                26" Mongoose Dolomite Men's 7-speed, Navy Blue.
-                              </span>
-                            </div>
-                          </li>
-                          
-                          <li className="item">
-                            <div className="product-img">
-                              <img src="asset/dist/img/default-150x150.png" alt="Product Imag" className="img-size-50"/>
-                            </div>
-                            <div className="product-info">
-                              <a href="/" className="product-title">
-                                Xbox One <span className="badge badge-danger float-right">
-                                $350
-                              </span>
-                              </a>
-                              <span className="product-description">
-                                Xbox One Console Bundle with Halo Master Chief Collection.
-                              </span>
-                            </div>
-                          </li>
-                          
-                          <li className="item">
-                            <div className="product-img">
-                              <img src="asset/dist/img/default-150x150.png" alt="Product Imag" className="img-size-50"/>
-                            </div>
-                            <div className="product-info">
-                              <a href="/" className="product-title">PlayStation 4
-                                <span className="badge badge-success float-right">$399</span></a>
-                              <span className="product-description">
-                                PlayStation 4 500GB Console (PS4)
-                              </span>
-                            </div>
-                          </li>
-                          
-                        </ul>
-                      </div>
-                      
-                      <div className="card-footer text-center">
-                        <a href="/" className="uppercase">View All Products</a>
-                      </div>
-                      
+                     
+
                     </div>
                     
                   </div>
                   
                 </div>
-                
+
+
+         
+
+                <hr/>
+
+
+
+
+<Percentage percentage={this.state.percentage}  amount={this.state.amount} />
               </div>
+
+
              }
            
        

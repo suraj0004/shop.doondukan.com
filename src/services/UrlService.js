@@ -187,6 +187,11 @@ class UrlService{
         return this.baseUrl + apiUrl;
     }
 
+    DashboardUrl(){
+        const apiUrl = '/retail/dashboard';
+        return this.baseUrl + apiUrl;
+    }
+
   
 
 

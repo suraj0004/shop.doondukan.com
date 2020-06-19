@@ -24,9 +24,11 @@ class GenerateBill extends Component {
           mobile : "",
           discount : 0,
           selectedOption : {value : "rupees" , label : "In Rs."},
+         
          },
 
           isLoader : true,
+          total : 0,
         };
         
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -129,9 +131,17 @@ class GenerateBill extends Component {
 
           return;
         }
+        console.log(rows);
+        var total = 0;
+       for(var i = 0; i<rows.length; i++){
+         console.log(rows[i]);
+         total += rows[i].price * rows[i].sell_quantity;
+       }
+        console.log(total);
         this.setState({
           rows : rows,
           response : "",
+          total : total,
         });
       
       };
@@ -418,7 +428,7 @@ class GenerateBill extends Component {
         });
 
         return (
-            <Layout pathname={this.props.location.pathname}  page="Generate Bill">
+            <Layout pathname={this.props.location.pathname}  page="">
               
               {
                   (this.state.isLoader)
@@ -427,7 +437,7 @@ class GenerateBill extends Component {
 
             <div className="card card-info" style={{marginLeft:'5%',marginRight:'5%',padding:'10px'}}>
               <div className="card-header">
-                <h3 className="card-title">Generate Bill</h3>
+                <h3 className="card-title"><strong>Generate Bill</strong></h3>
               </div>
               
                 
@@ -455,7 +465,7 @@ class GenerateBill extends Component {
                
               </div>
 
-
+<div className="text-right">  <h2> Total Amount: Rs. {this.state.total} /- </h2> </div>
               <div className="text-center"> <button  className="btn btn-block btn-success" type="button" onClick={this.handleGenerateBill} > Generate </button> </div>
               <br/>
 

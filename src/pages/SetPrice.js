@@ -175,14 +175,14 @@ class SetPrice extends Component {
     render() {
         const { selectedOption,options } = this.state;
         return (
-          <Layout pathname={this.props.location.pathname} page="Set Stock Price"  >
+          <Layout pathname={this.props.location.pathname} page=""  >
                 {
                   (this.state.isLoader)
                   ?<PageLoader error={this.state.response}/>
                   :  
                   <div className="card card-info" style={{marginLeft:'5%',marginRight:'5%',padding:'10px'}}>
                   <div className="card-header">
-                    <h3 className="card-title">Set Stock Selling Price</h3>
+                    <h3 className="card-title"><strong>Set Stock Selling Price</strong></h3>
                   </div>
                   
                   <div className={ this.state.responseClass } style={{ paddingTop:'5px' }}>  &nbsp; <strong> {this.state.response} </strong> </div>

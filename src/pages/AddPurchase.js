@@ -214,7 +214,7 @@ class AddPurchase extends Component {
        
       const { selectedOption,options } = this.state;
         return (
-          <Layout pathname={this.props.location.pathname} page="Add Purchase" >
+          <Layout pathname={this.props.location.pathname} page="" >
                    
 
                     {
@@ -224,7 +224,7 @@ class AddPurchase extends Component {
 
            <div className="card card-info" style={{marginLeft:'5%',marginRight:'5%',padding:'10px'}}>
               <div className="card-header">
-                <h3 className="card-title">Add Stock Purchase</h3>
+                <h3 className="card-title"><strong>Add Stock Purchase</strong></h3>
               </div>
               
               <div className={ this.state.responseClass } style={{ paddingTop:'5px' }}>  &nbsp; <strong> {this.state.response} </strong> </div>
