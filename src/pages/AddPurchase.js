@@ -38,22 +38,23 @@ class AddPurchase extends Component {
               label : "",
              };
             option.value = item.id+',main';
-            option.label =  item.name+' | '+  item.weight+' '+ item.weight_type +' | '+item.brand;
+            option.label =  item.name+' | '+  item.weight+' '+ item.weight_type;
             return option;
         });
 
-        let options_temp = data.temp.map(item => {
-          let option = {
-            value : "",
-            label : "",
-           };
-          option.value = item.id+',temp';
-          option.label =  item.name+' | '+  item.weight+' '+ item.weight_type +' | '+item.brand;
-          return option;
-      });
+      //   let options_temp = data.temp.map(item => {
+      //     let option = {
+      //       value : "",
+      //       label : "",
+      //      };
+      //     option.value = item.id+',temp';
+      //     option.label =  item.name+' | '+  item.weight+' '+ item.weight_type +' | '+item.brand;
+      //     return option;
+      // });
 
         this.setState({
-          options : options_temp.concat(options_main),
+          // options : options_temp.concat(options_main),
+          options : options_main,
           isLoader : false,
         });
        }else{

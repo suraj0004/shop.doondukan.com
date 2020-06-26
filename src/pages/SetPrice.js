@@ -125,23 +125,24 @@ class SetPrice extends Component {
                       label : "",
                      };
                     option.value = item.id + "," + item.price;
-                    option.label =  `${item.product.name} |  ${ item.product.weight} ${item.product.weight_type}  | ${item.product.brand}, (Purchased at Rs. ${item.purchase_price.price} /- Per Pec)`;
+                    option.label =  `${item.product.name} |  ${ item.product.weight} ${item.product.weight_type}, (Purchased at Rs. ${(item.purchase_price)?item.purchase_price.price:0} /- Per Pec)`;
                     return option;
                 });
         
-                let options_temp = [];
-                 options_temp = data.temp.map(item => {
-                  let option = {
-                    value : "",
-                    label : "",
-                   };
-                   option.value = item.id + "," + item.price;
-                  option.label =  item.temp_product.name+' | '+  item.temp_product.weight+' '+ item.temp_product.weight_type +' | '+item.temp_product.brand;
-                  return option;
-              });
+              //   let options_temp = [];
+              //    options_temp = data.temp.map(item => {
+              //     let option = {
+              //       value : "",
+              //       label : "",
+              //      };
+              //      option.value = item.id + "," + item.price;
+              //     option.label =  item.temp_product.name+' | '+  item.temp_product.weight+' '+ item.temp_product.weight_type +' | '+item.temp_product.brand;
+              //     return option;
+              // });
         
                 this.setState({
-                  options : options_temp.concat(options_main),
+                  // options : options_temp.concat(options_main),
+                  options : options_main,
                   isLoader : false,
                 });
               }else{
@@ -151,6 +152,7 @@ class SetPrice extends Component {
               }
 
             } ).catch(  err => {
+              console.log(err);
               err = err.response;
               if(err.status === 401 || err.statusText === "Unauthorized" )
                {

@@ -6,7 +6,7 @@ function Table(props) {
    return(
     <tr key={row.id}>
       <td> {index + 1} </td>
-    <td> {row.product.name + " | " + row.product.weight+row.product.weight_type + " | " + row.product.brand } </td>
+    <td> {row.product.name + " | " + row.product.weight+row.product.weight_type + " | " + (row.product.brand?row.product.brand.brand_name:"") } </td>
     <td> {row.quantity} Pcs. </td>
    <td> Rs. {row.price} /- per Pcs. </td>
     <td> Rs. {row.price * row.quantity} /-</td>

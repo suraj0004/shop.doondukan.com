@@ -42,7 +42,7 @@ function Table(props) {
                                  date={ item.created_at }
                                  />
                             </td>
-                        <td> { item.product.name + " | " + item.product.weight + item.product.weight_type + " | " +  item.product.brand } </td>
+                        <td> { item.product.name + " | " + item.product.weight + item.product.weight_type  } </td>
                         <td> {item.quantity} </td>
                         <td> { (item.price).toFixed(8) } </td>
                         <td>{Math.round(item.quantity * (item.price).toFixed(8)) } </td>
@@ -52,20 +52,20 @@ function Table(props) {
                 }
 
                 {
-                   temp.map( (item,index) => {
-                      console.log(item);
-                    return (
+                  //  temp.map( (item,index) => {
+                  //     console.log(item);
+                  //   return (
                       
-                       <tr key={index.toString() } >
-                       <td> {index + 1 } </td>
-                       <td> { item.created_at } </td>
-                       <td> { item.product_temp.name + " | " + item.product_temp.weight + item.product_temp.weight_type + " | " +  item.product_temp.brand } </td>
-                       <td> {item.quantity} </td>
-                       <td> {item.price} </td>
-                       <td>{item.quantity * item.price } </td>
-                     </tr>
-                    );
-                   })
+                  //      <tr key={index.toString() } >
+                  //      <td> {index + 1 } </td>
+                  //      <td> { item.created_at } </td>
+                  //      <td> { item.product_temp.name + " | " + item.product_temp.weight + item.product_temp.weight_type + " | " +  item.product_temp.brand } </td>
+                  //      <td> {item.quantity} </td>
+                  //      <td> {item.price} </td>
+                  //      <td>{item.quantity * item.price } </td>
+                  //    </tr>
+                  //   );
+                  //  })
                 }
            
             </tbody>

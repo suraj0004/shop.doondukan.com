@@ -56,9 +56,7 @@ class  Header extends React.Component {
               <li className="nav-item d-none d-sm-inline-block">
                 <Link to="/" className="nav-link">Dashboard</Link>
               </li>
-              <li className="nav-item d-none d-sm-inline-block">
-                <Link to="/contact" className="nav-link">Contact</Link>
-              </li>
+             
             </ul>
         
          

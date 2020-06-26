@@ -38,7 +38,7 @@ function Table(props) {
                                  />
                             </td>
                       
-                        <td> { item.product.name + " | " + item.product.weight + item.product.weight_type + " | " +  item.product.brand } </td>
+                        <td> { item.product.name + " | " + item.product.weight + item.product.weight_type } </td>
                         <td> {item.quantity} </td>
                         <td> {item.price} </td>
                         
@@ -47,20 +47,20 @@ function Table(props) {
                     } )
                 }
               {
-                    temp.map( (item,index) => {
+                    // temp.map( (item,index) => {
                       
-                     return (
+                    //  return (
                        
-                        <tr key={index.toString() } >
-                        <td> {index + 1 } </td>
-                        <td> { item.last_purchased_at } </td>
-                        <td> { item.temp_product.name + " | " + item.temp_product.weight + item.temp_product.weight_type + " | " +  item.temp_product.brand } </td>
-                        <td> {item.quantity} </td>
-                        <td> {item.price} </td>
+                    //     <tr key={index.toString() } >
+                    //     <td> {index + 1 } </td>
+                    //     <td> { item.last_purchased_at } </td>
+                    //     <td> { item.temp_product.name + " | " + item.temp_product.weight + item.temp_product.weight_type + " | " +  item.temp_product.brand } </td>
+                    //     <td> {item.quantity} </td>
+                    //     <td> {item.price} </td>
                         
-                      </tr>
-                     );
-                    } )
+                    //   </tr>
+                    //  );
+                    // } )
                 }
            
             </tbody>
