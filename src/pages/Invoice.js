@@ -136,7 +136,13 @@ class Invoice extends Component {
     });
    
   }
-
+  setImage = () => {
+    var from = this.state.from;
+    from.logo = "/asset/dist/img/user2-160x160.jpg";
+    this.setState({
+      from: from
+    })
+  }
 
   render() {
 
@@ -183,7 +189,7 @@ class Invoice extends Component {
                 <div className="col-sm-2 invoice-col text-left img-responsive">
 
                   <img src={this.state.from.logo} className="profile-user-img img-fluid img-circle"
-                    alt="Shop picture"
+                  onError={this.setImage}  alt="Shop Logo"
                     style={{ height: "150px", width: "150px" }} />
 
                 </div>

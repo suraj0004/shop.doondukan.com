@@ -26,6 +26,7 @@ import QuantityVsProfit from './pages/reports/comparison/QuantityVsProfit';
 import SaleGrowth from './pages/reports/growth/SaleGrowth';
 import ProfitGrowth from './pages/reports/growth/ProfitGrowth';
 import PurchaseGrowth from './pages/reports/growth/PurchaseGrowth';
+import MyProductList from './pages/myProducts/MyProductList';
 
 class App extends Component { 
   
@@ -66,6 +67,8 @@ class App extends Component {
                     <ProtectedRoutes exact path='/sale-growth' component = {SaleGrowth} />
                     <ProtectedRoutes exact path='/profit-growth' component = {ProfitGrowth} />
                     <ProtectedRoutes exact path='/purchase-growth' component = {PurchaseGrowth} />
+
+                    <ProtectedRoutes exact path='/my-products' component = {MyProductList} />
 
 
                     

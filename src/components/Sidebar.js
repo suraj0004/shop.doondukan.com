@@ -346,7 +346,7 @@ class Sidebar extends React.Component {
                 </Link>
               </li> */}
               <li className="nav-item ">
-                <Link to='/temp-products' className={(props.pathname === "/temp-products") ? "nav-link active" : "nav-link "}  >
+                <Link to='/my-products' className={(props.pathname === "/my-products") ? "nav-link active" : "nav-link "}  >
                   <i className="nav-icon fas fa-user"></i>
                   <p>My Products</p>
                 </Link>

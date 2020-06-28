@@ -7,8 +7,8 @@ class Login extends Component {
       
        super(props);
        this.state = {
-         mobile : '',
-         password : '',
+         mobile : '9876543210',
+         password : '123456',
          remember : false,
          error :  '',
          isLoader : true,
@@ -50,7 +50,7 @@ class Login extends Component {
        }, () => {
         
         const postData = {
-          email : this.state.mobile,
+          phone : this.state.mobile,
           password : this.state.password
         };
  
