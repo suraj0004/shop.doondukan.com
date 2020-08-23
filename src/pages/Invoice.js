@@ -4,6 +4,7 @@ import PageLoader from '../components/PageLoader';
 
 import Info from './invoice/Info';
 import Table from './invoice/Table';
+import ReturnTable from './invoice/ReturnTable';
 
 import axios from 'axios';
 import UrlService from '../services/UrlService';
@@ -22,7 +23,12 @@ class Invoice extends Component {
       from: null,
       to: null,
       store: null,
-      sales: null,
+      main: null,
+      temp: null,
+      main_return: [],
+      temp_return: [],
+      main_return_latest: [],
+      temp_return_latest: [],
       discount: null,
       status: "Un-Paid"
     }
@@ -41,7 +47,29 @@ class Invoice extends Component {
       console.log("hitting API");
       if (res.data.success) {
 
-        console.log(res);
+
+        var sale_return;
+        var main_sale_return_product_latest = [], main_sale_return_product_previous = [];
+      for(let i = 0; i < res.data.data.main_sale_return_product.length; i++ ){
+        sale_return =  res.data.data.main_sale_return_product[i];
+        console.log(sale_return);
+               if(sale_return.latest == 1){
+                 main_sale_return_product_latest.push(sale_return);
+               }else{
+                main_sale_return_product_previous.push(sale_return);
+               }
+      }
+
+      var temp_sale_return_product_latest = [], temp_sale_return_product_previous = [];
+      for(let i = 0; i < res.data.data.temp_sale_return_product.length; i++ ){
+        sale_return =  res.data.data.temp_sale_return_product[i];
+               if(sale_return.latest == 1){
+                 temp_sale_return_product_latest.push(sale_return);
+               }else{
+                temp_sale_return_product_previous.push(sale_return);
+               }
+      }
+
         this.setState({
           isLoader: false,
           to: {
@@ -58,7 +86,14 @@ class Invoice extends Component {
             address: (res.data.data.store)? res.data.data.store.address:"Not-Specified",
             logo: (res.data.data.store)? UrlService.shopImageUrl() + res.data.data.store.user_id + '/' + res.data.data.store.logo:"Not-Specified",
           },
-          sales: res.data.data.sales,
+          main: res.data.data.main_sale_product,
+          temp: res.data.data.temp_sale_product,
+          // main_return: res.data.data.main_sale_return_product,
+          // temp_return: res.data.data.temp_sale_return_product,
+          main_return: main_sale_return_product_previous,
+          temp_return: temp_sale_return_product_previous ,
+          main_return_latest: main_sale_return_product_latest,
+          temp_return_latest: temp_sale_return_product_latest ,
           discount: {
             type: res.data.data.discount_type,
             amount: res.data.data.discount,
@@ -148,10 +183,21 @@ class Invoice extends Component {
 
     var discount = 0, total = 0;
     console.log(this.state.discount);
-    if (this.state.discount && this.state.sales) {
+    if (this.state.discount && (this.state.main || this.state.temp) ) {
 
-      for (let row of this.state.sales) {
-        total += row.price * row.quantity;
+      var arr = (this.state.main).concat(this.state.temp);
+      // console.log("arr");
+      // console.log(arr);
+      for (let row of arr ) {
+        let quantity=0;
+        if(row.deleted_at){
+          quantity = Number(row.return_quantity);
+        }else if(row.return_quantity){
+          quantity = Number(row.return_quantity) + Number(row.quantity);
+        }else{
+          quantity =  Number(row.quantity);
+        }
+        total += row.price * quantity;
       }
       if (this.state.discount.type === "percentage") {
         discount = ((total) * (this.state.discount.amount)) / 100;
@@ -219,24 +265,14 @@ class Invoice extends Component {
               </div>
 
 
-              <Table data={this.state.sales} />
+              <Table main={this.state.main}  temp={this.state.temp} />
 
 
 
               <div className="row">
 
                 <div className="col-6">
-                  {/* <p className="lead">Payment Methods:</p>
-                      <img src="/asset/dist/img/credit/visa.png" alt="Visa"/>
-                      <img src="/asset/dist/img/credit/mastercard.png" alt="Mastercard"/>
-                      <img src="/asset/dist/img/credit/american-express.png" alt="American Express"/>
-                      <img src="/asset/dist/img/credit/paypal2.png" alt="Paypal"/>
-    
-                      <p className="text-muted well well-sm shadow-none" style={{marginTop: '10px'}}>
-                        Etsy doostang zoodles disqus groupon greplin oooj voxy zoodles, weebly ning heekya handango imeem
-                        plugg
-                        dopplr jibjab, movity jajah plickers sifteo edmodo ifttt zimbra.
-                      </p> */}
+              
                 </div>
 
                 <div className="col-6">
@@ -245,18 +281,6 @@ class Invoice extends Component {
                   <div className="table-responsive">
                     <table className="table">
                       <tbody>
-                        {/* <tr>
-                            <th style={{width:'50%'}}>Subtotal:</th>
-                            <td>$250.30</td>
-                          </tr>
-                          <tr>
-                            <th>Tax (9.3%)</th>
-                            <td>$10.34</td>
-                          </tr>
-                          <tr>
-                            <th>Shipping:</th>
-                            <td>$5.80</td>
-                          </tr> */}
                         <tr>
                           <th>Total:</th>
                           <td> Rs. {total} /- </td>
@@ -266,7 +290,7 @@ class Invoice extends Component {
                           <td> Rs. {discount} /- </td>
                         </tr>
                         <tr>
-                          <th>Net Total:</th>
+                          <th>Net Total (<Moment local format="D MMM, YYYY h:mm a" date={this.state.to.date} />) :</th>
                           <td> <strong> Rs. {total - discount} /- </strong></td>
                         </tr>
                       </tbody>
@@ -276,6 +300,12 @@ class Invoice extends Component {
 
               </div>
 
+{
+  (this.state.main_return_latest.length != 0 || this.state.temp_return_latest.length != 0)?
+    <ReturnTable main={this.state.main_return}  temp={this.state.temp_return} main_latest={this.state.main_return_latest}  temp_latest={this.state.temp_return_latest} total={total} discount={discount} />
+    :null
+}
+              
 
 
               <div className="row no-print">

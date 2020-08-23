@@ -129,20 +129,20 @@ class SetPrice extends Component {
                     return option;
                 });
         
-              //   let options_temp = [];
-              //    options_temp = data.temp.map(item => {
-              //     let option = {
-              //       value : "",
-              //       label : "",
-              //      };
-              //      option.value = item.id + "," + item.price;
-              //     option.label =  item.temp_product.name+' | '+  item.temp_product.weight+' '+ item.temp_product.weight_type +' | '+item.temp_product.brand;
-              //     return option;
-              // });
+                let options_temp = [];
+                 options_temp = data.temp.map(item => {
+                  let option = {
+                    value : "",
+                    label : "",
+                   };
+                   option.value = item.id + "," + item.price;
+                  option.label =  item.temp_product.name+' | '+  item.temp_product.weight+' '+ item.temp_product.weight_type + `, (Purchased at Rs. ${(item.purchase_price)?item.purchase_price.price:0} /- Per Pec)` +" ( Custom Product ) ";
+                  return option;
+              });
         
                 this.setState({
-                  // options : options_temp.concat(options_main),
-                  options : options_main,
+                  options : options_temp.concat(options_main),
+                  // options : options_main,
                   isLoader : false,
                 });
               }else{

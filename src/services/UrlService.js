@@ -202,6 +202,35 @@ class UrlService{
         const apiUrl = '/retail/get-user-custom-product-list';
         return this.baseUrl + apiUrl;
     }
+
+    
+    globalAvailableStockListForPurchaseReturnUrl(){
+        const apiUrl = "/retail/get-stock-for-purchase-return";
+        return this.baseUrl + apiUrl;
+    }
+
+    returnPurchaseURL(){
+        const apiUrl = '/retail/add-purchase-return';
+        return this.baseUrl + apiUrl;
+    }
+
+    returnPurchaseListURL(){
+        const apiUrl = '/retail/purchase-return-list';
+        return this.baseUrl + apiUrl;
+    }
+
+    getSaleForReturnUrl(){
+        const apiUrl = '/retail/get-sale-for-return/';
+        return this.baseUrl + apiUrl;
+    }
+    returnSaleURL(){
+        const apiUrl = '/retail/add-sale-return';
+        return this.baseUrl + apiUrl;
+    }
+    returnSaleListURL(){
+        const apiUrl = '/retail/sale-return-list';
+        return this.baseUrl + apiUrl;
+    }
     
 
   

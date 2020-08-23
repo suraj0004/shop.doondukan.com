@@ -27,6 +27,10 @@ import SaleGrowth from './pages/reports/growth/SaleGrowth';
 import ProfitGrowth from './pages/reports/growth/ProfitGrowth';
 import PurchaseGrowth from './pages/reports/growth/PurchaseGrowth';
 import MyProductList from './pages/myProducts/MyProductList';
+import AddPurchaseReturn from './pages/addPurchaseReturn';
+import PurchaseReturnList from './pages/purchaseReturnList';
+import AddSaleReturn from './pages/addSaleReturn';
+import SaleReturnList from './pages/saleReturnList';
 
 class App extends Component { 
   
@@ -52,6 +56,12 @@ class App extends Component {
                     <ProtectedRoutes exact path='/saleList' component = {SaleList} />
                     <ProtectedRoutes exact path='/invoice/:id' component = {Invoice} />
                     <ProtectedRoutes exact path='/profile' component = {Profile} />
+                    
+                    <ProtectedRoutes exact path='/addPurchaseReturn' component = {AddPurchaseReturn} />
+                    <ProtectedRoutes exact path='/purchaseReturnList' component = {PurchaseReturnList} />
+
+                    <ProtectedRoutes exact path='/addSaleReturn' component = {AddSaleReturn} />
+                    <ProtectedRoutes exact path='/saleReturnList' component = {SaleReturnList} />
 
                     <ProtectedRoutes exact path='/top-highest-selling-products' component = {HighestSelling} />
                     <ProtectedRoutes exact path='/top-lowest-selling-products' component = {LowestSelling} />

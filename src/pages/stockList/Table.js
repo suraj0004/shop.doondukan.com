@@ -24,6 +24,33 @@ function Table(props) {
             </tr>
             </thead>
             <tbody>
+
+
+
+
+
+            {
+                    temp.map( (item,index) => {
+                      
+                     return (
+                       
+                        <tr key={index.toString() } >
+                        <td> {index + 1 }  <span className="badge badge-warning">Custom Product</span> </td>
+                        <td> <Moment                              
+                                 local
+                                 format="D MMM, YYYY h:mm a"
+                                 date={ item.last_purchased_at }
+                                 />
+                            </td>
+                        <td> { item.temp_product.name + " | " + item.temp_product.weight + item.temp_product.weight_type } </td>
+                        <td> {item.quantity} </td>
+                        <td> {item.price} </td>
+                        
+                      </tr>
+                     );
+                    } )
+                }
+                
                 {
                     main.map( (item,index) => {
                       
@@ -46,22 +73,7 @@ function Table(props) {
                      );
                     } )
                 }
-              {
-                    // temp.map( (item,index) => {
-                      
-                    //  return (
-                       
-                    //     <tr key={index.toString() } >
-                    //     <td> {index + 1 } </td>
-                    //     <td> { item.last_purchased_at } </td>
-                    //     <td> { item.temp_product.name + " | " + item.temp_product.weight + item.temp_product.weight_type + " | " +  item.temp_product.brand } </td>
-                    //     <td> {item.quantity} </td>
-                    //     <td> {item.price} </td>
-                        
-                    //   </tr>
-                    //  );
-                    // } )
-                }
+            
            
             </tbody>
            

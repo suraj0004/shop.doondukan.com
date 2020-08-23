@@ -172,6 +172,58 @@ class Sidebar extends React.Component {
               </li>
 
 
+              <li className="nav-header">Return</li>
+
+              <li className={(props.pathname === "/addPurchaseReturn" || props.pathname === "/purchaseReturnList" || this.state.menu === "purchaseReturn") ? "nav-item has-treeview menu-open" : "nav-item has-treeview"} >
+                <a onClick={() => this.menuClick("purchaseReturn")} className="nav-link " >
+                  <i className="nav-icon fas fa-exchange-alt"></i>
+                  <p>
+                    Purchase Return
+                <i className="right fas fa-angle-left"></i>
+                  </p>
+                </a>
+                <ul className="nav nav-treeview ">
+                  <li className="nav-item">
+                    <Link to='/addPurchaseReturn' className={(props.pathname === "/addPurchaseReturn") ? "nav-link active" : "nav-link "} >
+                      <i className="nav-icon fa fa-plus"></i>
+                      <p>Add Return</p>
+                    </Link>
+                  </li>
+                  <li className="nav-item">
+                    <Link to='/purchaseReturnList' className={(props.pathname === "/purchaseReturnList") ? "nav-link active" : "nav-link "} >
+                      <i className="nav-icon fa fa-clipboard-list"></i>
+                      <p>Return List</p>
+                    </Link>
+                  </li>
+
+                </ul>
+              </li>
+
+
+              <li className={(props.pathname === "/addSaleReturn" || props.pathname === "/saleReturnList" || this.state.menu === "sellReturn") ? "nav-item has-treeview menu-open" : "nav-item has-treeview"} >
+                <a onClick={() => this.menuClick("sellReturn")} className="nav-link " >
+                  <i className="nav-icon fas fa-undo"></i>
+                  <p>
+                    Sale Return
+                <i className="right fas fa-angle-left"></i>
+                  </p>
+                </a>
+                <ul className="nav nav-treeview ">
+                  <li className="nav-item">
+                    <Link to='/addSaleReturn' className={(props.pathname === "/addSaleReturn") ? "nav-link active" : "nav-link "} >
+                    <i className="nav-icon fa fa-plus"></i>
+                      <p>Add Return</p>
+                    </Link>
+                  </li>
+                  <li className="nav-item">
+                    <Link to='/saleReturnList' className={(props.pathname === "/saleReturnList") ? "nav-link active" : "nav-link "} >
+                    <i className="nav-icon fa fa-clipboard-list"></i>
+                      <p>Return List</p>
+                    </Link>
+                  </li>
+
+                </ul>
+              </li>
 
 
 

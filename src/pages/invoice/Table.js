@@ -1,18 +1,47 @@
 import React from 'react';
 
 function Table(props) {
-
-  const data = props.data.map( (row,index) => {
+  
+  const {main,temp} = props;
+  const main_data = main.map( (row,index) => {
+    let quantity=0;
+    if(row.deleted_at){
+      quantity = Number(row.return_quantity);
+    }else if(row.return_quantity){
+      quantity = Number(row.return_quantity) + Number(row.quantity);
+    }else{
+      quantity =  Number(row.quantity);
+    }
    return(
     <tr key={row.id}>
       <td> {index + 1} </td>
     <td> {row.product.name + " | " + row.product.weight+row.product.weight_type + " | " + (row.product.brand?row.product.brand.brand_name:"") } </td>
-    <td> {row.quantity} Pcs. </td>
+    <td> {quantity} Pcs. </td>
    <td> Rs. {row.price} /- per Pcs. </td>
-    <td> Rs. {row.price * row.quantity} /-</td>
+    <td> Rs. {row.price * quantity} /-</td>
   </tr>
    );
   } );
+
+  const temp_data = temp.map( (row,index) => {
+    let quantity=0;
+    if(row.deleted_at){
+      quantity = Number(row.return_quantity);
+    }else if(row.return_quantity){
+      quantity = Number(row.return_quantity) + Number(row.quantity);
+    }else{
+      quantity =  Number(row.quantity);
+    }
+    return(
+     <tr key={row.id}>
+       <td> {index + 1} </td>
+     <td> {row.temp_product.name + " | " + row.temp_product.weight+row.temp_product.weight_type + " | " + (row.temp_product.brand?row.temp_product.brand.brand_name:"") } </td>
+     <td> {quantity} Pcs. </td>
+    <td> Rs. {row.price} /- per Pcs. </td>
+     <td> Rs. {row.price * quantity} /-</td>
+   </tr>
+    );
+   } );
     return (
         <div className="row">
         <div className="col-12 table-responsive">
@@ -22,13 +51,14 @@ function Table(props) {
             <th>#</th>
               <th>Product</th>
               <th>Qty</th>
-              <th>Price Per Pcs</th>
-              <th>Subtotal</th>
+              <th>Price ( Per Pcs )</th>
+              <th>Sub-total</th>
             </tr>
             </thead>
             <tbody>
             
-          {data}
+          {main_data}
+          {temp_data}
             </tbody>
           </table>
         </div>
