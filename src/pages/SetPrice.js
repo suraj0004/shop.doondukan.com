@@ -63,12 +63,20 @@ class SetPrice extends Component {
                headers : auth.apiHeader()
              }).then( res => {
                  if(res.data.success){
+                  var options = this.state.options;
+                  options.map((option) => {
+                    if(option == this.state.selectedOption){
+                      option.value = postData.stock_id + ',' + postData.price;
+                    }
+                    return option;
+                  });
                   this.setState({
                     response : "Successfully Added Selling price, Check your Stock list for details.",
                     responseClass : "text-success",
                     selectedOption: null,
                     price : "", 
                     isLoader : false,
+                    options : options
                   });
                  }else{
                   this.setState({
