@@ -7,8 +7,8 @@ class Login extends Component {
       
        super(props);
        this.state = {
-         mobile : '9876543210',
-         password : '123456',
+         mobile : '8954836965',
+         password : 'password',
          remember : false,
          error :  '',
          isLoader : true,
