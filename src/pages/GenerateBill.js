@@ -131,13 +131,13 @@ class GenerateBill extends Component {
 
           return;
         }
-        console.log(rows);
+        // console.log(rows);
         var total = 0;
        for(var i = 0; i<rows.length; i++){
-         console.log(rows[i]);
+        //  console.log(rows[i]);
          total += rows[i].price * rows[i].sell_quantity;
        }
-        console.log(total);
+        // console.log(total);
         this.setState({
           rows : rows,
           response : "",
@@ -224,9 +224,16 @@ class GenerateBill extends Component {
                return i !== index;
             });
 
+            var total = 0;
+            for(var i = 0; i<rows.length; i++){
+             //  console.log(rows[i]);
+              total += rows[i].price * rows[i].sell_quantity;
+            }
+
         this.setState({ 
           rows : rows,
           response : "",
+          total : total,
        });
       }
 
