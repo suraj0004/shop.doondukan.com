@@ -1,8 +1,8 @@
 class UrlService{
 
     constructor(){
-        this.baseUrl = "http://localhost/shopinventorymanagement/public/api";
-        this.imagePath = "http://localhost/shopinventorymanagement/public";
+        this.baseUrl = process.env.REACT_APP_API_BASE_PATH;
+        this.imagePath = process.env.REACT_APP_API_IMAGE_PATH;
     }
 
 
