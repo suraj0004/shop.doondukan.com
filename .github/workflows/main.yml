@@ -15,10 +15,6 @@ jobs:
       
     - name: 🔨 Build Project
       run: |
-        cat <<EOT >> .env
-        REACT_APP_API_BASE_PATH=${{ secrets.live_api_base_path }}
-        REACT_APP_API_IMAGE_PATH=${{ secrets.live_api_image_path }}
-        EOT
         npm install
         npm run build
     
