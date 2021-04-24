@@ -7,6 +7,20 @@ jobs:
     steps:
     - name: 🚚 Get latest code
       uses: actions/checkout@v2.3.2
+
+    - name: Use Node.js 12
+      uses: actions/setup-node@v2-beta
+      with:
+        node-version: '12'
+      
+    - name: 🔨 Build Project
+      run: |
+        cat <<EOT >> .env
+        REACT_APP_API_BASE_PATH=${{ secrets.live_api_base_path }}
+        REACT_APP_API_IMAGE_PATH=${{ secrets.live_api_image_path }}
+        EOT
+        npm install
+        npm run build
     
     - name: 📂 Sync files
       uses: SamKirkland/FTP-Deploy-Action@4.0.0
