@@ -7,7 +7,7 @@ import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import AddPurchase from './pages/AddPurchase';
 import PurchaseList from './pages/PurchaseList';
-import StockList from "./pages/StockList.js";
+import StockList from "./pages/StockList";
 import SetPrice from './pages/SetPrice'; 
 import GenerateBill from './pages/GenerateBill';
 import BillList from './pages/BillList';
