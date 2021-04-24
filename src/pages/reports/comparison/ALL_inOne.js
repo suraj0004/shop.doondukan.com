@@ -6,7 +6,7 @@ import PageLoader from '../../../components/PageLoader';
 import CanvasJSReact from '../../../assets/canvasjs.react';
 import axios from 'axios';
 
-import Moment from 'react-moment';
+// import Moment from 'react-moment';
 import 'moment-timezone';
 import Percentage from '../Percentage';
 import MoreDetails from '../MoreDetails';
@@ -304,7 +304,7 @@ class ALL_inOne extends Component {
                                   <td> {item.created_at} </td>
                                   <td> Rs. {item.cost} /-</td>
                                   <td> Rs. {item.sale} /-</td>
-                                  <td className={ (item.profit <= 0)?( (item.profit == 0)?"bg-warning":"bg-danger" ):"" } > Rs. {item.profit} /-</td>
+                                  <td className={ (item.profit <= 0)?( (item.profit === 0)?"bg-warning":"bg-danger" ):"" } > Rs. {item.profit} /-</td>
                                 </tr>
                               })
                             }

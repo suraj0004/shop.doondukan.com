@@ -41,7 +41,7 @@ class AddPurchaseReturn extends Component {
         var response = "";
         const return_quantity = Number(event.target.value);
         const max_quantity = Number(this.state.max_quantity);
-        if(event.target.name == "return_quantity" && return_quantity > max_quantity  ){
+        if(event.target.name === "return_quantity" && return_quantity > max_quantity  ){
             response = ` Return Quantity must be less than ${max_quantity} `;
         }
         this.setState({

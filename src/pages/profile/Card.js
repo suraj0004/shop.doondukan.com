@@ -31,7 +31,7 @@ function Card(props) {
                  src={image}
                  ref={imageRef}
                  onError={() => setErrorImage()}
-                 alt="User profile picture"
+                 alt="User profile"
                  style={{height:"120px",width:"120px"}}
                  />
           </div>
@@ -44,10 +44,10 @@ function Card(props) {
 
           <ul className="list-group list-group-unbordered mb-3">
             <li className="list-group-item">
-              <b>Total Product</b> <a className="float-right">1,622</a>
+              <b>Total Product</b> <span className="float-right">1,622</span>
             </li>
             <li className="list-group-item">
-              <b>In Stock</b> <a className="float-right">1413</a>
+              <b>In Stock</b> <span className="float-right">1413</span>
             </li>
          
           </ul>

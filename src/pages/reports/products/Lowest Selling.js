@@ -133,7 +133,6 @@ class LowestSelling extends Component {
       title: {
         text: `${this.state.top} Lowest Selling Products`,
       },
-      animationEnabled: true,
       data: [
         {
           // Change type to "doughnut", "line", "splineArea", etc.

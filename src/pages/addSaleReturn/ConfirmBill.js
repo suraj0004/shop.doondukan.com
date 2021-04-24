@@ -2,7 +2,7 @@ import React from 'react';
 
 function ConfirmBill(props) {
   
-    const {handleConfirmBillSubmmit,error,bill_id,handleConfirmBillChnage } = props;
+    const {handleConfirmBillSubmmit,bill_id,handleConfirmBillChnage } = props;
     return (
       <div className="row">
         <div className="col-md-4"></div>

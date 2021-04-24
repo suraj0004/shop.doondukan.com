@@ -6,7 +6,7 @@ import PageLoader from '../../../components/PageLoader';
 import CanvasJSReact from '../../../assets/canvasjs.react';
 import axios from 'axios';
 
-import Moment from 'react-moment';
+// import Moment from 'react-moment';
 import 'moment-timezone';
 import Percentage from '../Percentage';
 import MoreDetails from '../MoreDetails';

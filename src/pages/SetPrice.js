@@ -65,7 +65,7 @@ class SetPrice extends Component {
                  if(res.data.success){
                   var options = this.state.options;
                   options.map((option) => {
-                    if(option == this.state.selectedOption){
+                    if(option === this.state.selectedOption){
                       option.value = postData.stock_id + ',' + postData.price;
                     }
                     return option;
@@ -144,7 +144,7 @@ class SetPrice extends Component {
                     label : "",
                    };
                    option.value = item.id + "," + item.price;
-                  option.label =  item.temp_product.name+' | '+  item.temp_product.weight+' '+ item.temp_product.weight_type + `, (Purchased at Rs. ${(item.purchase_price)?item.purchase_price.price:0} /- Per Pec)` +" ( Custom Product ) ";
+                   option.label = `${item.temp_product.name} | ${item.temp_product.weight} ${item.temp_product.weight_type},(Purchased at Rs. ${(item.purchase_price)?item.purchase_price.price:0} /- Per Pec) ( Custom Product )`;
                   return option;
               });
         

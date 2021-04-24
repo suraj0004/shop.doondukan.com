@@ -53,7 +53,7 @@ class Invoice extends Component {
       for(let i = 0; i < res.data.data.main_sale_return_product.length; i++ ){
         sale_return =  res.data.data.main_sale_return_product[i];
         console.log(sale_return);
-               if(sale_return.latest == 1){
+               if(sale_return.latest === 1){
                  main_sale_return_product_latest.push(sale_return);
                }else{
                 main_sale_return_product_previous.push(sale_return);
@@ -63,7 +63,7 @@ class Invoice extends Component {
       var temp_sale_return_product_latest = [], temp_sale_return_product_previous = [];
       for(let i = 0; i < res.data.data.temp_sale_return_product.length; i++ ){
         sale_return =  res.data.data.temp_sale_return_product[i];
-               if(sale_return.latest == 1){
+               if(sale_return.latest === 1){
                  temp_sale_return_product_latest.push(sale_return);
                }else{
                 temp_sale_return_product_previous.push(sale_return);
@@ -301,7 +301,7 @@ class Invoice extends Component {
               </div>
 
 {
-  (this.state.main_return_latest.length != 0 || this.state.temp_return_latest.length != 0)?
+  (this.state.main_return_latest.length !== 0 || this.state.temp_return_latest.length !== 0)?
     <ReturnTable main={this.state.main_return}  temp={this.state.temp_return} main_latest={this.state.main_return_latest}  temp_latest={this.state.temp_return_latest} total={total} discount={discount} />
     :null
 }

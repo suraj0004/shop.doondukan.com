@@ -5,11 +5,11 @@ import 'moment-timezone';
 
 function Card(props) {
     const { customer_name, customer_email, customer_mobile, id, sales_count, sales_price,created_at  } = props.bill;
-     
+     var status;
     if(props.bill.status && props.bill.status === "paid"){
-        var status = <span className="text-right text-success float-right"><b>  <i className="fa fa-rupee-sign"></i> Paid </b></span>
+         status = <span className="text-right text-success float-right"><b>  <i className="fa fa-rupee-sign"></i> Paid </b></span>
     }else{
-        var status = <span className="text-right text-warning float-right"><b>   <i className="fas fa-exclamation-triangle"></i> Un-Paid </b></span>
+         status = <span className="text-right text-warning float-right"><b>   <i className="fas fa-exclamation-triangle"></i> Un-Paid </b></span>
     }
     return (
         <div className="col-12 col-sm-6 col-md-3 d-flex align-items-stretch" >

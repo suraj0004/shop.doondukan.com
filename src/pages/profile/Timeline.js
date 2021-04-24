@@ -17,7 +17,7 @@ function Timeline(props) {
                         <div className="timeline-item">
                           <span className="time"><i className="far fa-clock"></i> 12:05</span>
 
-                          <h3 className="timeline-header"><a href="#">Maggie | 100gm | Nestly </a>purchased 200 pcs @ Rs 10 /- per pic. </h3>
+                          <h3 className="timeline-header"><span>Maggie | 100gm | Nestly </span>purchased 200 pcs @ Rs 10 /- per pic. </h3>
 
                         
                          
@@ -31,7 +31,7 @@ function Timeline(props) {
                         <div className="timeline-item">
                           <span className="time"><i className="far fa-clock"></i> 5 mins ago</span>
 
-                          <h3 className="timeline-header border-0"><a href="#">#MeriDukan-19287</a> Bill Generated
+                          <h3 className="timeline-header border-0"><span>#MeriDukan-19287</span> Bill Generated
                           </h3>
                         </div>
                       </div>

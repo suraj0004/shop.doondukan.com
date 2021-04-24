@@ -1,6 +1,6 @@
 import React from 'react';
 import {Link,withRouter }from 'react-router-dom';
-import auth from '../services/AuthService';
+// import auth from '../services/AuthService';
 
 class  Header extends React.Component {
   constructor(props) {
@@ -51,7 +51,7 @@ class  Header extends React.Component {
             
             <ul className="navbar-nav">
               <li className="nav-item">
-                <button  className="btn nav-link" type="button" role="button" data-widget="pushmenu" ><i className="fas fa-bars"></i></button>
+                <button  className="btn nav-link" type="button" data-widget="pushmenu" ><i className="fas fa-bars"></i></button>
               </li>
               <li className="nav-item d-none d-sm-inline-block">
                 <Link to="/" className="nav-link">Dashboard</Link>

@@ -12,8 +12,9 @@ function PageLoader(props) {
     "text-dark"
   ];
 
+  var loaders;
   if(props.error === ""){
-                        var loaders = colors.map( (color,index) =>
+                         loaders = colors.map( (color,index) =>
                                 {
                                 return   <div key={index.toString()}
                                            className={"spinner-grow "+ color} 
@@ -24,7 +25,7 @@ function PageLoader(props) {
                                          </div>
                                 });
   }else{
-          var loaders =  <div 
+           loaders =  <div 
                            className="text-danger"> 
                            {props.error} 
                           </div>

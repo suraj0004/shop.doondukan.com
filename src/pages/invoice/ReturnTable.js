@@ -76,7 +76,7 @@ function ReturnTable(props) {
     });
 
     var data = [] ,tr;
-    if(main_data.length == 0 && temp_data.length == 0 ){
+    if(main_data.length === 0 && temp_data.length === 0 ){
       data = main_data_latest.concat(temp_data_latest);
     }else{
         tr = <tr className="text-center" > <th colSpan='5'> __________Perivous Return ( <Moment local format="D MMM, YYYY h:mm a" date={previous_return_date} /> ) __________ </th> </tr>;

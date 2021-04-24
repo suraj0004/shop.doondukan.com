@@ -160,7 +160,6 @@ class HighestSelling extends Component {
       title: {
         text: `Top ${this.state.top} Highest Selling Products`,
       },
-      animationEnabled: true,
       data: [
         {
           // Change type to "doughnut", "line", "splineArea", etc.
