@@ -13,6 +13,13 @@ jobs:
       with:
         node-version: '12'
       
+    - name: 🔨 Creating ENV file
+      run: |
+        cat <<EOT >> .env
+        REACT_APP_API_BASE_PATH=${{ secrets.LIVE_API_BASE_PATH }}
+        REACT_APP_API_IMAGE_PATH=${{ secrets.LIVE_API_IMAGE_PATH }}
+        EOT
+        cat .env
     - name: 🔨 Build Project
       run: |
         npm install
