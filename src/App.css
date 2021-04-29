@@ -20,3 +20,9 @@
   background: #4400ff !important; 
   border-radius: 10px !important;
 }
+
+.sidebar-menu {
+  background: none;
+  border: none;
+  color: #c2c7d0 !important;
+}
