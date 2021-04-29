@@ -108,13 +108,13 @@ class Sidebar extends React.Component {
               <li className="nav-header">Operations</li>
 
               <li className={(props.pathname === "/addPurchase" || props.pathname === "/purchaseList" || this.state.menu === "purchase") ? "nav-item has-treeview menu-open" : "nav-item has-treeview"} >
-                <button onClick={() => this.menuClick("purchase")} className="nav-link " >
+                <div onClick={() => this.menuClick("purchase")} className="nav-link sidebar-menu" >
                   <i className="nav-icon fas fa-money-bill-alt"></i>
                   <p>
                     Purchases
                 <i className="right fas fa-angle-left"></i>
                   </p>
-                </button>
+                </div>
                 <ul className="nav nav-treeview ">
                   <li className="nav-item">
                     <Link to='/addPurchase' className={(props.pathname === "/addPurchase") ? "nav-link active" : "nav-link "} >
@@ -134,13 +134,13 @@ class Sidebar extends React.Component {
 
 
               <li className={(props.pathname === "/setPrice" || props.pathname === "/stockList" || this.state.menu === "stock") ? "nav-item has-treeview menu-open" : "nav-item has-treeview"} >
-                <button onClick={() => this.menuClick("stock")} className="nav-link " >
+                <div onClick={() => this.menuClick("stock")} className="nav-link sidebar-menu" >
                   <i className="nav-icon fas fa-boxes"></i>
                   <p>
                     Stock
                 <i className="right fas fa-angle-left"></i>
                   </p>
-                </button>
+                </div>
                 <ul className="nav nav-treeview ">
                   <li className="nav-item">
                     <Link to='/setPrice' className={(props.pathname === "/setPrice") ? "nav-link active" : "nav-link "} >
@@ -175,13 +175,13 @@ class Sidebar extends React.Component {
               <li className="nav-header">Return</li>
 
               <li className={(props.pathname === "/addPurchaseReturn" || props.pathname === "/purchaseReturnList" || this.state.menu === "purchaseReturn") ? "nav-item has-treeview menu-open" : "nav-item has-treeview"} >
-                <button onClick={() => this.menuClick("purchaseReturn")} className="nav-link " >
+                <div onClick={() => this.menuClick("purchaseReturn")} className="nav-link sidebar-menu" >
                   <i className="nav-icon fas fa-exchange-alt"></i>
                   <p>
                     Purchase Return
                 <i className="right fas fa-angle-left"></i>
                   </p>
-                </button>
+                </div>
                 <ul className="nav nav-treeview ">
                   <li className="nav-item">
                     <Link to='/addPurchaseReturn' className={(props.pathname === "/addPurchaseReturn") ? "nav-link active" : "nav-link "} >
@@ -201,13 +201,13 @@ class Sidebar extends React.Component {
 
 
               <li className={(props.pathname === "/addSaleReturn" || props.pathname === "/saleReturnList" || this.state.menu === "sellReturn") ? "nav-item has-treeview menu-open" : "nav-item has-treeview"} >
-                <button onClick={() => this.menuClick("sellReturn")} className="nav-link " >
+                <div onClick={() => this.menuClick("sellReturn")} className="nav-link sidebar-menu" >
                   <i className="nav-icon fas fa-undo"></i>
                   <p>
                     Sale Return
                 <i className="right fas fa-angle-left"></i>
                   </p>
-                </button>
+                </div>
                 <ul className="nav nav-treeview ">
                   <li className="nav-item">
                     <Link to='/addSaleReturn' className={(props.pathname === "/addSaleReturn") ? "nav-link active" : "nav-link "} >
@@ -239,13 +239,13 @@ class Sidebar extends React.Component {
                   || this.state.menu === "products"
                 ) ? "nav-item has-treeview menu-open" : "nav-item has-treeview"
               } >
-                <button onClick={() => this.menuClick("products")} className="nav-link " >
+                <div onClick={() => this.menuClick("products")} className="nav-link sidebar-menu" >
                   <i className="nav-icon fas fa-database"></i>
                   <p>
                     Products
       <i className="right fas fa-angle-left"></i>
                   </p>
-                </button>
+                </div>
                 <ul className="nav nav-treeview ">
                   <li className="nav-item">
                     <Link to='/top-highest-selling-products' className={(props.pathname === "/top-highest-selling-products") ? "nav-link active" : "nav-link "} >
@@ -300,13 +300,13 @@ class Sidebar extends React.Component {
                   || this.state.menu === "comparison"
                 ) ? "nav-item has-treeview menu-open" : "nav-item has-treeview"
               } >
-                <button onClick={() => this.menuClick("comparison")} className="nav-link " >
+                <div onClick={() => this.menuClick("comparison")} className="nav-link sidebar-menu" >
                   <i className="nav-icon fas fa-greater-than-equal"></i>
                   <p>
                     Comparison
       <i className="right fas fa-angle-left"></i>
                   </p>
-                </button>
+                </div>
                 <ul className="nav nav-treeview ">
                   <li className="nav-item">
                     <Link to='/sale-vs-profit' className={(props.pathname === "/sale-vs-profit") ? "nav-link active" : "nav-link "} >
@@ -350,13 +350,13 @@ class Sidebar extends React.Component {
                   || this.state.menu === "growth"
                 ) ? "nav-item has-treeview menu-open" : "nav-item has-treeview"
               } >
-                <button onClick={() => this.menuClick("growth")} className="nav-link " >
+                <div onClick={() => this.menuClick("growth")} className="nav-link sidebar-menu" >
                   <i className="nav-icon fas fa-hand-holding-water"></i>
                   <p>
                     Growth
       <i className="right fas fa-angle-left"></i>
                   </p>
-                </button>
+                </div>
                 <ul className="nav nav-treeview ">
                   <li className="nav-item">
                     <Link to='/sale-growth' className={(props.pathname === "/sale-growth") ? "nav-link active" : "nav-link "} >
