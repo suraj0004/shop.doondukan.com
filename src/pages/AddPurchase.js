@@ -211,6 +211,16 @@ class AddPurchase extends Component {
    
   };
 
+  handleReset = event => {
+    this.setState({
+      selectedOption: null,
+      price_type : "lumsum",
+      price : "",
+      quantity : "",
+      total : 0,
+    })
+  }
+
     render() {
        
       const { selectedOption,options } = this.state;
@@ -283,7 +293,7 @@ class AddPurchase extends Component {
                 </div>
                 
                 <div className="card-footer">
-                  <button type="reset" className="btn btn-default ">Cancel</button>
+                  <button type="reset" onClick={this.handleReset} className="btn btn-default ">Reset</button>
                   <button type="submit" className="btn btn-info float-right">Add</button>
                 </div>
                 
