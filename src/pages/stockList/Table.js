@@ -1,11 +1,9 @@
-import React,{useEffect} from 'react';
+import React from 'react';
 import Moment from 'react-moment';
 import 'moment-timezone';
 function Table(props) {
-  useEffect(()=>{
-    window.setDataTable();
-  },[]);
     const {main,temp} = props.data;
+    let sno = 0;
     return (
         <div className="card">
                        
@@ -30,12 +28,12 @@ function Table(props) {
 
 
             {
-                    temp.map( (item,index) => {
-                      
+                    temp.map( (item) => {
+                      sno++
                      return (
                        
-                        <tr key={index.toString() } >
-                        <td> {index + 1 }  <span className="badge badge-warning">Custom Product</span> </td>
+                        <tr key={sno.toString() } >
+                        <td> {sno }  <span className="badge badge-warning">Custom Product</span> </td>
                         <td> <Moment                              
                                  local
                                  format="D MMM, YYYY h:mm a"
@@ -52,12 +50,12 @@ function Table(props) {
                 }
                 
                 {
-                    main.map( (item,index) => {
-                      
+                    main.map( (item) => {
+                      sno++
                      return (
                        
-                        <tr key={index.toString() } >
-                        <td> {index + 1 } </td>
+                        <tr key={sno.toString() } >
+                        <td> {sno } </td>
                         <td> <Moment                              
                                  local
                                  format="D MMM, YYYY h:mm a"
