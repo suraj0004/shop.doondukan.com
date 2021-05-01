@@ -127,7 +127,7 @@ setLoader(true);
 
                     <div className="col-sm-6">
                     <Field
-                    type="text"
+                    type="number"
                     className="form-control"
                     placeholder="Enter Your Product weight"
                     name="weight"

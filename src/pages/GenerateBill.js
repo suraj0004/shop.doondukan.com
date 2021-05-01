@@ -422,7 +422,7 @@ class GenerateBill extends Component {
                     <td> { (item.price === "")?"----" : "Rs. " + item.price + " /-" } </td>
                     <td> <input 
                             value={item.sell_quantity} 
-                            type="text" 
+                            type="number" 
                             className="form-control"
                             name="quantity" 
                             placeholder="Enter Quantity"  
