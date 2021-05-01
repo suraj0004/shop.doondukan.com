@@ -43,12 +43,14 @@ class GenerateBill extends Component {
                if(res.data.success){
                 const data = res.data.data;
                 let options_main = data.main.map(item => {
+                  console.log(item.product);
                     let option = {
                       value : "",
                       label : "",
                      };
                     option.value = item.id+','+item.price+','+item.quantity;
-                    option.label =  item.product.name+' | '+  item.product.weight+' '+ item.product.weight_type +' | '+item.product.brand;
+                    let brand = (item.product?.brand?.brand_name)?(' | '+item.product.brand.brand_name):''
+                    option.label =  item.product.name+' | '+  item.product.weight+' '+ item.product.weight_type + brand;
                     return option;
                 });
         
@@ -58,7 +60,8 @@ class GenerateBill extends Component {
                     label : "",
                    };
                    option.value = item.id+','+item.price+','+item.quantity;
-                   option.label =  item.temp_product.name+' | '+  item.temp_product.weight+' '+ item.temp_product.weight_type + " ( Custom Product) ";
+                   let brand = (item.temp_product?.brand?.brand_name)?(' | '+item.temp_product.brand.brand_name):''
+                   option.label =  item.temp_product.name+' | '+  item.temp_product.weight+' '+ item.temp_product.weight_type + brand + " ( Custom Product) ";
                   return option;
               });
         
