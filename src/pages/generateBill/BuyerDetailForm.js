@@ -46,7 +46,7 @@ function BuyerDetailForm(props) {
                     <input  
                          onChange={ props.handleBuyerDetails}  
                          value={buyer_mobile} 
-                         type="text" 
+                         type="number" 
                          className="form-control" 
                          id="buyer_mobile" 
                          name="buyer_mobile" 
@@ -65,7 +65,7 @@ function BuyerDetailForm(props) {
                     <input  
                          onChange={ props.handleBuyerDetails}  
                          value={discount} 
-                         type="text" 
+                         type="number" 
                          className="form-control" 
                          id="discount" 
                          name="discount" 

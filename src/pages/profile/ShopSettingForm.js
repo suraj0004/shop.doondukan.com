@@ -165,7 +165,7 @@ class ShopSettingForm extends Component {
           <label htmlFor="email" className="col-sm-2 col-form-label">Shop Email</label>
           <div className="col-sm-10">
             <input
-              type="text"
+              type="email"
               className="form-control"
               id="email"
               name="email"
@@ -179,7 +179,7 @@ class ShopSettingForm extends Component {
           <label htmlFor="mobile" className="col-sm-2 col-form-label">Shop Mobile</label>
           <div className="col-sm-10">
             <input
-              type="text"
+              type="number"
               className="form-control"
               id="mobile"
               name="mobile"

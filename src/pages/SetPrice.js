@@ -218,7 +218,7 @@ class SetPrice extends Component {
                       <div className="form-group row">
                       <label htmlFor="price" className="col-sm-4 col-form-label">Set Selling Price</label>
                         <div className="col-sm-8">
-                          <input value={this.state.price} type="text" className="form-control" name="price" placeholder="Enter Selling Price"  onChange={this.handleInputChange}/>
+                          <input value={this.state.price} type="number" className="form-control" name="price" placeholder="Enter Selling Price"  onChange={this.handleInputChange}/>
                         </div>
     
                         </div>
