@@ -249,7 +249,7 @@ class AddPurchase extends Component {
                   <div className="form-group row">
                   <label htmlFor="quantity" className="col-sm-3 col-form-label">Quantity</label>
                     <div className="col-sm-9">
-                      <input value={this.state.quantity} type="text" className="form-control" name="quantity" placeholder="Enter Quantity"  onChange={this.handleInputChange}/>
+                      <input value={this.state.quantity} type="number" className="form-control" name="quantity" placeholder="Enter Quantity"  onChange={this.handleInputChange}/>
                     </div>
 
                     </div>
@@ -270,7 +270,7 @@ class AddPurchase extends Component {
                   <div className="form-group row">
                   <label htmlFor="price" className="col-sm-3 col-form-label">Price</label>
                     <div className="col-sm-9">
-                      <input value={this.state.price} type="text" className="form-control" name="price" placeholder="Enter Price"  onChange={this.handleInputChange}/>
+                      <input value={this.state.price} type="number" className="form-control" name="price" placeholder="Enter Price"  onChange={this.handleInputChange}/>
                     </div>
 
                     </div>
