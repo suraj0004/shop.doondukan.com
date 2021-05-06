@@ -117,9 +117,10 @@ class SetPrice extends Component {
 
 
       componentDidMount() {
-   
 
-
+        let selectedOption = null;
+        let price = "";
+        const edit_id = this.props.match.params.id;
         axios.get( UrlService.globalStockListUrl(), {
           headers : auth.apiHeader(),    
             } ).then( res => {
@@ -134,6 +135,10 @@ class SetPrice extends Component {
                      };
                     option.value = item.id + "," + item.price;
                     option.label =  `${item.product.name} |  ${ item.product.weight} ${item.product.weight_type}, (Purchased at Rs. ${(item.purchase_price)?item.purchase_price.price:0} /- Per Pec)`;
+                    if(edit_id && edit_id == item.id){
+                      selectedOption = option;
+                      price = item.price
+                    }
                     return option;
                 });
         
@@ -145,13 +150,18 @@ class SetPrice extends Component {
                    };
                    option.value = item.id + "," + item.price;
                    option.label = `${item.temp_product.name} | ${item.temp_product.weight} ${item.temp_product.weight_type},(Purchased at Rs. ${(item.purchase_price)?item.purchase_price.price:0} /- Per Pec) ( Custom Product )`;
-                  return option;
+                   if(edit_id && edit_id == item.id){
+                    selectedOption = option;
+                    price = item.price
+                  }
+                   return option;
               });
         
                 this.setState({
                   options : options_temp.concat(options_main),
-                  // options : options_main,
                   isLoader : false,
+                  selectedOption,
+                  price,
                 });
               }else{
                 this.setState({
