@@ -7,6 +7,7 @@ import auth from '../../services/AuthService';
 
 import Layout from '../../layouts/RetailLayout';
 import AddProduct from './AddProductModal';
+import EditProduct from './EditProductModal';
 import Table from './Table';
 
 
@@ -33,6 +34,10 @@ class MyProductList extends Component {
       loader: true,
       data: null,
       error: "",
+      edit : {
+        show: false,
+        data : null,
+      },
     }
   }
 
@@ -43,6 +48,33 @@ class MyProductList extends Component {
        data : data,
      });
   }
+
+  handleEditProduct = (row) => {
+    let data = this.state.data.map(product =>{
+      return (product.id == row.id)?row:product;
+    })
+    this.setState({
+      data
+    })
+ }
+
+ showEditModal = (row) => {
+   this.setState({
+     edit : {
+       show : true,
+       data : row,
+     }
+   })
+ }
+
+ hideEditModal = () => {
+  this.setState({
+    edit : {
+      show : false,
+      data : null,
+    }
+  })
+}
 
   componentDidMount() {
      axios.get(UrlService.GetCustomeProductListUrl(),{
@@ -78,6 +110,7 @@ class MyProductList extends Component {
       <Layout pathname={this.props.location.pathname} page="My Custom Product List">
 
         <AddProduct handleAddProduct={this.handleAddProduct} />
+        <EditProduct edit={this.state.edit} hideEditModal={this.hideEditModal}  handleEditProduct={this.handleEditProduct} />
 
         <div className="card">
           <div className="card-header">
@@ -88,7 +121,7 @@ class MyProductList extends Component {
             {
               this.state.loader
                 ? <MyLoader />
-                : <Table data={this.state.data}/>
+                : <Table data={this.state.data} showEditModal={this.showEditModal}/>
             }
 
           </div>

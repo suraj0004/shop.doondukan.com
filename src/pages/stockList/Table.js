@@ -1,6 +1,7 @@
 import React from 'react';
 import Moment from 'react-moment';
 import 'moment-timezone';
+import { Link } from 'react-router-dom';
 function Table(props) {
     const {main,temp} = props.data;
     let sno = 0;
@@ -18,6 +19,7 @@ function Table(props) {
               <th>Product Detail</th>
               <th>Total Quantity</th> 
               <th>Selling Price</th>  
+              <th>Actions</th>
                                       
             </tr>
             </thead>
@@ -43,6 +45,9 @@ function Table(props) {
                         <td> { item.temp_product.name + " | " + item.temp_product.weight + item.temp_product.weight_type } </td>
                         <td> {item.quantity} </td>
                         <td> {item.price} </td>
+                        <td>
+                        <Link to={`/setPrice/${item.id}`} className="btn btn-info"> <i className="fa fa-edit"></i>  </Link>
+                        </td>
                         
                       </tr>
                      );
@@ -66,6 +71,9 @@ function Table(props) {
                         <td> { item.product.name + " | " + item.product.weight + item.product.weight_type } </td>
                         <td> {item.quantity} </td>
                         <td> {item.price} </td>
+                        <td>
+                        <Link to={`/setPrice/${item.id}`} className="btn btn-info"> <i className="fa fa-edit"></i>  </Link>
+                        </td>
                         
                       </tr>
                      );
