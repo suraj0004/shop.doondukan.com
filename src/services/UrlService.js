@@ -232,7 +232,10 @@ class UrlService{
         return this.baseUrl + apiUrl;
     }
     
-
+    signUpUrl() {
+        const apiUrl = '/register';
+        return this.baseUrl + apiUrl;
+    }
   
 
 

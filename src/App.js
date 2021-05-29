@@ -31,6 +31,7 @@ import AddPurchaseReturn from './pages/addPurchaseReturn';
 import PurchaseReturnList from './pages/purchaseReturnList';
 import AddSaleReturn from './pages/addSaleReturn';
 import SaleReturnList from './pages/saleReturnList';
+import Sign from './pages/Signup';
 
 class App extends Component { 
   
@@ -83,6 +84,7 @@ class App extends Component {
 
                     
                     <Route exact path='/login' component = {Login} />
+                    <Route exact path='/Sign-up' component = {Sign} />
                     <Route path="*" component = { ()=> { return <h1 style={{ textAlign: 'center' }} > 404, PAGE NOT FOUND </h1> } } />
                  </Switch>
 
