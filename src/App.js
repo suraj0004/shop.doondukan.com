@@ -5,6 +5,7 @@ import {ProtectedRoutes} from './ProtectedRoutes';
 
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
+import Orders from './pages/orders';
 import AddPurchase from './pages/AddPurchase';
 import PurchaseList from './pages/PurchaseList';
 import StockList from "./pages/StockList";
@@ -52,10 +53,12 @@ class App extends Component {
                     <ProtectedRoutes exact path='/stockList' component = {StockList} />
                     <ProtectedRoutes exact path='/setPrice' component = {SetPrice} />
                     <ProtectedRoutes exact path='/generateBill' component = {GenerateBill} />
+                    <ProtectedRoutes exact path='/orders' component = {Orders} />
                     <ProtectedRoutes exact path='/billList' component = {BillList} />
                     <ProtectedRoutes exact path='/saleList' component = {SaleList} />
                     <ProtectedRoutes exact path='/invoice/:id' component = {Invoice} />
                     <ProtectedRoutes exact path='/profile' component = {Profile} />
+
                     
                     <ProtectedRoutes exact path='/addPurchaseReturn' component = {AddPurchaseReturn} />
                     <ProtectedRoutes exact path='/purchaseReturnList' component = {PurchaseReturnList} />

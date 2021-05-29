@@ -105,6 +105,15 @@ class Sidebar extends React.Component {
               </li>
 
 
+              <li className="nav-item ">
+                <Link to='/orders' className={(props.pathname === "/orders") ? "nav-link active" : "nav-link "}  >
+                  <i className="nav-icon fas fa-cash-register"></i>
+                  <p>Oders </p>
+                </Link>
+              </li>
+
+
+
               <li className="nav-header">Operations</li>
 
               <li className={(props.pathname === "/addPurchase" || props.pathname === "/purchaseList" || this.state.menu === "purchase") ? "nav-item has-treeview menu-open" : "nav-item has-treeview"} >
