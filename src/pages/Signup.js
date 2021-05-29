@@ -1,7 +1,7 @@
 import React, { useState  } from 'react';
 import axios from 'axios';
 import auth from '../services/AuthService';
-import PageLoader from '../components/PageLoader';
+// import PageLoader from '../components/PageLoader';
 import UrlService from '../services/UrlService';
 const Signup = (props) => {
 	const [userData,setUserData] = useState({
