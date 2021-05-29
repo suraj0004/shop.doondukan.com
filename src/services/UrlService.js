@@ -198,6 +198,11 @@ class UrlService{
         return this.baseUrl + apiUrl;
     }
 
+    EditCustomeProductUrl(product_id){
+        const apiUrl = `/retail/edit-user-custom-product/${product_id}`;
+        return this.baseUrl + apiUrl;
+    }
+
     GetCustomeProductListUrl(){
         const apiUrl = '/retail/get-user-custom-product-list';
         return this.baseUrl + apiUrl;

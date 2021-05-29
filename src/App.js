@@ -51,7 +51,7 @@ class App extends Component {
                     <ProtectedRoutes exact path='/addPurchase' component = {AddPurchase} />
                     <ProtectedRoutes exact path='/purchaseList' component = {PurchaseList} />
                     <ProtectedRoutes exact path='/stockList' component = {StockList} />
-                    <ProtectedRoutes exact path='/setPrice' component = {SetPrice} />
+                    <ProtectedRoutes exact path='/setPrice/:id?' component = {SetPrice} />
                     <ProtectedRoutes exact path='/generateBill' component = {GenerateBill} />
                     <ProtectedRoutes exact path='/billList' component = {BillList} />
                     <ProtectedRoutes exact path='/saleList' component = {SaleList} />

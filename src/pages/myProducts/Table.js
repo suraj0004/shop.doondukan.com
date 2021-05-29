@@ -14,6 +14,7 @@ function Table(props) {
       <th scope="col">Weight</th>
       <th scope="col">Added On</th>
       <th scope="col">Status</th>
+      <th scope="col">Action</th>
     </tr>
   </thead>
   <tbody>
@@ -32,6 +33,7 @@ function Table(props) {
                      /> 
                 </td>
                 <td>  {status} </td>
+                <td> <button type="button" className="btn btn-info" onClick={() => props.showEditModal(row)}> <i className="fa fa-edit"></i> </button> </td>
               </tr>
               )
           })
