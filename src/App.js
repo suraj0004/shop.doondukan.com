@@ -32,6 +32,7 @@ import AddPurchaseReturn from './pages/addPurchaseReturn';
 import PurchaseReturnList from './pages/purchaseReturnList';
 import AddSaleReturn from './pages/addSaleReturn';
 import SaleReturnList from './pages/saleReturnList';
+import Sign from './pages/Signup';
 
 class App extends Component { 
   
@@ -51,7 +52,7 @@ class App extends Component {
                     <ProtectedRoutes exact path='/addPurchase' component = {AddPurchase} />
                     <ProtectedRoutes exact path='/purchaseList' component = {PurchaseList} />
                     <ProtectedRoutes exact path='/stockList' component = {StockList} />
-                    <ProtectedRoutes exact path='/setPrice' component = {SetPrice} />
+                    <ProtectedRoutes exact path='/setPrice/:id?' component = {SetPrice} />
                     <ProtectedRoutes exact path='/generateBill' component = {GenerateBill} />
                     <ProtectedRoutes exact path='/orders' component = {Orders} />
                     <ProtectedRoutes exact path='/billList' component = {BillList} />
@@ -86,6 +87,7 @@ class App extends Component {
 
                     
                     <Route exact path='/login' component = {Login} />
+                    <Route exact path='/Sign-up' component = {Sign} />
                     <Route path="*" component = { ()=> { return <h1 style={{ textAlign: 'center' }} > 404, PAGE NOT FOUND </h1> } } />
                  </Switch>
 

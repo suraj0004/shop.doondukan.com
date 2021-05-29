@@ -192,7 +192,7 @@ return;
       <label htmlFor="useremail" className="col-sm-2 col-form-label">Owner Email</label>
       <div className="col-sm-10">
         <input  
-          type="text" 
+          type="email" 
           className="form-control" 
           id="useremail" 
           name="email"
@@ -206,7 +206,7 @@ return;
       <label htmlFor="usermobile" className="col-sm-2 col-form-label">Owner Mobile</label>
       <div className="col-sm-10">
         <input 
-           type="text" 
+           type="number" 
            className="form-control" 
            id="usermobile"
            name="mobile" 

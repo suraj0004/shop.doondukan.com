@@ -211,6 +211,16 @@ class AddPurchase extends Component {
    
   };
 
+  handleReset = event => {
+    this.setState({
+      selectedOption: null,
+      price_type : "lumsum",
+      price : "",
+      quantity : "",
+      total : 0,
+    })
+  }
+
     render() {
        
       const { selectedOption,options } = this.state;
@@ -249,7 +259,7 @@ class AddPurchase extends Component {
                   <div className="form-group row">
                   <label htmlFor="quantity" className="col-sm-3 col-form-label">Quantity</label>
                     <div className="col-sm-9">
-                      <input value={this.state.quantity} type="text" className="form-control" name="quantity" placeholder="Enter Quantity"  onChange={this.handleInputChange}/>
+                      <input value={this.state.quantity} type="number" className="form-control" name="quantity" placeholder="Enter Quantity"  onChange={this.handleInputChange}/>
                     </div>
 
                     </div>
@@ -270,7 +280,7 @@ class AddPurchase extends Component {
                   <div className="form-group row">
                   <label htmlFor="price" className="col-sm-3 col-form-label">Price</label>
                     <div className="col-sm-9">
-                      <input value={this.state.price} type="text" className="form-control" name="price" placeholder="Enter Price"  onChange={this.handleInputChange}/>
+                      <input value={this.state.price} type="number" className="form-control" name="price" placeholder="Enter Price"  onChange={this.handleInputChange}/>
                     </div>
 
                     </div>
@@ -283,7 +293,7 @@ class AddPurchase extends Component {
                 </div>
                 
                 <div className="card-footer">
-                  <button type="reset" className="btn btn-default ">Cancel</button>
+                  <button type="reset" onClick={this.handleReset} className="btn btn-default ">Reset</button>
                   <button type="submit" className="btn btn-info float-right">Add</button>
                 </div>
                 
