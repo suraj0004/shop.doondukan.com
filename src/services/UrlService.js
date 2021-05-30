@@ -5,6 +5,16 @@ class UrlService{
         this.imagePath = process.env.REACT_APP_API_IMAGE_PATH;
     }
 
+    getOrders() {
+        const apiUrl = "/retail/get/orders";
+        return this.baseUrl + apiUrl;
+    }
+
+    updateOrderStatus(id) {
+        const apiUrl = "/retail/shop/order";
+        return this.baseUrl + apiUrl;
+    }
+
 
     userImageUrl(){
         const folderName = "/profileimages/";
