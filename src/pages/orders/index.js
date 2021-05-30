@@ -6,7 +6,6 @@ import auth from '../../services/AuthService';
 import Layout from '../../layouts/RetailLayout';
 import PageLoader from '../../components/PageLoader';
 
-
 class orders extends Component {
 
     constructor(props) {
@@ -21,6 +20,7 @@ class orders extends Component {
         this.getOrders = this.getOrders.bind(this);
       }
 
+  
       componentWillMount() {
 
         this.getOrders();
@@ -68,7 +68,7 @@ class orders extends Component {
                   <PageLoader error={this.state.response} />
                   : <React.Fragment>
                     <div className="row">
-                         <OrderCard data={this.state.data} />
+                         <OrderCard data={this.state.data} updateState={this.updateState}/>
                     </div>
                   </React.Fragment>
                 }

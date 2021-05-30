@@ -10,6 +10,11 @@ class UrlService{
         return this.baseUrl + apiUrl;
     }
 
+    updateOrderStatus(id) {
+        const apiUrl = "/retail/shop/order";
+        return this.baseUrl + apiUrl;
+    }
+
 
     userImageUrl(){
         const folderName = "/profileimages/";

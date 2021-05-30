@@ -2,12 +2,34 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import Moment from 'react-moment';
 import 'moment-timezone';
+import UrlService from '../../services/UrlService';
+import axios from 'axios';
+import auth from '../../services/AuthService';
+
+
+function  updateState(id) {
+  
+    const postData = {
+          id  : id,
+      };
+    axios.post(UrlService.updateOrderStatus(), postData,  {
+        headers: auth.apiHeader()
+    }).then(res=>{
+         console.log(res, 'success');
+         
+    }).catch(err=> {
+          console.log(err, 'error');
+          
+    })
+
+  
+ }; 
+
+
 
 function OrderCard(props) {
 
-        var  data  = props;
-
-    
+    var  data  = props;
     return (
         <>
         {data.data.map((order, index) => {
@@ -26,9 +48,9 @@ function OrderCard(props) {
                                
                                <div className="d-flex">
                                     <button className="btn btn-info mr-2" data-toggle="modal" data-target="#exampleModal">View Details</button>
-                                    <button className="btn btn-success " >Complete</button>
+                                    <button className="btn btn-success" onClick={function(){updateState(order.id)}} >Confirm</button>
                                </div>
-                               <div className="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                               <div className="modal fade" id="exampleModal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                 <div className="modal-dialog" role="document">
                                     <div className="modal-content">
                                     <div className="modal-header">
@@ -51,7 +73,7 @@ function OrderCard(props) {
                                                 {(order.orderitem) ? 
                                                 (order.orderitem.map((item) => {
                                                     return (
-                                                        <React.Fragment>
+                                                        <React.Fragment key={item.id}>
                                                             <tr>
                                                                 <td>1</td>
                                                                 <td>{item.product.name} </td>
