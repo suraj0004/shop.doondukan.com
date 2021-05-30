@@ -1,14 +1,14 @@
-import React, {useRef, useState} from 'react';
+import React, { useState} from 'react';
 import {Formik, Form, Field, ErrorMessage} from 'formik';
 import { ClipLoader } from "react-spinners";
 import * as Yup from 'yup';
 import axios from 'axios';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import auth from '../../services/AuthService';
 import UrlService from '../../services/UrlService';
-import { Button, Modal } from 'react-bootstrap';
+import { Modal } from 'react-bootstrap';
 
 function ErrorMsg(props) {
   return <div className="text-danger">

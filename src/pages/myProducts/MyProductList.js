@@ -51,7 +51,7 @@ class MyProductList extends Component {
 
   handleEditProduct = (row) => {
     let data = this.state.data.map(product =>{
-      return (product.id == row.id)?row:product;
+      return (product.id === row.id)?row:product;
     })
     this.setState({
       data
