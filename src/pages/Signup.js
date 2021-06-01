@@ -12,16 +12,58 @@ const Signup = (props) => {
 		c_password:"",
 	});
 	const [error,setError] = useState("");
+	const [lat,setlat] = useState("");
+	const [lng,setlng] = useState("");
 	const handleInput = (e) => {
 		const name = e.target.name;
 		const value = e.target.value;
 		setUserData({...userData, [name]: value });
 	}
-
+	const handleLocation = (e) => {
+		if (navigator.geolocation) {
+			if(e.target.checked){
+    		navigator.geolocation.getCurrentPosition(showPosition, showError);
+    	} 
+  	} else { 
+    	setError("Geolocation is not supported by this browser.");
+  	}
+	}
+	const showPosition = (position) => {
+		setError("");
+		setlat(position.coords.latitude);
+    setlng(position.coords.longitude);
+	}
+	const showError = (error) => {
+		document.getElementById("locationId").checked = false;
+		switch(error.code) {
+	    case error.PERMISSION_DENIED:
+	       setError("Please Allow Location Permission");
+	      break;
+	    case error.POSITION_UNAVAILABLE:
+	      setError("Location information is unavailable.");
+	      break;
+	    case error.TIMEOUT:
+	     setError("The request to get user location timed out.Try again.");
+	      break;
+	    case error.UNKNOWN_ERROR:
+	      setError("An unknown error occurred.Please try again.");
+	      break;
+  		}
+	}
 	const handleSubmit = (e) => {
 		e.preventDefault();
 		try {
-            axios.post( UrlService.signUpUrl() , userData, {
+					var location;
+					var userPostData;
+					location = {
+						lat: lat,
+						lng: lng
+					}
+					userPostData = {
+						...userData,
+						...location
+					}
+            axios.post( UrlService.signUpUrl() , userPostData, {
                 headers : {
                   "Accept" : "application/json",
                   "Content-Type" : "application/json",
@@ -32,7 +74,6 @@ const Signup = (props) => {
                 	auth.afterLogin(response,false);
                   props.history.push('/');
              	} else {
-             			console.log(response.success);
              			setError(response.data.message);
 	               	console.log(response);
              	}
@@ -101,6 +142,17 @@ const Signup = (props) => {
 				            <div className="input-group-text">
 				              <span className="fas fa-lock"></span>
 				            </div>
+				          </div>
+				        </div>
+				        <div className="mb-3 row">
+				        	<div className="col-2">
+				          	<input type="checkbox" name="location"
+				          	 onClick={handleLocation} id="locationId" required/>
+				          	<input type="hidden" value={lat} name="lat" id="lat"/>
+				          	<input type="hidden" value={lng} name="lng" id="lng"/>
+				          </div>
+				          <div className="col-8">
+				          	<label>Allow Location Permission</label>
 				          </div>
 				        </div>
 				        <div className="row">			          
