@@ -27,6 +27,35 @@ class orders extends Component {
         
       }
 
+      updateState(id, status) {
+  
+        const postData = {
+              id  : id,
+              status : status
+    
+          };
+        axios.post(UrlService.updateOrderStatus(), postData,  {
+            headers: auth.apiHeader()
+        }).then(res=>{
+             console.log(res, 'success');
+             this.getOrders();
+             
+        }).catch(err=> {
+              console.log(err, 'error');
+              
+        })
+    
+      
+     }; 
+
+
+
+
+
+
+
+
+
       getOrders() {
 
         axios.get(UrlService.getOrders(),{
@@ -68,7 +97,7 @@ class orders extends Component {
                   <PageLoader error={this.state.response} />
                   : <React.Fragment>
                     <div className="row">
-                         <OrderCard data={this.state.data} updateState={this.updateState}/>
+                         <OrderCard data={this.state.data} getOrders={this.getOrders} updateState={this.updateState}/>
                     </div>
                   </React.Fragment>
                 }

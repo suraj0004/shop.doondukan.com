@@ -7,29 +7,12 @@ import axios from 'axios';
 import auth from '../../services/AuthService';
 
 
-function  updateState(id) {
-  
-    const postData = {
-          id  : id,
-      };
-    axios.post(UrlService.updateOrderStatus(), postData,  {
-        headers: auth.apiHeader()
-    }).then(res=>{
-         console.log(res, 'success');
-         
-    }).catch(err=> {
-          console.log(err, 'error');
-          
-    })
-
-  
- }; 
-
 
 
 function OrderCard(props) {
 
     var  data  = props;
+    
     return (
         <>
         {data.data.map((order, index) => {
@@ -47,10 +30,15 @@ function OrderCard(props) {
                                 <p className="text-muted text-sm"> <strong> Pickup Time : </strong> {order.from_time} to {order.to_time}  </p>
                                
                                <div className="d-flex">
-                                    <button className="btn btn-info mr-2" data-toggle="modal" data-target="#exampleModal">View Details</button>
-                                    <button className="btn btn-success" onClick={function(){updateState(order.id)}} >Confirm</button>
+                                    <button className="btn btn-sm btn-info mr-2" data-toggle="modal" data-target={"#exampleModal"+order.id}>View Details</button>
+                                    { order.status == 0 ? <button className="btn btn-success btn-sm mr-2" onClick={function(){props.updateState(order.id, 1)}} >Accept</button>
+                                       :   '' }
+                                    {order.status == 1 ? <span className="badge text-success">Confirmed</span> :'' }
+                                    {order.status == 3 ? <span className="badge text-secondary">Canceled</span> : '' }
+                                    {order.status == 0 ? <button className="btn btn-sm btn-success" onClick={function(){props.updateState(order.id, 3)}} >Cancel</button> : '' } 
+                                   
                                </div>
-                               <div className="modal fade" id="exampleModal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                               <div className="modal fade" id={"exampleModal"+order.id} tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                 <div className="modal-dialog" role="document">
                                     <div className="modal-content">
                                     <div className="modal-header">
@@ -71,11 +59,11 @@ function OrderCard(props) {
                                             </thead>
                                             <tbody>
                                                 {(order.orderitem) ? 
-                                                (order.orderitem.map((item) => {
+                                                (order.orderitem.map((item, i) => {
                                                     return (
                                                         <React.Fragment key={item.id}>
                                                             <tr>
-                                                                <td>1</td>
+                                                                <td>{i+1}.</td>
                                                                 <td>{item.product.name} </td>
                                                                 <td>{item.quantity } </td>
                                                                 <td>{item.price} </td>
@@ -93,7 +81,7 @@ function OrderCard(props) {
                                     </div>
                                     <div className="modal-footer">
                                         <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
-                                        <button type="button" className="btn btn-primary">Save changes</button>
+                                        {/* <button type="button" className="btn btn-primary">Save changes</button> */}
                                     </div>
                                     </div>
                                 </div>

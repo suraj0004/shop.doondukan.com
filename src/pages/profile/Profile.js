@@ -49,6 +49,9 @@ class Profile extends Component {
             axios.get(UrlService.profilegUrl(), {
                 headers: auth.apiHeader()
             }).then(res => {
+
+                // console.log(data);
+                
                 if (res.data.success) {
                     this.setState({
                         shop: {
@@ -57,6 +60,7 @@ class Profile extends Component {
                             mobile: (res.data.data.store && res.data.data.store.mobile) ? res.data.data.store.mobile : "",
                             address: (res.data.data.store && res.data.data.store.address) ? res.data.data.store.address : "",
                             about: (res.data.data.store && res.data.data.store.about) ? res.data.data.store.about : "",
+                            shop_url : (res.data.data.store.shop_url && res.data.data.store.shop_url) ? res.data.data.store.shop_url : "",
                             logo: null,
                         },
                         user: {

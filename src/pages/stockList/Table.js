@@ -16,18 +16,14 @@ function Table(props) {
             <tr>
               <th>Sno.</th>
               <th>Last purchased date</th>
+              <th>Product Image</th>
               <th>Product Detail</th>
               <th>Total Quantity</th> 
               <th>Selling Price</th>  
-              <th>Actions</th>
-                                      
+              <th>Actions</th>                     
             </tr>
             </thead>
             <tbody>
-
-
-
-
 
             {
                     temp.map( (item) => {
@@ -42,6 +38,7 @@ function Table(props) {
                                  date={ item.last_purchased_at }
                                  />
                             </td>
+                        <td> <img src={item.product.image} className="img-fluid"  height="100" width="100" /> </td>    
                         <td> { item.temp_product.name + " | " + item.temp_product.weight + item.temp_product.weight_type } </td>
                         <td> {item.quantity} </td>
                         <td> {item.price} </td>
@@ -67,7 +64,7 @@ function Table(props) {
                                  date={ item.last_purchased_at }
                                  />
                             </td>
-                      
+                        <td> <img src={item.product.image} className="img-fluid" height="100" width="100"/> </td>
                         <td> { item.product.name + " | " + item.product.weight + item.product.weight_type } </td>
                         <td> {item.quantity} </td>
                         <td> {item.price} </td>
