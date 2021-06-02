@@ -3,6 +3,8 @@ import axios from 'axios';
 import auth from '../services/AuthService';
 // import PageLoader from '../components/PageLoader';
 import UrlService from '../services/UrlService';
+import { Link } from 'react-router-dom';
+
 const Signup = (props) => {
 	const [userData,setUserData] = useState({
 		name:"",
@@ -70,9 +72,13 @@ const Signup = (props) => {
                 }
             })
             .then( (response) => {
+				console.log("response");
+				console.log(response);
                 if(response.data.success){
-                	auth.afterLogin(response,false);
-                  props.history.push('/');
+                	auth.afterLogin(response.data,false);
+                  setTimeout(() => {
+					props.history.push('/');
+				  }, 2000);
              	} else {
              			setError(response.data.message);
 	               	console.log(response);
@@ -163,10 +169,10 @@ const Signup = (props) => {
 				      </form>
 				      <div className="social-auth-links text-center">
 				        <p>- OR -</p>
-				        <a href="/login" className="btn btn-block btn-danger">
+				        <Link to="/login" className="btn btn-block btn-success">
 				          <i className="mr-2"></i>
 				          Login
-				        </a>
+				        </Link>
 				      </div>
 				    </div>
   				</div>

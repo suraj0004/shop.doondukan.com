@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import auth from '../services/AuthService';
 import PageLoader from '../components/PageLoader';
+import { Link } from 'react-router-dom';
+
 class Login extends Component {
 
      constructor(props) {
@@ -148,12 +150,12 @@ class Login extends Component {
 
       <div className="social-auth-links text-center mb-3">
         <p>- OR -</p>
-        <a href="/" className="btn btn-block btn-danger">
+        {/* <a href="/" className="btn btn-block btn-danger">
           <i className="fa fa-lock mr-2"></i> I forgot my password
-        </a>
-        <a href="/" className="btn btn-block btn-success">
+        </a> */}
+        <Link to="/sign-up" className="btn btn-block btn-success">
           <i className="fa fa-user mr-2"></i> Register a new membership
-        </a>
+        </Link>
        
       </div>
     </div>
