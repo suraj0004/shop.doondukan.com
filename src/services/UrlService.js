@@ -252,6 +252,15 @@ class UrlService{
         return this.baseUrl + apiUrl;
     }
   
+    getProductCatalogue() {
+        const apiUrl = '/retail/get-product-catalogue';
+        return this.baseUrl + apiUrl;
+    }
+
+    addProductFromCatalogue(){
+        const apiUrl = '/retail/add-product-from-catalogue';
+        return this.baseUrl + apiUrl;
+    }
 
 
     
