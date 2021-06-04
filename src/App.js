@@ -36,6 +36,7 @@ import Sign from "./pages/Signup";
 import CatalogBuilder from "./pages/Catalog";
 
 class App extends Component {
+ 
   render() {
     return (
       <Router>

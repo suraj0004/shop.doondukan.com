@@ -28,22 +28,6 @@ class Sidebar extends React.Component {
 
 
   }
-  linkClick = () => {
-
-    // if(document.body.classList.contains('sidebar-open'))
-    //  {
-    //   document.body.classList.remove('sidebar-open');
-    //   document.body.classList.add('sidebar-closed');
-    //   document.body.classList.add('sidebar-collapse');
-
-
-    // }else{
-
-    //     document.body.classList.add('sidebar-collapse');
-
-    // }
-
-  }
 
   componentDidMount() {
     const name = cookieService.get("name") ? cookieService.get("name") : "Owner";

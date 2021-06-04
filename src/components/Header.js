@@ -10,39 +10,6 @@ class  Header extends React.Component {
     };
     
   }
-
-  // handleSidebar = () =>{
-   
-
-  //       if (document.body.classList.contains('sidebar-closed')) {
-  //     alert("sidebar-closed true");
-  //         document.body.classList.remove('sidebar-closed');
-  //         document.body.classList.remove('sidebar-collapse');
-  //         document.body.classList.add('sidebar-open');
-  //       }else{
-  //         alert("sidebar-closed false");
-  //         if(document.body.classList.contains('sidebar-open'))
-  //          {
-  //           alert("sidebar-open true");
-  //           document.body.classList.add('sidebar-closed');
-  //           document.body.classList.add('sidebar-collapse');
-  //           document.body.classList.remove('sidebar-open');
-           
-  //         }else{
-  //           alert("sidebar-open false");
-  //           if (document.body.classList.contains('sidebar-collapse')) {
-  //             alert("sidebar-collapse true");
-  //             document.body.classList.remove('sidebar-collapse');
-  //           }else{
-  //             alert("sidebar-collapse false");
-  //             document.body.classList.add('sidebar-collapse');
-  //           }
-  //         }
-  //       }
-    
-  // }
-
-
   render(){
 
   
