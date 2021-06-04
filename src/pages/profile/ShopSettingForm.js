@@ -169,7 +169,7 @@ class ShopSettingForm extends Component {
         <div className="form-group row">   
            <label className="col-sm-2 col-form-label"> Shop Url</label>
                 <div className="col-sm-10">
-                    <input type="text" className="form-control" value={shop_url}/>
+                    <input disabled={true} type="text" className="form-control" value={shop_url}/>
                     
                 </div>
         </div>

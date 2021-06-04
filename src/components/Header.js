@@ -20,7 +20,7 @@ class  Header extends React.Component {
               <li className="nav-item">
                 <button  className="btn nav-link" type="button" data-widget="pushmenu" ><i className="fas fa-bars"></i></button>
               </li>
-              <li className="nav-item d-none d-sm-inline-block">
+              <li className="nav-item ">
                 <Link to="/" className="nav-link">Dashboard</Link>
               </li>
              
@@ -31,7 +31,7 @@ class  Header extends React.Component {
             
             <ul className="navbar-nav ml-auto">
               
-            <li className="nav-item d-none d-sm-inline-block">
+            <li className="nav-item ">
                  <button className="btn" onClick={this.props.handleLogout} > <i className="fa fa-sign-out-alt"></i> </button>
               </li>
               

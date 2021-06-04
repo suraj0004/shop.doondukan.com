@@ -77,8 +77,8 @@ const Signup = (props) => {
                 if(response.data.success){
                 	auth.afterLogin(response.data,false);
                   setTimeout(() => {
-					props.history.push('/');
-				  }, 2000);
+					props.history.push('/profile');
+				  }, 250);
              	} else {
              			setError(response.data.message);
 	               	console.log(response);
