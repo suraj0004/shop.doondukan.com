@@ -50,6 +50,8 @@ const Signup = (props) => {
 	    case error.UNKNOWN_ERROR:
 	      setError("An unknown error occurred.Please try again.");
 	      break;
+		default:
+			console.log("default");
   		}
 	}
 	const handleSubmit = (e) => {

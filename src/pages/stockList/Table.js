@@ -52,6 +52,7 @@ function Table(props) {
                       className="img-fluid"
                       height="100"
                       width="100"
+                      alt={item.temp_product.name}
                     />{" "}
                   </td>
                   <td> {item.quantity} </td>
@@ -93,6 +94,7 @@ function Table(props) {
                       className="img-fluid"
                       height="100"
                       width="100"
+                      alt={item.product.name}
                     />{" "}
                   </td>
                   <td> {item.quantity} </td>

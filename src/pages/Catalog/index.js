@@ -144,6 +144,7 @@ const Catalog = (props) => {
                                   <img
                                     src={product.image}
                                     className="img-fluid"
+                                    alt={product.name}
                                   />
                                 </div>
 

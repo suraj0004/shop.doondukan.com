@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Card from './Card';
-import Timeline from './Timeline';
+// import Timeline from './Timeline';
 import axios from 'axios';
 import UrlService from '../../services/UrlService';
 import auth from '../../services/AuthService';

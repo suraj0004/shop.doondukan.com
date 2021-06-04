@@ -29,11 +29,11 @@ function OrderCard(props) {
                                
                                <div className="d-flex">
                                     <button className="btn btn-sm btn-info mr-2" data-toggle="modal" data-target={"#exampleModal"+order.id}>View Details</button>
-                                    { order.status == 0 ? <button className="btn btn-success btn-sm mr-2" onClick={function(){props.updateState(order.id, 1)}} >Accept</button>
+                                    { order.status === 0 ? <button className="btn btn-success btn-sm mr-2" onClick={function(){props.updateState(order.id, 1)}} >Accept</button>
                                        :   '' }
-                                    {order.status == 1 ? <span className="badge text-success">Confirmed</span> :'' }
-                                    {order.status == 3 ? <span className="badge text-secondary">Canceled</span> : '' }
-                                    {order.status == 0 ? <button className="btn btn-sm btn-success" onClick={function(){props.updateState(order.id, 3)}} >Cancel</button> : '' } 
+                                    {order.status === 1 ? <span className="badge text-success">Confirmed</span> :'' }
+                                    {order.status === 3 ? <span className="badge text-secondary">Canceled</span> : '' }
+                                    {order.status === 0 ? <button className="btn btn-sm btn-success" onClick={function(){props.updateState(order.id, 3)}} >Cancel</button> : '' } 
                                    
                                </div>
                                <div className="modal fade" id={"exampleModal"+order.id} tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
