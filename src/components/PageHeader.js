@@ -13,7 +13,7 @@ function PageHeader(props) {
             <div className="col-sm-6">
               <h1 className="m-0 text-dark">{props.page}</h1>
             </div>
-            <div className="col-sm-6">
+            <div className="col-sm-6 d-none d-md-block">
               <ol className="breadcrumb float-sm-right">
                 {li}
                 <li className="breadcrumb-item active">{props.page}</li>

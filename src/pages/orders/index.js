@@ -91,7 +91,7 @@ class orders extends Component {
 
       render() {
         return (
-            <Layout>
+            <Layout pathname={this.props.location.pathname} page="Order Management" >
                 {
                   (this.state.isLoader) ? 
                   <PageLoader error={this.state.response} />
