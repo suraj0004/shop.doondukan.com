@@ -12,7 +12,7 @@ function Card(props) {
          status = <span className="text-right text-warning float-right"><b>   <i className="fas fa-exclamation-triangle"></i> Un-Paid </b></span>
     }
     return (
-        <div className="col-12 col-sm-6 col-md-3 d-flex align-items-stretch" >
+        <div className="col-12 col-md-6 col-lg-4 d-flex align-items-stretch" >
             <div className="card bg-light" style={{ width: 'inherit' }}>
                 <div className="card-header text-muted border-bottom-1">
                     BILL No:  <strong>#{(id.toString().padStart('4', '0'))}</strong>
