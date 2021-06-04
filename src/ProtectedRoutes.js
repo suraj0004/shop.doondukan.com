@@ -2,6 +2,9 @@ import React from 'react';
 import {Route,Redirect} from 'react-router-dom';
 import auth from './services/AuthService';
 export const ProtectedRoutes = ( {component: Component, ...rest} ) => {
+    // Auto close sidebar while navigation
+    document.body.classList.remove('sidebar-open');
+    document.body.classList.add('sidebar-closed');
     return(
       <Route  {...rest} render={
           (props) => {

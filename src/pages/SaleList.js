@@ -31,10 +31,7 @@ class SaleList extends Component {
                     isLoader: false,
 
                 }, () => {
-                    var script = document.createElement("script");
-                    script.src = "/asset/dist/js/pages/data_table.js";
-                    script.defer = true;
-                    document.body.appendChild(script);
+                    window.setDataTable();
                 });
             } else {
                 this.setState({

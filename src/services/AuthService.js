@@ -60,7 +60,7 @@ class AuthService {
        }else{
             options = { path : '/' };
        }
-       
+       console.log(response)
        CookieService.set('token',response.data.accessToken,options);
        CookieService.set('name',response.data.name,options);
        const image = response.data.id + '/' +response.data.image;

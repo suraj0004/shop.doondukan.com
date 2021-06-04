@@ -10,7 +10,7 @@ function Table(props) {
         <div className="card">
            
             
-        <div className="card-body">
+        <div className="card-body table-responsive">
           <table id="my_table" className="table table-bordered table-striped">
             <thead>
                 

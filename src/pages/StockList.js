@@ -31,9 +31,10 @@ class StockList extends Component {
                 data: res.data.data,
                
             }, ()=>{
-              window.setDataTable();
               this.setState({
-              isLoader : false,
+                isLoader : false,
+              },()=>{
+                window.setDataTable();
             });
             } )
             }else{
@@ -42,20 +43,20 @@ class StockList extends Component {
             });
             }
         }).catch( (err) => {
-          err = err.response;
-          if(err.status === 401 || err.statusText === "Unauthorized" )
-           {
-                 auth.afterLogout();
-                 this.props.history.push("/login");
-           }else if(err.status === 404){
-            this.setState({
-              response : "Opps! Something went wrong, Please call to adminstrator at +91-8954836965",
-          });
-           }else{
-            this.setState({
-              response : err.data.message,
-          });
-           }
+          // err = err.response;
+          // if(err.status === 401 || err.statusText === "Unauthorized" )
+          //  {
+          //        auth.afterLogout();
+          //        this.props.history.push("/login");
+          //  }else if(err.status === 404){
+          //   this.setState({
+          //     response : "Opps! Something went wrong, Please call to adminstrator at +91-8954836965",
+          // });
+          //  }else{
+          //   this.setState({
+          //     response : err.data.message,
+          // });
+          //  }
         } );
 
 

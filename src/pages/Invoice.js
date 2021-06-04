@@ -30,16 +30,24 @@ class Invoice extends Component {
       main_return_latest: [],
       temp_return_latest: [],
       discount: null,
-      status: "Un-Paid"
+      status: "Un-Paid",
+      isMobile: (window.innerWidth <= 850)
     }
+
+    this.printInvoice = this.printInvoice.bind(this);
 
   }
 
   printInvoice = () => {
     window.print();
+    if(this.state.isMobile){
+      this.props.history.goBack()
+    }
   }
 
   componentDidMount() {
+    document.body.classList.remove('sidebar-open');
+    document.body.classList.add('sidebar-collapse');
     axios.get(UrlService.invoiceUrl() + this.state.id, {
       headers: auth.apiHeader()
     }).then(res => {
@@ -101,6 +109,12 @@ class Invoice extends Component {
           id : res.data.data.id,
           status : (res.data.data.status === 'unpaid')?"Un-Paid":"Paid",
 
+        },()=>{
+          if(this.state.isMobile){
+           setTimeout(() => {
+            this.printInvoice()
+           }, 250);
+          }
         })
 
       } else {

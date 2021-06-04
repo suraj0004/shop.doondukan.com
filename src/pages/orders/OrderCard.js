@@ -1,12 +1,15 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import Moment from 'react-moment';
+// import { Link } from 'react-router-dom';
+// import Moment from 'react-moment';
 import 'moment-timezone';
+
+
+
+
 
 function OrderCard(props) {
 
-        var  data  = props;
-
+    var  data  = props;
     
     return (
         <>
@@ -25,10 +28,15 @@ function OrderCard(props) {
                                 <p className="text-muted text-sm"> <strong> Pickup Time : </strong> {order.from_time} to {order.to_time}  </p>
                                
                                <div className="d-flex">
-                                    <button className="btn btn-info mr-2" data-toggle="modal" data-target="#exampleModal">View Details</button>
-                                    <button className="btn btn-success " >Complete</button>
+                                    <button className="btn btn-sm btn-info mr-2" data-toggle="modal" data-target={"#exampleModal"+order.id}>View Details</button>
+                                    { order.status === 0 ? <button className="btn btn-success btn-sm mr-2" onClick={function(){props.updateState(order.id, 1)}} >Accept</button>
+                                       :   '' }
+                                    {order.status === 1 ? <span className="badge text-success">Confirmed</span> :'' }
+                                    {order.status === 3 ? <span className="badge text-secondary">Canceled</span> : '' }
+                                    {order.status === 0 ? <button className="btn btn-sm btn-success" onClick={function(){props.updateState(order.id, 3)}} >Cancel</button> : '' } 
+                                   
                                </div>
-                               <div className="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                               <div className="modal fade" id={"exampleModal"+order.id} tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                 <div className="modal-dialog" role="document">
                                     <div className="modal-content">
                                     <div className="modal-header">
@@ -37,23 +45,23 @@ function OrderCard(props) {
                                         <span aria-hidden="true">&times;</span>
                                         </button>
                                     </div>
-                                    <div className="modal-body">
-                                        <table className="table table-bordered table-hover">
+                                    <div className="modal-body table-responsive">
+                                        <table id="" className="table table-bordered table-hover my_table">
                                             <thead>
                                                 <tr>
-                                                    <th>Sr. No</th>
-                                                    <th>Product</th>
-                                                    <th>Quantity</th>
-                                                    <th>Price</th>
+                                                    <th  className="all">Sr. No</th>
+                                                    <th  className="all">Product</th>
+                                                    <th className="none">Quantity</th>
+                                                    <th className="none">Price</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 {(order.orderitem) ? 
-                                                (order.orderitem.map((item) => {
+                                                (order.orderitem.map((item, i) => {
                                                     return (
-                                                        <React.Fragment>
+                                                        <React.Fragment key={item.id}>
                                                             <tr>
-                                                                <td>1</td>
+                                                                <td>{i+1}.</td>
                                                                 <td>{item.product.name} </td>
                                                                 <td>{item.quantity } </td>
                                                                 <td>{item.price} </td>
@@ -71,7 +79,7 @@ function OrderCard(props) {
                                     </div>
                                     <div className="modal-footer">
                                         <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
-                                        <button type="button" className="btn btn-primary">Save changes</button>
+                                        {/* <button type="button" className="btn btn-primary">Save changes</button> */}
                                     </div>
                                     </div>
                                 </div>

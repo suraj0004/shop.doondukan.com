@@ -51,7 +51,7 @@ class MyProductList extends Component {
 
   handleEditProduct = (row) => {
     let data = this.state.data.map(product =>{
-      return (product.id == row.id)?row:product;
+      return (product.id === row.id)?row:product;
     })
     this.setState({
       data
@@ -86,6 +86,8 @@ class MyProductList extends Component {
               loader:false,
               data : res.data.data,
               error: ""
+            },()=>{
+              window.setDataTable();
             });
            }else{
             this.setState({
@@ -117,7 +119,7 @@ class MyProductList extends Component {
             <button type="button" className="btn btn-outline-primary" data-toggle="modal" data-target="#add_product"><i className="fa fa-plus"></i> Add Product  </button>
           </div>
 
-          <div className="card-body">
+          <div className="card-body table-responsive">
             {
               this.state.loader
                 ? <MyLoader />

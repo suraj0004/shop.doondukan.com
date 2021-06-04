@@ -10,39 +10,6 @@ class  Header extends React.Component {
     };
     
   }
-
-  // handleSidebar = () =>{
-   
-
-  //       if (document.body.classList.contains('sidebar-closed')) {
-  //     alert("sidebar-closed true");
-  //         document.body.classList.remove('sidebar-closed');
-  //         document.body.classList.remove('sidebar-collapse');
-  //         document.body.classList.add('sidebar-open');
-  //       }else{
-  //         alert("sidebar-closed false");
-  //         if(document.body.classList.contains('sidebar-open'))
-  //          {
-  //           alert("sidebar-open true");
-  //           document.body.classList.add('sidebar-closed');
-  //           document.body.classList.add('sidebar-collapse');
-  //           document.body.classList.remove('sidebar-open');
-           
-  //         }else{
-  //           alert("sidebar-open false");
-  //           if (document.body.classList.contains('sidebar-collapse')) {
-  //             alert("sidebar-collapse true");
-  //             document.body.classList.remove('sidebar-collapse');
-  //           }else{
-  //             alert("sidebar-collapse false");
-  //             document.body.classList.add('sidebar-collapse');
-  //           }
-  //         }
-  //       }
-    
-  // }
-
-
   render(){
 
   
@@ -53,7 +20,7 @@ class  Header extends React.Component {
               <li className="nav-item">
                 <button  className="btn nav-link" type="button" data-widget="pushmenu" ><i className="fas fa-bars"></i></button>
               </li>
-              <li className="nav-item d-none d-sm-inline-block">
+              <li className="nav-item ">
                 <Link to="/" className="nav-link">Dashboard</Link>
               </li>
              
@@ -64,7 +31,7 @@ class  Header extends React.Component {
             
             <ul className="navbar-nav ml-auto">
               
-            <li className="nav-item d-none d-sm-inline-block">
+            <li className="nav-item ">
                  <button className="btn" onClick={this.props.handleLogout} > <i className="fa fa-sign-out-alt"></i> </button>
               </li>
               

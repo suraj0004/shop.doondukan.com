@@ -13,6 +13,8 @@ class ShopSettingForm extends Component {
       responseClass : "text-danger",
       isLoader : false,
     };
+    console.log(props.data, 'shopsett');
+    
   }
 
   handleInputChange = (event) => {
@@ -34,6 +36,12 @@ class ShopSettingForm extends Component {
       case 'about':
         shop.about = event.target.value;
         break;
+      case 'open_at':
+        shop.open_at = event.target.value;
+        break;
+      case 'close_at':
+        shop.close_at = event.target.value;  
+        break;  
       case 'logo':
         shop.logo = event.target.files[0];
         break;
@@ -58,6 +66,13 @@ class ShopSettingForm extends Component {
       });
       return;
     }
+    if(shop.close_at === "" || shop.close_at === null  ) {
+      this.setState({
+        response : "shop closing time Can't be empty.",
+        responseClass : "text-danger",
+      });
+      return;
+    }
     if (shop.email === "" || shop.email === null) {
       this.setState({
         response : "Email Can't be empty.",
@@ -65,6 +80,7 @@ class ShopSettingForm extends Component {
       });
       return;
     }
+
     if (shop.mobile === "" || shop.mobile === null) {
       this.setState({
         response : "Mobile Can't be empty.",
@@ -98,6 +114,8 @@ class ShopSettingForm extends Component {
       data.append("mobile", shop.mobile);
       data.append("address", shop.address);
       data.append("about", shop.about);
+      data.append("open_at", shop.open_at);
+      data.append("close_at", shop.close_at);
       if (shop.logo) {
         data.append("logo", shop.logo, shop.logo.name);
       }
@@ -141,12 +159,20 @@ class ShopSettingForm extends Component {
 
  render() {
     const {response,responseClass,data} = this.state;
-    const { name, email, mobile, address, about, logo } = data;
+    const { name, email, mobile, address, about, logo , open_at, close_at, shop_url } = data;
     return (
         this.state.isLoader
         ?<PageLoader error={response}/>
         :  <form className="form-horizontal" onSubmit={this.handleSubmit} >
         <div className={responseClass}> {response} </div>
+
+        <div className="form-group row">   
+           <label className="col-sm-2 col-form-label"> Shop Url</label>
+                <div className="col-sm-10">
+                    <input disabled={true} type="text" className="form-control" value={shop_url}/>
+                    
+                </div>
+        </div>
         <div className="form-group row">
           <label htmlFor="name" className="col-sm-2 col-form-label">Shop Name</label>
           <div className="col-sm-10">
@@ -161,6 +187,35 @@ class ShopSettingForm extends Component {
             />
           </div>
         </div>
+        <div className="form-group row">
+          <label htmlFor="name" className="col-sm-2 col-form-label">Shop Opening Time</label>
+          <div className="col-sm-10">
+            <input
+              type="time"
+              className="form-control"
+              id="name"
+              name="open_at"
+              placeholder="Opening Time"
+              value={open_at}
+              onChange={this.handleInputChange}
+            />
+          </div>
+        </div>
+        <div className="form-group row">
+          <label htmlFor="name" className="col-sm-2 col-form-label">Shop Closing Time</label>
+          <div className="col-sm-10">
+            <input
+              type="time"
+              className="form-control"
+              id="name"
+              name="close_at"
+              placeholder="Closing Time"
+              value={close_at}
+              onChange={this.handleInputChange}
+            />
+          </div>
+        </div>
+
         <div className="form-group row">
           <label htmlFor="email" className="col-sm-2 col-form-label">Shop Email</label>
           <div className="col-sm-10">

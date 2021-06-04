@@ -28,24 +28,9 @@ class Sidebar extends React.Component {
 
 
   }
-  linkClick = () => {
-
-    // if(document.body.classList.contains('sidebar-open'))
-    //  {
-    //   document.body.classList.remove('sidebar-open');
-    //   document.body.classList.add('sidebar-closed');
-    //   document.body.classList.add('sidebar-collapse');
-
-
-    // }else{
-
-    //     document.body.classList.add('sidebar-collapse');
-
-    // }
-
-  }
 
   componentDidMount() {
+    console.log(this.props);
     const name = cookieService.get("name") ? cookieService.get("name") : "Owner";
     const image = (UrlService.userImageUrl() + cookieService.get("image"));
     this.setState({
@@ -142,7 +127,7 @@ class Sidebar extends React.Component {
               </li>
 
 
-              <li className={(props.pathname === "/setPrice" || props.pathname === "/stockList" || this.state.menu === "stock") ? "nav-item has-treeview menu-open" : "nav-item has-treeview"} >
+              <li className={(props.pathname.includes('/setPrice') || props.pathname === "/stockList" || this.state.menu === "stock") ? "nav-item has-treeview menu-open" : "nav-item has-treeview"} >
                 <div onClick={() => this.menuClick("stock")} className="nav-link sidebar-menu" >
                   <i className="nav-icon fas fa-boxes"></i>
                   <p>
@@ -152,7 +137,7 @@ class Sidebar extends React.Component {
                 </div>
                 <ul className="nav nav-treeview ">
                   <li className="nav-item">
-                    <Link to='/setPrice' className={(props.pathname === "/setPrice") ? "nav-link active" : "nav-link "} >
+                    <Link to='/setPrice' className={props.pathname.includes('/setPrice') ? "nav-link active" : "nav-link "} >
                       <i className="fa fa-tags nav-icon"></i>
                       <p>Set Selling Price</p>
                     </Link>
@@ -413,12 +398,12 @@ class Sidebar extends React.Component {
                 </Link>
               </li>
 
-              <li className="nav-item ">
+              {/* <li className="nav-item ">
                 <Link to='/contact-us' className={(props.pathname === "/contact-us") ? "nav-link active" : "nav-link "}  >
                   <i className="nav-icon fas fa-phone"></i>
                   <p>Contact Us</p>
                 </Link>
-              </li>
+              </li> */}
 
 
               <li className="nav-header"></li>

@@ -12,15 +12,15 @@ function Table(props) {
     var i = 1;
 
     return (
-        <table className="table table-striped">
+        <table className="table table-striped" id="my_table">
   <thead className="thead-dark">
     <tr>
-      <th scope="col">#Bill No.</th>
-      <th scope="col">Product</th>
-      <th scope="col">Return Price (Per Pcs.)</th>
-      <th scope="col">Return Quantity</th>
-      <th scope="col">Total Amount</th>
-      <th scope="col">Return On</th>
+      <th scope="col" className="all">#Bill No.</th>
+      <th scope="col" className="all">Product</th>
+      <th scope="col" className="none">Return Price (Per Pcs.)</th>
+      <th scope="col" className="none">Return Quantity</th>
+      <th scope="col" className="none">Total Amount</th>
+      <th scope="col" className="none">Return On</th>
     </tr>
   </thead>
   <tbody>

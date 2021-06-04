@@ -59,7 +59,7 @@ class ALL_inOne extends Component {
           year: res.data.year,
           isLoader: false
         },()=>{
-          // window.setDataTable();
+          window.setDataTable();
         });
       } else {
         this.setState({

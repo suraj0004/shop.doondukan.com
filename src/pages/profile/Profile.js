@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Card from './Card';
-import Timeline from './Timeline';
+// import Timeline from './Timeline';
 import axios from 'axios';
 import UrlService from '../../services/UrlService';
 import auth from '../../services/AuthService';
@@ -21,6 +21,7 @@ class Profile extends Component {
               address : "",
               about : "",
               logo : null,
+              shop_url : "",
             },
             user : {
               name : "",
@@ -31,7 +32,7 @@ class Profile extends Component {
               image : null,
             },
             response : "",
-            tab: "timeline",
+            tab: "shopSettings",
             card : {
                 userImage  : "",
                 shopImage : "",
@@ -49,8 +50,12 @@ class Profile extends Component {
             axios.get(UrlService.profilegUrl(), {
                 headers: auth.apiHeader()
             }).then(res => {
+
+                // console.log(data);
+                
                 if (res.data.success) {
                     this.setState({
+                       
                         shop: {
                             name: (res.data.data.store && res.data.data.store.name) ? res.data.data.store.name : "",
                             email: (res.data.data.store && res.data.data.store.email) ? res.data.data.store.email : "",
@@ -58,6 +63,7 @@ class Profile extends Component {
                             address: (res.data.data.store && res.data.data.store.address) ? res.data.data.store.address : "",
                             about: (res.data.data.store && res.data.data.store.about) ? res.data.data.store.about : "",
                             logo: null,
+                            shop_url : (res.data.data.shop_url && res.data.data.shop_url) ? res.data.data.shop_url : "",
                         },
                         user: {
                             name: (res.data.data.name) ? res.data.data.name : "",
@@ -130,16 +136,16 @@ class Profile extends Component {
                         <div className="card">
                             <div className="card-header p-2">
                                 <ul className="nav nav-pills">
-                                    <li className="nav-item"><a onClick={() => this.handleTabChange("timeline")} className={(this.state.tab === 'timeline') ? "nav-link active" : "nav-link "} href="#timeline" data-toggle="tab">Timeline</a></li>
+                                    {/* <li className="nav-item"><a onClick={() => this.handleTabChange("timeline")} className={(this.state.tab === 'timeline') ? "nav-link active" : "nav-link "} href="#timeline" data-toggle="tab">Timeline</a></li> */}
                                     <li className="nav-item"><a onClick={() => this.handleTabChange("shopSettings")} className={(this.state.tab === 'shopSettings') ? "nav-link active" : "nav-link "} href="#shopSettings" data-toggle="tab">Shop Settings</a></li>
                                     <li className="nav-item"><a onClick={() => this.handleTabChange("accountSettings")} className={(this.state.tab === 'accountSettings') ? "nav-link active" : "nav-link "} href="#accountSettings" data-toggle="tab">Account Settings</a></li>
                                 </ul>
                             </div>
                             <div className="card-body">
                                 <div className="tab-content">
-                                    <div className={(this.state.tab === 'timeline') ? "tab-pane active" : "tab-pane "} id="timeline">
+                                    {/* <div className={(this.state.tab === 'timeline') ? "tab-pane active" : "tab-pane "} id="timeline">
                                         <Timeline />
-                                    </div>
+                                    </div> */}
                                     <div className={(this.state.tab === 'shopSettings') ? "tab-pane active" : "tab-pane "} id="shopSettings">
                                         <ShopSettingForm
                                             data={this.state.shop}  

@@ -6,7 +6,7 @@ function Percentage(props) {
         <div className="card-footer bg-dark">
         <div className="row">
 
-          <div className="col-sm-4 col-6">
+          <div className="col-md-4 col-12">
             <div className="description-block border-right">
               {
                 (props.percentage.purchase > 0)
@@ -21,7 +21,7 @@ function Percentage(props) {
           </div>
 
 
-          <div className="col-sm-4 col-6">
+          <div className="col-md-4 col-12">
             <div className="description-block border-right">
             {
                 (props.percentage.sale > 0)
@@ -36,7 +36,7 @@ function Percentage(props) {
           </div>
 
 
-          <div className="col-sm-4 col-6">
+          <div className="col-md-4 col-12">
             <div className="description-block border-right">
             {
                 (props.percentage.profit > 0)
