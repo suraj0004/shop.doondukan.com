@@ -120,7 +120,8 @@ class SetPrice extends Component {
 
         let selectedOption = null;
         let price = "";
-        const edit_id = this.props.match.params.id;
+        const edit_id = Number(this.props.match.params.id);
+        console.log("edit_id",typeof edit_id);
         axios.get( UrlService.globalStockListUrl(), {
           headers : auth.apiHeader(),    
             } ).then( res => {

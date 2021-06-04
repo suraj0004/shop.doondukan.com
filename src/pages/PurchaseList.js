@@ -15,22 +15,18 @@ class PurchaseList extends Component {
             isLoader : true,
             response : ""
         }
-
-        console.log("Purchase constructor");
     }
     componentDidMount() {
-        console.log("Purchase did mount");
-    
-      
-
         axios.get( UrlService.purchasedListUrl(),{
             headers : auth.apiHeader(),
         }).then( res => {
              if(res.data.success){
-                console.log(res);
+                
                 this.setState({
                     data: res.data.data,
                     isLoader : false,
+                },()=>{
+                    window.setDataTable();
                 });
              }else{
                 this.setState({

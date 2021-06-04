@@ -61,7 +61,7 @@ class QuantityVsProfit extends Component {
           year: res.data.year,
           isLoader: false
         },()=>{
-          // window.setDataTable();
+          window.setDataTable();
         });
       } else {
         this.setState({

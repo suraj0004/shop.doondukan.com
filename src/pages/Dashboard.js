@@ -68,7 +68,7 @@ class Dashboard extends Component {
           today : res.data.today,
           isLoader: false
         },()=>{
-          // window.setDataTable();
+          window.setDataTable();
         });
       } else {
         this.setState({

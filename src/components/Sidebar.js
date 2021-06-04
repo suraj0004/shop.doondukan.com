@@ -30,6 +30,7 @@ class Sidebar extends React.Component {
   }
 
   componentDidMount() {
+    console.log(this.props);
     const name = cookieService.get("name") ? cookieService.get("name") : "Owner";
     const image = (UrlService.userImageUrl() + cookieService.get("image"));
     this.setState({
@@ -126,7 +127,7 @@ class Sidebar extends React.Component {
               </li>
 
 
-              <li className={(props.pathname === "/setPrice" || props.pathname === "/stockList" || this.state.menu === "stock") ? "nav-item has-treeview menu-open" : "nav-item has-treeview"} >
+              <li className={(props.pathname.includes('/setPrice') || props.pathname === "/stockList" || this.state.menu === "stock") ? "nav-item has-treeview menu-open" : "nav-item has-treeview"} >
                 <div onClick={() => this.menuClick("stock")} className="nav-link sidebar-menu" >
                   <i className="nav-icon fas fa-boxes"></i>
                   <p>
@@ -136,7 +137,7 @@ class Sidebar extends React.Component {
                 </div>
                 <ul className="nav nav-treeview ">
                   <li className="nav-item">
-                    <Link to='/setPrice' className={(props.pathname === "/setPrice") ? "nav-link active" : "nav-link "} >
+                    <Link to='/setPrice' className={props.pathname.includes('/setPrice') ? "nav-link active" : "nav-link "} >
                       <i className="fa fa-tags nav-icon"></i>
                       <p>Set Selling Price</p>
                     </Link>

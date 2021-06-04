@@ -31,9 +31,10 @@ class StockList extends Component {
                 data: res.data.data,
                
             }, ()=>{
-              window.setDataTable();
               this.setState({
-              isLoader : false,
+                isLoader : false,
+              },()=>{
+                window.setDataTable();
             });
             } )
             }else{
