@@ -398,12 +398,12 @@ class Sidebar extends React.Component {
                 </Link>
               </li>
 
-              <li className="nav-item ">
+              {/* <li className="nav-item ">
                 <Link to='/contact-us' className={(props.pathname === "/contact-us") ? "nav-link active" : "nav-link "}  >
                   <i className="nav-icon fas fa-phone"></i>
                   <p>Contact Us</p>
                 </Link>
-              </li>
+              </li> */}
 
 
               <li className="nav-header"></li>

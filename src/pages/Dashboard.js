@@ -608,13 +608,13 @@ var options;
                       
                       <div className="card-body p-0">
                         <div className="table-responsive">
-                          <table className="table m-0 text-center">
+                          <table className="table m-0 text-center" id="my_table">
                             <thead>
                             <tr>
-                              <th>Bill ID</th>                             
-                              <th>Status</th>
-                              <th>Time</th>
-                              <th>Bill Amount</th>
+                              <th className="all">Bill ID</th>                             
+                              <th className="none">Status</th>
+                              <th className="all">Time</th>
+                              <th className="none">Bill Amount</th>
                             </tr>
                             </thead>
                             <tbody>

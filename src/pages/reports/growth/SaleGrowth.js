@@ -104,7 +104,7 @@ class SaleGrowth extends Component {
                   sales : res.data.more.sales,
                   profit : res.data.more.profit,
                 }
-          });
+          },);
         }
     }).catch(err=>{
 
@@ -301,13 +301,13 @@ class SaleGrowth extends Component {
                     </div>
 
                     <div className="card-body p-0">
-                      <div className="card-body">
+                      <div className="card-body table-responsive">
                         <table id="my_table" className="table table-bordered table-striped">
                           <thead>
                             <tr className="text-center">
-                              <th>Sno.</th>
-                              <th> { table_label.split("-")[1] } </th>
-                              <th> { this.state.type === "quantity" ? "Item Sold":"Sales in Rs" } </th>
+                              <th className="all">Sno.</th>
+                              <th className="all"> { table_label.split("-")[1] } </th>
+                              <th className="none"> { this.state.type === "quantity" ? "Item Sold":"Sales in Rs" } </th>
                             </tr>
                           </thead>
                           <tbody>

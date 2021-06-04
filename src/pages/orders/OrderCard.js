@@ -2,9 +2,7 @@ import React from 'react';
 // import { Link } from 'react-router-dom';
 // import Moment from 'react-moment';
 import 'moment-timezone';
-import UrlService from '../../services/UrlService';
-import axios from 'axios';
-import auth from '../../services/AuthService';
+
 
 
 
@@ -47,14 +45,14 @@ function OrderCard(props) {
                                         <span aria-hidden="true">&times;</span>
                                         </button>
                                     </div>
-                                    <div className="modal-body">
-                                        <table className="table table-bordered table-hover">
+                                    <div className="modal-body table-responsive">
+                                        <table id="" className="table table-bordered table-hover my_table">
                                             <thead>
                                                 <tr>
-                                                    <th>Sr. No</th>
-                                                    <th>Product</th>
-                                                    <th>Quantity</th>
-                                                    <th>Price</th>
+                                                    <th  className="all">Sr. No</th>
+                                                    <th  className="all">Product</th>
+                                                    <th className="none">Quantity</th>
+                                                    <th className="none">Price</th>
                                                 </tr>
                                             </thead>
                                             <tbody>

@@ -45,6 +45,8 @@ if(res.data.success){
       loader:false,
       data : res.data.data,
       error: ""
+    },()=>{
+      window.setDataTable();
     });
    }else{
     this.setState({
@@ -72,7 +74,7 @@ if(res.data.success){
           <Link to="/addPurchaseReturn" className="btn btn-outline-primary" ><i className="fa fa-plus"></i> Add Return  </Link>
           </div>
 
-          <div className="card-body">
+          <div className="card-body table-responsive">
             {
               this.state.loader
                 ? <MyLoader />

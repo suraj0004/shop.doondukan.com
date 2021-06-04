@@ -454,8 +454,8 @@ class GenerateBill extends Component {
               <div className="row" >
               <div className={ this.state.responseClass } style={{ paddingTop:'5px' }}>  &nbsp; <strong> {this.state.response} </strong> </div>
 
-                <div className="col-12" style={{ paddingBottom: '115px' }}>
-                  <table className="table table-striped">
+                <div className="col-12 table-responsive" style={{ paddingBottom: '115px' }}>
+                  <table className="table table-striped ">
                     <thead>
                     <tr className="text-center">
                       <th>#</th>

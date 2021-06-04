@@ -6,15 +6,15 @@ function Table(props) {
     const data = props.data ? props.data : [];
 
     return (
-        <table className="table">
+        <table className="table" id="my_table">
   <thead className="thead-dark">
     <tr>
-      <th scope="col">#</th>
-      <th scope="col">Product</th>
-      <th scope="col">Weight</th>
-      <th scope="col">Added On</th>
-      <th scope="col">Status</th>
-      <th scope="col">Action</th>
+      <th scope="col"  className="all">#</th>
+      <th scope="col" className="all">Product</th>
+      <th scope="col" className="none">Weight</th>
+      <th scope="col" className="none">Added On</th>
+      <th scope="col" className="none">Status</th>
+      <th scope="col" className="none">Action</th>
     </tr>
   </thead>
   <tbody>

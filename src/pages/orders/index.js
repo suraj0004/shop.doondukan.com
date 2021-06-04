@@ -58,6 +58,10 @@ class orders extends Component {
 
       getOrders() {
 
+        this.setState({
+          isLoader:true
+        })
+
         axios.get(UrlService.getOrders(),{
           headers: auth.apiHeader()
         }).then(res=> {
@@ -68,6 +72,8 @@ class orders extends Component {
               data: res.data.data,
               isLoader: false,
               response : "",
+            },()=>{
+              window.setDataTable();
             })
             console.log(this.state.data);
             

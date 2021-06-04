@@ -301,13 +301,13 @@ class PurchaseGrowth extends Component {
                     </div>
 
                     <div className="card-body p-0">
-                      <div className="card-body">
+                      <div className="card-body table-responsive">
                         <table id="my_table" className="table table-bordered table-striped">
                           <thead>
                             <tr className="text-center">
-                              <th>Sno.</th>
-                              <th> { table_label.split("-")[1] } </th>
-                              <th> { this.state.type === "quantity" ? "Item Bought":"Purchase in Rs" } </th>
+                              <th className="all">Sno.</th>
+                              <th  className="all"> { table_label.split("-")[1] } </th>
+                              <th className="none"> { this.state.type === "quantity" ? "Item Bought":"Purchase in Rs" } </th>
                             </tr>
                           </thead>
                           <tbody>
