@@ -165,14 +165,6 @@ class ShopSettingForm extends Component {
         ?<PageLoader error={response}/>
         :  <form className="form-horizontal" onSubmit={this.handleSubmit} >
         <div className={responseClass}> {response} </div>
-
-        <div className="form-group row">   
-           <label className="col-sm-2 col-form-label"> Shop Url</label>
-                <div className="col-sm-10">
-                    <input disabled={true} type="text" className="form-control" value={shop_url}/>
-                    
-                </div>
-        </div>
         <div className="form-group row">
           <label htmlFor="name" className="col-sm-2 col-form-label">Shop Name</label>
           <div className="col-sm-10">
