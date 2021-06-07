@@ -582,6 +582,7 @@ class Dashboard extends Component {
                           target="_blank"
                           className="text-primary"
                           href={this.state.share.link}
+                          rel="noopener noreferrer"
                         >
                           {this.state.share.link}
                         </a>{" "}
@@ -609,14 +610,14 @@ class Dashboard extends Component {
                     <div className="icon">
                       <i className="ion ion-bag"></i>
                     </div>
-                    <a
-                      className="small-box-footer btn"
+                    <span
+                      className="small-box-footer btn text-dark"
                       onClick={this.copyShopLink}
                       role="button"
                     >
                       {this.state.copy_btn_label}{" "}
                       <i className="fas fa-arrow-circle-right"></i>
-                    </a>
+                    </span>
                   </div>
                 </div>
 
@@ -648,7 +649,7 @@ class Dashboard extends Component {
                     <div className="icon">
                       <i className="ion ion-stats-bars"></i>
                     </div>
-                    <a className="small-box-footer btn p-0 m-0" role="button">
+                    <span className="small-box-footer btn p-0 m-0" role="button">
                       <Base64Downloader
                         className="btn text-light"
                         base64={this.state.share.qr_code}
@@ -657,7 +658,7 @@ class Dashboard extends Component {
                         Download Shop QR Code{" "}
                         <i className="fas fa-arrow-circle-right"></i>
                       </Base64Downloader>
-                    </a>
+                    </span>
                   </div>
                 </div>
               </div>

@@ -159,7 +159,7 @@ class ShopSettingForm extends Component {
 
  render() {
     const {response,responseClass,data} = this.state;
-    const { name, email, mobile, address, about, logo , open_at, close_at, shop_url } = data;
+    const { name, email, mobile, address, about, logo , open_at, close_at } = data;
     return (
         this.state.isLoader
         ?<PageLoader error={response}/>
