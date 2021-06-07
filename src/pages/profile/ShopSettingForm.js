@@ -159,20 +159,12 @@ class ShopSettingForm extends Component {
 
  render() {
     const {response,responseClass,data} = this.state;
-    const { name, email, mobile, address, about, logo , open_at, close_at, shop_url } = data;
+    const { name, email, mobile, address, about, logo , open_at, close_at } = data;
     return (
         this.state.isLoader
         ?<PageLoader error={response}/>
         :  <form className="form-horizontal" onSubmit={this.handleSubmit} >
         <div className={responseClass}> {response} </div>
-
-        <div className="form-group row">   
-           <label className="col-sm-2 col-form-label"> Shop Url</label>
-                <div className="col-sm-10">
-                    <input disabled={true} type="text" className="form-control" value={shop_url}/>
-                    
-                </div>
-        </div>
         <div className="form-group row">
           <label htmlFor="name" className="col-sm-2 col-form-label">Shop Name</label>
           <div className="col-sm-10">
