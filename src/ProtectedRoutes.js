@@ -5,6 +5,7 @@ export const ProtectedRoutes = ( {component: Component, ...rest} ) => {
     // Auto close sidebar while navigation
     document.body.classList.remove('sidebar-open');
     document.body.classList.add('sidebar-closed');
+    document.body.classList.add('sidebar-collapse');
     return(
       <Route  {...rest} render={
           (props) => {
