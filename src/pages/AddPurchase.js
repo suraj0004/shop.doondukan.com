@@ -15,6 +15,7 @@ class AddPurchase extends Component {
       options: [],
       price_type: "lumsum",
       price: "",
+      selling_price : "",
       quantity: "",
       total: 0,
       response: "",
@@ -130,7 +131,7 @@ class AddPurchase extends Component {
 
   handleSubmit = event => {
     event.preventDefault();
-    var { selectedOption, price_type, price, quantity } = this.state;
+    var { selectedOption, price_type, price, quantity, selling_price } = this.state;
 
     if (selectedOption === null) {
       this.setState({
@@ -144,10 +145,15 @@ class AddPurchase extends Component {
       });
     } else if (price === null || price === 0 || price === "") {
       this.setState({
-        response: "Please Enter Price.",
+        response: "Please Enter Buying Price.",
         responseClass: "text-danger",
       });
-    } else {
+    } else if (selling_price === null || selling_price === 0 || selling_price === "") {
+      this.setState({
+        response: "Please Enter Selling Price.",
+        responseClass: "text-danger",
+      });
+    }else {
       this.setState({
         response: "",
         isLoader: true,
@@ -158,6 +164,7 @@ class AddPurchase extends Component {
           product_source: product[1],
           price: Number((price_type === "lumsum") ? (price / quantity).toFixed(8) : price),
           quantity: Number(quantity),
+          selling_price: Number(selling_price),
         }
 
         axios.post(UrlService.addPurchaseUrl(), postData, {
@@ -170,6 +177,7 @@ class AddPurchase extends Component {
               selectedOption: null,
               price_type: "lumsum",
               price: "",
+              selling_price : "",
               quantity: "",
               total: 0,
               isLoader: false,
@@ -181,6 +189,7 @@ class AddPurchase extends Component {
               selectedOption: null,
               price_type: "lumsum",
               price: "",
+              selling_price : "",
               quantity: "",
               total: 0,
               isLoader: false,
@@ -216,6 +225,7 @@ class AddPurchase extends Component {
       selectedOption: null,
       price_type: "lumsum",
       price: "",
+      selling_price : "",
       quantity: "",
       total: 0,
     })
@@ -289,9 +299,17 @@ class AddPurchase extends Component {
                     </div>
 
                     <div className="form-group row">
-                      <label htmlFor="price" className="col-sm-3 col-form-label">Price</label>
+                      <label htmlFor="price" className="col-sm-3 col-form-label">Buying Price</label>
                       <div className="col-sm-9">
-                        <input value={this.state.price} type="number" className="form-control" name="price" placeholder="Enter Price" onChange={this.handleInputChange} />
+                        <input value={this.state.price} type="number" className="form-control" name="price" placeholder="Enter Buying Price" onChange={this.handleInputChange} />
+                      </div>
+
+                    </div>
+
+                    <div className="form-group row">
+                      <label htmlFor="selling_price" className="col-sm-3 col-form-label">Selling Price</label>
+                      <div className="col-sm-9">
+                        <input value={this.state.selling_price} type="number" className="form-control" name="selling_price" placeholder="Enter Selling Price" onChange={this.handleInputChange} />
                       </div>
 
                     </div>
