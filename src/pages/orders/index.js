@@ -35,10 +35,13 @@ class orders extends Component {
       })
       .then((res) => {
         console.log(res);
-        if(status === 2 && res.data.success){
+        if (status === 2 && res.data.success) {
           this.props.history.push("/invoice/" + res.data.data);
-        }else
+        } else if (res.data.success) {
           this.getOrders();
+        } else {
+          alert(res.data.message);
+        }
       })
       .catch((err) => {
         console.log(err, "error");
