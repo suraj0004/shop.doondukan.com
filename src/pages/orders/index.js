@@ -5,6 +5,8 @@ import UrlService from "../../services/UrlService";
 import auth from "../../services/AuthService";
 import Layout from "../../layouts/RetailLayout";
 import PageLoader from "../../components/PageLoader";
+import Pagination from 'react-js-pagination';
+
 
 class orders extends Component {
   constructor(props) {
@@ -77,7 +79,7 @@ class orders extends Component {
     this.getOrders();
   };
 
-  getOrders() {
+  getOrders(page = 1) {
     this.setState({
       isLoader: true,
     });
@@ -86,7 +88,7 @@ class orders extends Component {
       .get(UrlService.getOrders(), {
         headers: auth.apiHeader(),
         params: {
-          // page : page,
+          page : page,
           status: this.state.status,
           search: this.state.search,
         },
@@ -145,7 +147,7 @@ class orders extends Component {
                 <input
                   type="text"
                   className="form-control"
-                  placeholder="Search Bill No."
+                  placeholder="Search Order No."
                   value={this.state.search}
                   onChange={this.handleSearchChange}
                 />
@@ -172,6 +174,22 @@ class orders extends Component {
                 data={this.state.data}
                 updateState={this.updateState}
               />
+                 
+            </div>
+            <div className="card-footer">
+                <nav aria-label="Contacts Page Navigation">
+                    <Pagination
+                        activePage={this.state.data.current_page}
+                        itemsCountPerPage={this.state.data.per_page}
+                        totalItemsCount={this.state.data.total}
+                        onChange={(pageNumber) => this.getOrders(pageNumber)}
+                        innerClass="pagination justify-content-center m-0"
+                        itemClass="page-item"
+                        linkClass="page-link"
+                        firstPageText="First"
+                        lastPageText="Last"
+                    />
+                </nav>
             </div>
           </React.Fragment>
         )}
