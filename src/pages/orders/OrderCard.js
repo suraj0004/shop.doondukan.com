@@ -4,7 +4,7 @@ import Moment from "react-moment";
 import "moment-timezone";
 
 function OrderCard(props) {
-  var data = props;
+  var data = props.data;
 
   return (
     <>
