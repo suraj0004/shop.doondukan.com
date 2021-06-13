@@ -98,35 +98,9 @@ class Sidebar extends React.Component {
                 </Link>
               </li>
 
-              <li className="nav-item ">
-                <Link
-                  to="/generateBill"
-                  className={
-                    props.pathname === "/generateBill"
-                      ? "nav-link active"
-                      : "nav-link "
-                  }
-                >
-                  <i className="nav-icon fas fa-cash-register"></i>
-                  <p>Generate Bill</p>
-                </Link>
-              </li>
+             
 
-              <li className="nav-item ">
-                <Link
-                  to="/orders"
-                  className={
-                    props.pathname === "/orders"
-                      ? "nav-link active"
-                      : "nav-link "
-                  }
-                >
-                  <i className="nav-icon fas fa-cash-register"></i>
-                  <p>Oders </p>
-                </Link>
-              </li>
-
-              <li className="nav-header">Operations</li>
+              <li className="nav-header">Management</li>
 
               <li
                 className={
@@ -143,7 +117,7 @@ class Sidebar extends React.Component {
                 >
                   <i className="nav-icon fas fa-money-bill-alt"></i>
                   <p>
-                    Purchases
+                  Manage Inventory 
                     <i className="right fas fa-angle-left"></i>
                   </p>
                 </div>
@@ -158,7 +132,7 @@ class Sidebar extends React.Component {
                       }
                     >
                       <i className="nav-icon fa fa-plus"></i>
-                      <p>Add Purchase</p>
+                      <p>Add Product</p>
                     </Link>
                   </li>
                   <li className="nav-item">
@@ -171,7 +145,7 @@ class Sidebar extends React.Component {
                       }
                     >
                       <i className="nav-icon fa fa-clipboard-list"></i>
-                      <p>Purchase List</p>
+                      <p>Product List</p>
                     </Link>
                   </li>
                 </ul>
@@ -192,24 +166,12 @@ class Sidebar extends React.Component {
                 >
                   <i className="nav-icon fas fa-boxes"></i>
                   <p>
-                    Stock
+                    Manage Stock
                     <i className="right fas fa-angle-left"></i>
                   </p>
                 </div>
                 <ul className="nav nav-treeview ">
-                  <li className="nav-item">
-                    <Link
-                      to="/setPrice"
-                      className={
-                        props.pathname.includes("/setPrice")
-                          ? "nav-link active"
-                          : "nav-link "
-                      }
-                    >
-                      <i className="fa fa-tags nav-icon"></i>
-                      <p>Set Selling Price</p>
-                    </Link>
-                  </li>
+                 
                   <li className="nav-item">
                     <Link
                       to="/stockList"
@@ -220,12 +182,58 @@ class Sidebar extends React.Component {
                       }
                     >
                       <i className="fa fa-warehouse nav-icon"></i>
-                      <p>Stock List</p>
+                      <p>Product Stock List</p>
                     </Link>
                   </li>
+
+                  <li className="nav-item">
+                    <Link
+                      to="/setPrice"
+                      className={
+                        props.pathname.includes("/setPrice")
+                          ? "nav-link active"
+                          : "nav-link "
+                      }
+                    >
+                      <i className="fa fa-tags nav-icon"></i>
+                      <p>Set Product Price</p>
+                    </Link>
+                  </li>
+
                 </ul>
               </li>
+              <li className="nav-header">Operations</li>
+             
 
+              <li className="nav-item ">
+                <Link
+                  to="/orders"
+                  className={
+                    props.pathname === "/orders"
+                      ? "nav-link active"
+                      : "nav-link "
+                  }
+                >
+                  <i class="nav-icon fas fa-list-ul"></i>
+                  <p>Online Order </p>
+                </Link>
+              </li>
+
+              <li className="nav-item ">
+                <Link
+                  to="/generateBill"
+                  className={
+                    props.pathname === "/generateBill"
+                      ? "nav-link active"
+                      : "nav-link "
+                  }
+                >
+                  <i className="nav-icon fas fa-cash-register"></i>
+                  <p>Offline Order</p>
+                </Link>
+              </li>
+
+              <li className="nav-header">Completed Orders</li>
               <li className="nav-item">
                 <Link
                   to="/billList"
@@ -236,7 +244,7 @@ class Sidebar extends React.Component {
                   }
                 >
                   <i className="nav-icon fa fa-file-invoice-dollar"></i>
-                  <p>Bill List</p>
+                  <p>Bill</p>
                 </Link>
               </li>
               <li className="nav-item">
@@ -249,11 +257,11 @@ class Sidebar extends React.Component {
                   }
                 >
                   <i className="nav-icon fa fa-layer-group"></i>
-                  <p>Sale List</p>
+                  <p>Sold Out Product</p>
                 </Link>
               </li>
 
-              <li className="nav-header">Return</li>
+              <li className="nav-header">Return Management</li>
 
               <li
                 className={
@@ -373,7 +381,7 @@ class Sidebar extends React.Component {
                 >
                   <i className="nav-icon fas fa-database"></i>
                   <p>
-                    Products
+                    Product Report
                     <i className="right fas fa-angle-left"></i>
                   </p>
                 </div>
@@ -467,7 +475,7 @@ class Sidebar extends React.Component {
                 >
                   <i className="nav-icon fas fa-greater-than-equal"></i>
                   <p>
-                    Comparison
+                    Comparison Report
                     <i className="right fas fa-angle-left"></i>
                   </p>
                 </div>
@@ -546,7 +554,7 @@ class Sidebar extends React.Component {
                 >
                   <i className="nav-icon fas fa-hand-holding-water"></i>
                   <p>
-                    Growth
+                    Growth Report
                     <i className="right fas fa-angle-left"></i>
                   </p>
                 </div>
