@@ -46,15 +46,15 @@ class Sidebar extends React.Component {
     const props = this.props;
     return (
       <aside className="main-sidebar sidebar-dark-primary elevation-4">
-        <Link to="/" className="brand-link">
+        <a target="_blank" rel="noopener noreferrer" href="https://doondukan.com" className="brand-link">
           <img
-            src="/asset/dist/img/AdminLTELogo.png"
+            src="/logo192.png"
             alt="DoonDukan Logo"
             className="brand-image img-circle elevation-3"
             style={{ opacity: ".8" }}
           />
           <span className="brand-text font-weight-light">DoonDukan</span>
-        </Link>
+        </a>
 
         <div className="sidebar">
           <div className="user-panel mt-3 pb-3 mb-3 d-flex">

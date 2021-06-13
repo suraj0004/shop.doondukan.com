@@ -41,3 +41,9 @@
 .password-eye-btn:focus {
   outline: none;
 }
+
+@media only screen and (max-width: 600px) {
+  .main-footer{
+    display: none
+  }
+}

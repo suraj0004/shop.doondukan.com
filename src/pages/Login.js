@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import auth from "../services/AuthService";
-import PageLoader from "../components/PageLoader";
 import { Link } from "react-router-dom";
 import { ClipLoader } from "react-spinners";
 
