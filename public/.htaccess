@@ -6,4 +6,9 @@
   RewriteCond %{REQUEST_FILENAME} !-d
   RewriteCond %{REQUEST_FILENAME} !-l
   RewriteRule . /index.html [L]
+
+  RewriteCond %{HTTPS} off
+  RewriteCond %{HTTP_HOST} ^shop\.doondukan\.com [NC]
+  RewriteRule ^(.*)$ https://shop.doondukan.com/$1 [R,L]
+
 </IfModule>
