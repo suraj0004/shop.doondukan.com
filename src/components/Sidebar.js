@@ -229,7 +229,7 @@ class Sidebar extends React.Component {
                   }
                 >
                   <i className="nav-icon fas fa-cash-register"></i>
-                  <p>Offline Order</p>
+                  <p>Generate Offline Order</p>
                 </Link>
               </li>
 
@@ -244,7 +244,7 @@ class Sidebar extends React.Component {
                   }
                 >
                   <i className="nav-icon fa fa-file-invoice-dollar"></i>
-                  <p>Bill</p>
+                  <p>All Bills</p>
                 </Link>
               </li>
               <li className="nav-item">
