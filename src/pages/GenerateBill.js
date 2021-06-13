@@ -483,7 +483,7 @@ class GenerateBill extends Component {
 
             <div className="row">
               <div
-                className={this.state.responseClass}
+                className={`text-center col-12 ${this.state.responseClass}`}
                 style={{ paddingTop: "5px" }}
               >
                 {" "}

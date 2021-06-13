@@ -460,41 +460,6 @@ class AddSaleReturn extends Component {
         </div>
       </div>
       )
-      // return (
-        
-      //   <tr key={(index + 1).toString()} className="text-center">
-      //     <td>{deleteRow}</td>
-      //     <td style={{ width: "35%" }}>
-      //       <div>
-      //         <Select
-      //           value={item.selectedOption}
-      //           onChange={(e) => this.handleChange(index, e)}
-      //           options={item.options}
-      //           isDisabled={item.selectedOption === null ? false : true}
-      //         />
-      //       </div>
-      //     </td>
-      //     <td>
-      //       {" "}
-      //       {item.avaliable_quantity === ""
-      //         ? "----"
-      //         : item.avaliable_quantity + "Pcs."}{" "}
-      //     </td>
-      //     <td> {item.price === "" ? "----" : "Rs. " + item.price + " /-"} </td>
-      //     <td>
-      //       {" "}
-      //       <input
-      //         value={item.return_quantity}
-      //         type="number"
-      //         className="form-control"
-      //         name="quantity"
-      //         placeholder="Enter Quantity"
-      //         onChange={(e) => this.handleInputChange(index, e)}
-      //         disabled={item.selectedOption === null ? true : false}
-      //       />
-      //     </td>
-      //   </tr>
-      // );
     });
 
     return (
@@ -511,7 +476,7 @@ class AddSaleReturn extends Component {
           <React.Fragment>
             <button
               type="button"
-              className="btn btn-outline-secondary"
+              className="btn btn-primary"
               onClick={this.handleBackButtonClick}
             >
               <i className="fa fa-arrow-left"></i> Back{" "}

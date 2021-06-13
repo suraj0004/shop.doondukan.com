@@ -5,19 +5,19 @@
 
 /* Track */
 ::-webkit-scrollbar-track {
-  background: #f1f1f1 !important; 
+  background: #f1f1f1 !important;
   border-radius: 10px !important;
 }
- 
+
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: #007bff !important; 
+  background: #007bff !important;
   border-radius: 10px !important;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: #4400ff !important; 
+  background: #4400ff !important;
   border-radius: 10px !important;
 }
 
@@ -25,4 +25,25 @@
   background: none;
   border: none;
   color: #c2c7d0 !important;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+.password-eye-btn {
+  background: none;
+  border: none;
+  color: grey;
+  padding: 0;
+  margin: 0;
+  outline: none;
+}
+.password-eye-btn:focus {
+  outline: none;
+}
+
+@media only screen and (max-width: 600px) {
+  .main-footer{
+    display: none
+  }
 }
