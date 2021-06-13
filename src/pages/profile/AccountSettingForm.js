@@ -3,6 +3,8 @@ import axios from 'axios';
 import UrlService from '../../services/UrlService';
 import auth from '../../services/AuthService';
 import PageLoader from '../../components/PageLoader';
+import CookieService from '../../services/CookieService';
+
 class AccountSettingForm extends Component {
   
   constructor(props) {
@@ -13,6 +15,15 @@ class AccountSettingForm extends Component {
       responseClass : "text-danger",
       isLoader : false,
     };
+  }
+
+  setUserImage = (data) => {
+    let date = new Date();
+    const expiryAfterDays = 7;
+    date.setTime( date.getTime()  + ( 1000 * 60 * 60 * 24 * expiryAfterDays) );
+    let options = { path : '/',expires : date };
+    const image = data.id + '/' +data.image;
+    CookieService.set('image',image,options);
   }
 
   
@@ -122,6 +133,7 @@ return;
             user.password = "";
             user.c_password = "";
             user.image = null;
+            this.setUserImage(res.data.data);
           this.setState({
             isLoader: false,
             data : user,
