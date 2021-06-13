@@ -224,6 +224,9 @@ class Invoice extends Component {
       <Layout
         pathname={this.props.location.pathname}
         page="Invoice">
+        <div className="mb-4">
+          <button className="btn btn-primary" onClick={this.props.history.goBack}> <i className="fa fa-arrow-left"></i> Back</button>
+        </div>
         {
           (this.state.isLoader)
             ? <PageLoader error={this.state.response} />

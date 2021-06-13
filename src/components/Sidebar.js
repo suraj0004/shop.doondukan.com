@@ -57,27 +57,7 @@ class Sidebar extends React.Component {
         </a>
 
         <div className="sidebar">
-          <div className="user-panel mt-3 pb-3 mb-3 d-flex">
-            <div className="image">
-              <img
-                src={this.state.image}
-                onError={this.setImage}
-                className="img-circle elevation-3"
-                alt="User Img"
-                style={{ height: "35px", width: "35px" }}
-              />
-            </div>
-            <div className="info">
-              <Link
-                to="/profile"
-                className={
-                  props.pathname === "/profile" ? "d-block active" : "d-block "
-                }
-              >
-                {this.state.name}
-              </Link>
-            </div>
-          </div>
+          
 
           <nav className="mt-2">
             <ul
@@ -86,7 +66,9 @@ class Sidebar extends React.Component {
               role="menu"
               data-accordion="false"
             >
-              <li className="nav-item ">
+               <li className="nav-header">Dashboard & My Profile</li>
+
+               <li className="nav-item ">
                 <Link
                   to="/"
                   className={
@@ -97,6 +79,27 @@ class Sidebar extends React.Component {
                   <p>Dashboard</p>
                 </Link>
               </li>
+
+               <li className="nav-item ">
+                <Link
+                  to="/profile"
+                  className={
+                    props.pathname === "/profile" ? "nav-link active" : "nav-link "
+                  }
+                >
+                 
+                  <img
+                src={this.state.image}
+                onError={this.setImage}
+                className="img-circle elevation-3 nav-icon"
+                alt="User Img"
+                style={{ height: "25px", width: "25px" }}
+              />
+                  <p> {this.state.name}</p>
+                </Link>
+              </li>
+
+            
 
              
 
@@ -306,7 +309,7 @@ class Sidebar extends React.Component {
                       }
                     >
                       <i className="nav-icon fa fa-clipboard-list"></i>
-                      <p>Return List</p>
+                      <p>Return Product List</p>
                     </Link>
                   </li>
                 </ul>
@@ -355,7 +358,7 @@ class Sidebar extends React.Component {
                       }
                     >
                       <i className="nav-icon fa fa-clipboard-list"></i>
-                      <p>Return List</p>
+                      <p>Return Product List</p>
                     </Link>
                   </li>
                 </ul>

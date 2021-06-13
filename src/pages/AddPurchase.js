@@ -286,33 +286,38 @@ class AddPurchase extends Component {
                     </div>
 
 
+                  
+
                     <div className="form-group row">
-                      <label htmlFor="price_type" className="col-sm-3 col-form-label">Price Type</label>
+                      <label htmlFor="price" className="col-sm-3 col-form-label">Purchase Price</label>
+                      <div className="col-sm-9">
+                        <input value={this.state.price} type="number" className="form-control" name="price" placeholder="Enter price you paid on purchasing" onChange={this.handleInputChange} />
+                      </div>
+
+                    </div>
+
+                    <div className="form-group row">
+                      <label htmlFor="price_type" className="col-sm-3 col-form-label">Purchase Price Type</label>
                       <div className="col-sm-9">
                         <select value={this.state.price_type} name="price_type" className="form-control" onChange={this.handleInputChange} >
-                          <option value="lumsum" >Lumsum</option>
+                          <option value="lumsum" >Total Amount</option>
                           <option value="per_piece">Per Piece</option>
                         </select>
                       </div>
 
 
                     </div>
+<hr/>
 
+<small>*This price will show on your e-commerce app</small>
                     <div className="form-group row">
-                      <label htmlFor="price" className="col-sm-3 col-form-label">Buying Price</label>
-                      <div className="col-sm-9">
-                        <input value={this.state.price} type="number" className="form-control" name="price" placeholder="Enter Buying Price" onChange={this.handleInputChange} />
-                      </div>
-
-                    </div>
-
-                    <div className="form-group row">
-                      <label htmlFor="selling_price" className="col-sm-3 col-form-label">Selling Price</label>
+                      <label htmlFor="selling_price" className="col-sm-3 col-form-label">Selling Price (Per Piece)</label>
                       <div className="col-sm-9">
                         <input value={this.state.selling_price} type="number" className="form-control" name="selling_price" placeholder="Enter Selling Price" onChange={this.handleInputChange} />
                       </div>
 
                     </div>
+                    
 
 
 
