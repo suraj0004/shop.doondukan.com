@@ -31,7 +31,7 @@ function Timeline(props) {
                         <div className="timeline-item">
                           <span className="time"><i className="far fa-clock"></i> 5 mins ago</span>
 
-                          <h3 className="timeline-header border-0"><span>#MeriDukan-19287</span> Bill Generated
+                          <h3 className="timeline-header border-0"><span>#DoonDukan-19287</span> Bill Generated
                           </h3>
                         </div>
                       </div>

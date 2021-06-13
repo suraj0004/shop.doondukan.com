@@ -49,11 +49,11 @@ class Sidebar extends React.Component {
         <Link to="/" className="brand-link">
           <img
             src="/asset/dist/img/AdminLTELogo.png"
-            alt="Meri Dukan Logo"
+            alt="DoonDukan Logo"
             className="brand-image img-circle elevation-3"
             style={{ opacity: ".8" }}
           />
-          <span className="brand-text font-weight-light">Meri Dukan</span>
+          <span className="brand-text font-weight-light">DoonDukan</span>
         </Link>
 
         <div className="sidebar">
