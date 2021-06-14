@@ -5,8 +5,10 @@ import axios from "axios";
 import auth from "../../services/AuthService";
 import UrlService from "../../services/UrlService";
 import { ToastContainer, toast } from "react-toastify";
+import PageLoader from "../../components/PageLoader";
 
 const Catalog = (props) => {
+  const [loader, setLoader] = useState(false);
   const [activeKey, setActiveKey] = useState("0");
   const [selectedProducts, setSelectedProducts] = useState([]);
   const [selectedCategories, setSelectedCategories] = useState([]);
@@ -14,6 +16,7 @@ const Catalog = (props) => {
   const [categories, setCategories] = useState([]);
 
   useEffect(() => {
+    setLoader(true);
     axios
       .get(UrlService.getProductCatalogue(), {
         headers: auth.apiHeader(),
@@ -31,13 +34,16 @@ const Catalog = (props) => {
           });
           setSelectedProducts(product_ids);
           setSelectedCategories(category_ids);
-          toast.success(response.data.message);
+          // toast.success(response.data.message);
         } else {
           toast.error(response.data.message);
         }
       })
       .catch((err) => {
         toast.error("opps something went wrong");
+      })
+      .finally(() => {
+        setLoader(false);
       });
   }, []);
 
@@ -74,6 +80,7 @@ const Catalog = (props) => {
       alert("Please select a product");
       return;
     }
+    setLoader(true);
     axios
       .post(
         UrlService.addProductFromCatalogue(),
@@ -97,95 +104,101 @@ const Catalog = (props) => {
       .catch((err) => {
         console.log(err);
         toast.error("opps something went wrong");
+      }).finally(() => {
+        setLoader(false);
       });
   };
   return (
     <Layout pathname={props.location.pathname} page="Catalogue Builder">
-      <div className="container">
-        <div className="">
-          <Accordion onSelect={(key) => setActiveKey(key)}>
-            {categories.map((category, index) => {
-              return (
-                <Card key={index.toString()}>
-                  <Card.Header>
-                    <div className="row">
-                      <div className="col-8 text-left">
-                        <Accordion.Toggle
-                          as={Button}
-                          variant="button"
-                          eventKey={index.toString()}
-                        >
-                          {index.toString() === activeKey ? (
-                            <i className="fas fa-chevron-circle-down"></i>
-                          ) : (
-                            <i className="fas fa-chevron-circle-right"></i>
-                          )}{" "}
-                          {category.name}
-                        </Accordion.Toggle>
+      {loader ? (
+        <PageLoader error=""/>
+      ) : (
+        <div className="container">
+          <div className="">
+            <Accordion onSelect={(key) => setActiveKey(key)}>
+              {categories.map((category, index) => {
+                return (
+                  <Card key={index.toString()}>
+                    <Card.Header>
+                      <div className="row">
+                        <div className="col-8 text-left">
+                          <Accordion.Toggle
+                            as={Button}
+                            variant="button"
+                            eventKey={index.toString()}
+                          >
+                            {index.toString() === activeKey ? (
+                              <i className="fas fa-chevron-circle-down"></i>
+                            ) : (
+                              <i className="fas fa-chevron-circle-right"></i>
+                            )}{" "}
+                            {category.name}
+                          </Accordion.Toggle>
+                        </div>
+                        <div className="col-4 text-right">
+                          <input
+                            type="checkbox"
+                            checked={selectedCategories.includes(category.id)}
+                            onChange={() => checkCategory(category.id)}
+                          />
+                        </div>
                       </div>
-                      <div className="col-4 text-right">
-                        <input
-                          type="checkbox"
-                          checked={selectedCategories.includes(category.id)}
-                          onChange={() => checkCategory(category.id)}
-                        />
-                      </div>
-                    </div>
-                  </Card.Header>
-                  <Accordion.Collapse eventKey={index.toString()}>
-                    <Card.Body className="p-1">
-                      {category.products.map((product, index) => {
-                        return (
-                          <div className="row pt-3">
-                            <div className="col-md-2"></div>
-                            <div className="col-md-10 row">
-                              <div className="col-md-8 row">
-                                <div className="col-5">
-                                  <img
-                                    src={product.image}
-                                    className="img-fluid"
-                                    alt={product.name}
+                    </Card.Header>
+                    <Accordion.Collapse eventKey={index.toString()}>
+                      <Card.Body className="p-1">
+                        {category.products.map((product, index) => {
+                          return (
+                            <div className="row pt-3">
+                              <div className="col-md-2"></div>
+                              <div className="col-md-10 row">
+                                <div className="col-md-8 row">
+                                  <div className="col-5">
+                                    <img
+                                      src={product.image}
+                                      className="img-fluid"
+                                      alt={product.name}
+                                    />
+                                  </div>
+
+                                  <div className="col-7 pt-3">
+                                    <p>{product.name}</p>
+                                    <p>
+                                      ₹{product.price} /{product.weight}{" "}
+                                      {product.weight_type}
+                                    </p>
+                                  </div>
+                                </div>
+                                <div className="col-md-4 text-right">
+                                  <input
+                                    type="checkbox"
+                                    checked={selectedProducts.includes(
+                                      product.id
+                                    )}
+                                    onChange={() => checkProduct(product.id)}
                                   />
                                 </div>
-
-                                <div className="col-7 pt-3">
-                                  <p>{product.name}</p>
-                                  <p>
-                                    ₹{product.price} /{product.weight}{" "}
-                                    {product.weight_type}
-                                  </p>
-                                </div>
-                              </div>
-                              <div className="col-md-4 text-right">
-                                <input
-                                  type="checkbox"
-                                  checked={selectedProducts.includes(
-                                    product.id
-                                  )}
-                                  onChange={() => checkProduct(product.id)}
-                                />
                               </div>
                             </div>
-                          </div>
-                        );
-                      })}
-                    </Card.Body>
-                  </Accordion.Collapse>
-                </Card>
-              );
-            })}
-          </Accordion>
+                          );
+                        })}
+                      </Card.Body>
+                    </Accordion.Collapse>
+                  </Card>
+                );
+              })}
+            </Accordion>
+          </div>
+          <div className="pb-5 pt-3">
+            <button
+              className="btn btn-success btn-block btn-large font-weight-bold"
+              onClick={importProduct}
+            >
+              {" "}
+              Import{" "}
+            </button>
+          </div>
         </div>
-        <div className="pb-5 pt-3">
-          <button
-            className="btn btn-success btn-block btn-large font-weight-bold"
-            onClick={importProduct}
-          >
-            {" "}
-            Import{" "}
-          </button>
-        </div>
-      </div>
+      )}
       <ToastContainer />
     </Layout>
   );
