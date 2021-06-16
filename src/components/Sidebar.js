@@ -25,7 +25,6 @@ class Sidebar extends React.Component {
   };
 
   componentDidMount() {
-    console.log(this.props);
     const name = cookieService.get("name")
       ? cookieService.get("name")
       : "Owner";
@@ -217,7 +216,7 @@ class Sidebar extends React.Component {
                       : "nav-link "
                   }
                 >
-                  <i class="nav-icon fas fa-list-ul"></i>
+                  <i className="nav-icon fas fa-list-ul"></i>
                   <p>Online Order </p>
                 </Link>
               </li>

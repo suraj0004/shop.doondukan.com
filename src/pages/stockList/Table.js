@@ -2,11 +2,14 @@ import React from "react";
 import Moment from "react-moment";
 import "moment-timezone";
 import { Link } from "react-router-dom";
+import NoRecord from '../../components/NoRecord'
+
 function Table(props) {
   const {data, currentPage, perPage} = props;
  
   return (
     <div className="row">
+      <NoRecord data_count={data.length} />
       {data.map((item, index) => {
         
         return (
@@ -14,7 +17,7 @@ function Table(props) {
             <div className="card shadow">
               <div className="card-header">
                 {" "}
-                <strong> #{ ( (currentPage - 1) * perPage ) +  (index + 1)} </strong>{" "}
+                <strong> #{ ( (currentPage - 1) * perPage ) +  (index + 1)} <span className={`p-1 badge ${item.in_stock?'badge-success':'badge-warning'}`}> {item.in_stock?'In-Stock':'Out-Of-Stock'} </span> </strong>{" "}
                 <span className="float-right">
                   <Link to={`/setPrice/${item.id}`} className="btn btn-info">
                     {" "}
