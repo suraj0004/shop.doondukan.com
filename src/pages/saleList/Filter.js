@@ -1,44 +1,56 @@
 import React from "react";
 
 const Filter = ({
-  stockFilter,
+  saleDate,
   sortType,
   searchKey,
+  status,
   handleSearchChange,
-  handleStockFilterChange,
+  handleSaleDateChange,
   handleSortTypeChange,
   handleSearch,
+  handleStatusChange,
 }) => {
   return (
     <div className="row">
-      <div className="col-sm-4 col-12">
+      <div className="col-sm-3 col-12">
         <div className="form-group">
           <select
             className="custom-select"
-            value={stockFilter}
-            onChange={handleStockFilterChange}
+            value={status}
+            onChange={handleStatusChange}
           >
-            <option value="all-stock">All-Stock</option>
-            <option value="in-stock">In-Stock</option>
-            <option value="out-of-stock">Out-of-Stock</option>
+            <option value="">All</option>
+            <option value="paid">Paid</option>
+            <option value="unpaid">Un Paid</option>
           </select>
         </div>
       </div>
-      <div className="col-sm-4 col-12">
+      <div className="col-sm-3 col-12">
+        <div className="form-group">
+          <input
+            className="form-control"
+            type="date"
+            onChange={handleSaleDateChange}
+            value={saleDate}
+          />
+        </div>
+      </div>
+      <div className="col-sm-3 col-12">
         <div className="form-group">
           <select
             className="custom-select"
             value={sortType}
             onChange={handleSortTypeChange}
           >
+            <option value="sale-date-latest">Sale-Date-Latest</option>
+            <option value="sale-date-oldest">Sale-Date-Oldest</option>
             <option value="qty-low-to-high">Qty-Low-to-High</option>
-            <option value="qty-high-to-tow">Qty-High-to-Low</option>
-            <option value="price-low-to-high">Price-Low-to-High</option>
-            <option value="price-high-to-low">Price-High-to-Low</option>
+            <option value="qty-high-to-low">Qty-High-to-Low</option>
           </select>
         </div>
       </div>
-      <div className="col-sm-4 col-12">
+      <div className="col-sm-3 col-12">
         <div className="form-group">
           <div className="input-group input-group-sm">
             <input

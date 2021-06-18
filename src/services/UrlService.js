@@ -262,6 +262,11 @@ class UrlService{
         return this.baseUrl + apiUrl;
     }
 
+    sendOtp() {
+        const apiUrl = '/send-otp';
+        return this.baseUrl + apiUrl;
+    }
+
 
     
 
