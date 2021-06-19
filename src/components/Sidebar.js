@@ -56,8 +56,6 @@ class Sidebar extends React.Component {
         </a>
 
         <div className="sidebar">
-          
-
           <nav className="mt-2">
             <ul
               className="nav nav-pills nav-sidebar flex-column"
@@ -363,9 +361,9 @@ class Sidebar extends React.Component {
                 </ul>
               </li>
 
-              <li className="nav-header">Reports &amp; Charts</li>
+              {/* <li className="nav-header">Reports &amp; Charts</li> */}
 
-              <li
+              {/* <li
                 className={
                   props.pathname === "/top-highest-selling-products" ||
                   props.pathname === "/top-profitable-products" ||
@@ -603,7 +601,7 @@ class Sidebar extends React.Component {
                     </Link>
                   </li>
                 </ul>
-              </li>
+              </li> */}
 
               <li className="nav-header">Emergency</li>
               {/* <li className="nav-item ">
@@ -618,12 +616,12 @@ class Sidebar extends React.Component {
                   <p>My Categories</p>
                 </Link>
               </li> */}
-              {/* <li className="nav-item ">
+              <li className="nav-item ">
                 <Link to='/my-products' className={(props.pathname === "/my-products") ? "nav-link active" : "nav-link "}  >
                   <i className="nav-icon fas fa-user"></i>
                   <p>My Products</p>
                 </Link>
-              </li> */}
+              </li>
 
               {/* <li className="nav-item ">
                 <Link to='/contact-us' className={(props.pathname === "/contact-us") ? "nav-link active" : "nav-link "}  >
