@@ -261,7 +261,7 @@ class Sidebar extends React.Component {
                 </Link>
               </li>
 
-              <li className="nav-header">Return Management</li>
+              {/* <li className="nav-header">Return Management</li>
 
               <li
                 className={
@@ -359,7 +359,7 @@ class Sidebar extends React.Component {
                     </Link>
                   </li>
                 </ul>
-              </li>
+              </li> */}
 
               {/* <li className="nav-header">Reports &amp; Charts</li> */}
 

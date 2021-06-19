@@ -1,11 +1,11 @@
 import React from "react";
 
 const Filter = ({
-  stockFilter,
+  purchaseDate,
   sortType,
   searchKey,
   handleSearchChange,
-  handleStockFilterChange,
+  handlePurchaseDateChange,
   handleSortTypeChange,
   handleSearch,
 }) => {
@@ -13,15 +13,7 @@ const Filter = ({
     <div className="row">
       <div className="col-sm-4 col-12">
         <div className="form-group">
-          <select
-            className="custom-select"
-            value={stockFilter}
-            onChange={handleStockFilterChange}
-          >
-            <option value="all-stock">All-Stock</option>
-            <option value="in-stock">In-Stock</option>
-            <option value="out-of-stock">Out-of-Stock</option>
-          </select>
+          <input className="form-control" type="date" onChange={handlePurchaseDateChange} value={purchaseDate} />
         </div>
       </div>
       <div className="col-sm-4 col-12">
@@ -31,10 +23,10 @@ const Filter = ({
             value={sortType}
             onChange={handleSortTypeChange}
           >
+            <option value="purchase-date-latest">Purchase-Date-Latest</option>
+            <option value="purchase-date-oldest">Purchase-Date-Oldest</option>
             <option value="qty-low-to-high">Qty-Low-to-High</option>
-            <option value="qty-high-to-tow">Qty-High-to-Low</option>
-            <option value="price-low-to-high">Price-Low-to-High</option>
-            <option value="price-high-to-low">Price-High-to-Low</option>
+            <option value="qty-high-to-low">Qty-High-to-Low</option>
           </select>
         </div>
       </div>

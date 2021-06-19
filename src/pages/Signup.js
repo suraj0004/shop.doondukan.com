@@ -4,6 +4,7 @@ import auth from "../services/AuthService";
 import UrlService from "../services/UrlService";
 import { Link } from "react-router-dom";
 import { ClipLoader } from "react-spinners";
+import { Modal } from "react-bootstrap";
 
 const Loader = () => {
   return <ClipLoader loading color="#0069d9" />;
@@ -16,12 +17,14 @@ const Signup = (props) => {
     phone: "",
     password: "",
     c_password: "",
+    otp: "",
   });
   const [error, setError] = useState("");
   const [lat, setlat] = useState("");
   const [lng, setlng] = useState("");
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [otpModal, setOtpModal] = useState(false);
 
   const handleInput = (e) => {
     const name = e.target.name;
@@ -93,6 +96,10 @@ const Signup = (props) => {
           } else {
             setError(response.data.message);
             console.log(response);
+
+            if(!response.data.otp_error){
+              setOtpModal(false);
+            }
           }
         })
         .catch((error) => {
@@ -108,6 +115,65 @@ const Signup = (props) => {
       setLoading(false);
     }
   };
+
+  const sendOTP = () => {
+    setError("")
+    if(!userData.name){
+      setError("Name is required");
+      return;
+    }
+    if(!userData.email){
+      setError("Email is required");
+      return;
+    }
+    if(!userData.phone){
+      setError("Phone is required");
+      return;
+    }  
+    if(!userData.password){
+      setError("Password is required");
+      return;
+    } 
+     if(!userData.c_password){
+      setError("Confirm Password is required");
+      return;
+    } 
+    if(userData.password !== userData.c_password){
+      setError("Confirm Password not match");
+      return;
+    }  
+    if(!lat || !lng){
+      setError("Please Allow Location");
+      return;
+    }
+    setLoading(true);
+    const payload = {
+      mobile : userData.phone,
+      type:"sign_up_otp"
+    } 
+    axios
+    .post(UrlService.sendOtp(), payload, {
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    })
+    .then((response) => {
+      if(response.data.success){
+        setUserData({ ...userData, otp: '' });
+        setOtpModal(true)
+      }else{
+        setError(response.data.message);
+      }
+    })
+    .catch((error) => {
+      setError(error.message);
+      console.log(error);
+    })
+    .finally(() => {
+      setLoading(false);
+    });
+  }
   return (
     <div className="register-page">
       <div className="register-box">
@@ -227,7 +293,7 @@ const Signup = (props) => {
                 />
                 <input type="hidden" value={lat} name="lat" id="lat" />
                 <input type="hidden" value={lng} name="lng" id="lng" />
-                <label className="pl-1 cursor-pointer" for="locationId">
+                <label className="pl-1 cursor-pointer" htmlFor="locationId">
                   Allow Location Permission
                 </label>
               </div>
@@ -236,12 +302,46 @@ const Signup = (props) => {
                   {loading ? (
                     <Loader />
                   ) : (
-                    <button type="submit" className="btn btn-primary btn-block">
+                    <button
+                      type="button"
+                      onClick={sendOTP}
+                      className="btn btn-primary btn-block"
+                    >
                       Sign Up
                     </button>
                   )}
                 </div>
               </div>
+              <Modal
+                show={otpModal}
+                onHide={() => setOtpModal(false)}
+                backdrop="static"
+                keyboard={false}
+                aria-labelledby="contained-modal-title-vcenter"
+                centered
+              >
+                <Modal.Header closeButton>
+                  <Modal.Title>OTP Verification</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                  <p className="text-danger text-left"> {error} </p>
+                  <div>
+                    <input
+                      className="form-control"
+                      type="number"
+                      placeholder="Enter OTP"
+                      name="otp"
+                      value={userData.otp}
+                      onChange={handleInput}
+                    />
+                  </div>
+                </Modal.Body>
+                <Modal.Footer>
+                  <button type="button" onClick={handleSubmit} className="btn btn-primary btn-block">
+                    Confirm OTP
+                  </button>
+                </Modal.Footer>
+              </Modal>
             </form>
             <div className="social-auth-links text-center">
               <p>- OR -</p>

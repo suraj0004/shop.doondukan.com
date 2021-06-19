@@ -24,7 +24,7 @@ class Dashboard extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isLoader: false,
+      isLoader: true,
       response: "",
       data: [],
       purchase: [],
