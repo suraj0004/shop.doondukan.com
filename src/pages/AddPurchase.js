@@ -249,21 +249,21 @@ class AddPurchase extends Component {
                 </div>
                 <p className="font-weight-bold"> Catalogue Builder  </p>
                 <div className="row">
-                  <p className="col-md-8">Import Products and create your catalogue from our already existing products. </p>
-                  <p className="col-md-4 font-weight-bold text-right"><Link to="/catalogue-builder" className="btn btn-warning"> Import Now <i class="fas fa-chevron-circle-right"></i> </Link></p>
+                  <p className="col-md-8">Purchase Product in Bulk and create your catalogue from our already existing products. </p>
+                  <p className="col-md-4 font-weight-bold text-right"><Link to="/catalogue-builder" className="btn btn-warning"> Bulk Purchase Now <i class="fas fa-chevron-circle-right"></i> </Link></p>
                 </div>
               </div>
               <div className="card card-info" style={{ marginLeft: '5%', marginRight: '5%', padding: '10px' }}>
 
                 <div className="card-header">
-                  <h3 className="card-title"><strong>Add Stock Purchase</strong></h3>
+                  <h3 className="card-title"><strong>Purchase Product</strong></h3>
                 </div>
 
                 <div className={this.state.responseClass} style={{ paddingTop: '5px' }}>  &nbsp; <strong> {this.state.response} </strong> </div>
                 <form className="form-horizontal" onSubmit={this.handleSubmit}>
                   <div className="card-body">
                     <div className="form-group row">
-                      <label htmlFor="prduct" className="col-sm-3 col-form-label">Select Product</label>
+                      <label htmlFor="prduct" className="col-sm-3 col-form-label">Purchased Product</label>
                       <div className="col-sm-9" id="prduct">
                         <Select
                           value={selectedOption}
@@ -278,7 +278,7 @@ class AddPurchase extends Component {
 
 
                     <div className="form-group row">
-                      <label htmlFor="quantity" className="col-sm-3 col-form-label">Quantity</label>
+                      <label htmlFor="quantity" className="col-sm-3 col-form-label">Purchased Quantity</label>
                       <div className="col-sm-9">
                         <input value={this.state.quantity} type="number" className="form-control" name="quantity" placeholder="Enter Quantity" onChange={this.handleInputChange} />
                       </div>
@@ -289,7 +289,7 @@ class AddPurchase extends Component {
                   
 
                     <div className="form-group row">
-                      <label htmlFor="price" className="col-sm-3 col-form-label">Purchase Price</label>
+                      <label htmlFor="price" className="col-sm-3 col-form-label">Purchased Price</label>
                       <div className="col-sm-9">
                         <input value={this.state.price} type="number" className="form-control" name="price" placeholder="Enter price you paid on purchasing" onChange={this.handleInputChange} />
                       </div>
@@ -297,7 +297,7 @@ class AddPurchase extends Component {
                     </div>
 
                     <div className="form-group row">
-                      <label htmlFor="price_type" className="col-sm-3 col-form-label">Purchase Price Type</label>
+                      <label htmlFor="price_type" className="col-sm-3 col-form-label">Purchased Price Type</label>
                       <div className="col-sm-9">
                         <select value={this.state.price_type} name="price_type" className="form-control" onChange={this.handleInputChange} >
                           <option value="lumsum" >Total Amount</option>
@@ -311,7 +311,7 @@ class AddPurchase extends Component {
 
 <small>*This price will show on your e-commerce app</small>
                     <div className="form-group row">
-                      <label htmlFor="selling_price" className="col-sm-3 col-form-label">Selling Price (Per Piece)</label>
+                      <label htmlFor="selling_price" className="col-sm-3 col-form-label">Product Selling Price (Per Piece)</label>
                       <div className="col-sm-9">
                         <input value={this.state.selling_price} type="number" className="form-control" name="selling_price" placeholder="Enter Selling Price" onChange={this.handleInputChange} />
                       </div>
@@ -328,7 +328,7 @@ class AddPurchase extends Component {
 
                   <div className="card-footer">
                     <button type="reset" onClick={this.handleReset} className="btn btn-default ">Reset</button>
-                    <button type="submit" className="btn btn-info float-right">Add</button>
+                    <button type="submit" className="btn btn-info float-right">Add to Purchase</button>
                   </div>
 
                 </form>

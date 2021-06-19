@@ -24,7 +24,7 @@ class Dashboard extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isLoader: false,
+      isLoader: true,
       response: "",
       data: [],
       purchase: [],
@@ -424,7 +424,7 @@ class Dashboard extends Component {
 
       theme: "light2", //"light1", "dark1", "dark2"
       title: {
-        text: "Quantity Comparision",
+        text: "Compare Qty",
       },
       data: [
         {
@@ -649,7 +649,10 @@ class Dashboard extends Component {
                     <div className="icon">
                       <i className="ion ion-stats-bars"></i>
                     </div>
-                    <span className="small-box-footer btn p-0 m-0" role="button">
+                    <span
+                      className="small-box-footer btn p-0 m-0"
+                      role="button"
+                    >
                       <Base64Downloader
                         className="btn text-light"
                         base64={this.state.share.qr_code}
@@ -711,10 +714,10 @@ class Dashboard extends Component {
                       <table className="table m-0 text-center" id="my_table">
                         <thead>
                           <tr>
-                            <th className="all">Bill ID</th>
-                            <th className="none">Status</th>
-                            <th className="all">Time</th>
-                            <th className="none">Bill Amount</th>
+                            <th>Bill ID</th>
+                            <th>Status</th>
+                            <th>Time</th>
+                            <th>Bill Amount</th>
                           </tr>
                         </thead>
                         <tbody>

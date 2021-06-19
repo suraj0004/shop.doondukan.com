@@ -203,14 +203,14 @@ class SetPrice extends Component {
                   :  
                   <div className="card card-info" style={{marginLeft:'5%',marginRight:'5%',padding:'10px'}}>
                   <div className="card-header">
-                    <h3 className="card-title"><strong>Set Stock Selling Price</strong></h3>
+                    <h3 className="card-title"><strong>Set Product Selling Price</strong></h3>
                   </div>
                   
                   <div className={ this.state.responseClass } style={{ paddingTop:'5px' }}>  &nbsp; <strong> {this.state.response} </strong> </div>
                   <form className="form-horizontal" onSubmit={this.handleSubmit}>
                     <div className="card-body">
                       <div className="form-group row">
-                        <label htmlFor="prduct" className="col-sm-4 col-form-label">Select Stock</label>
+                        <label htmlFor="prduct" className="col-sm-4 col-form-label">Select Product</label>
                         <div className="col-sm-8" id="prduct">
              <Select
              value={selectedOption}
@@ -227,7 +227,7 @@ class SetPrice extends Component {
                 
     
                       <div className="form-group row">
-                      <label htmlFor="price" className="col-sm-4 col-form-label">Set Selling Price</label>
+                      <label htmlFor="price" className="col-sm-4 col-form-label">Selling Price</label>
                         <div className="col-sm-8">
                           <input value={this.state.price} type="number" className="form-control" name="price" placeholder="Enter Selling Price"  onChange={this.handleInputChange}/>
                         </div>
@@ -238,7 +238,7 @@ class SetPrice extends Component {
                     
                     <div className="card-footer">
                       <button type="reset" className="btn btn-default ">Cancel</button>
-                      <button type="submit" className="btn btn-info float-right">Add</button>
+                      <button type="submit" className="btn btn-info float-right">Set Price</button>
                     </div>
                     
                   </form>

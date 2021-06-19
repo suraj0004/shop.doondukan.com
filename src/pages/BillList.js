@@ -125,7 +125,7 @@ handleSearch = () =>{
     return (
       <Layout
         pathname={this.props.location.pathname}
-        page="Bills">
+        page="All Bills">
         {
           (this.state.isLoader)
             ? <PageLoader error={this.state.response} />
