@@ -116,7 +116,7 @@ class PurchaseList extends Component {
   render() {
 
     return (
-      <Layout pathname={this.props.location.pathname} page="Purchased List">
+      <Layout pathname={this.props.location.pathname} page="Purchase History">
         {this.state.isLoader ? (
           <PageLoader error={this.state.response} />
         ) : (

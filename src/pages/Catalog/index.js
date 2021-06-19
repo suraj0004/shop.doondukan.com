@@ -109,7 +109,7 @@ const Catalog = (props) => {
       });
   };
   return (
-    <Layout pathname={props.location.pathname} page="Catalogue Builder">
+    <Layout pathname={props.location.pathname} page="Catalogue Builder | Bulk Purchase">
       {loader ? (
         <PageLoader error=""/>
       ) : (
@@ -193,8 +193,7 @@ const Catalog = (props) => {
               className="btn btn-success btn-block btn-large font-weight-bold"
               onClick={importProduct}
             >
-              {" "}
-              Import{" "}
+              Bulk Import to Purchase
             </button>
           </div>
         </div>

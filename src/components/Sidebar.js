@@ -100,7 +100,7 @@ class Sidebar extends React.Component {
 
              
 
-              <li className="nav-header">Management</li>
+              <li className="nav-header">Inventory Management</li>
 
               <li
                 className={
@@ -117,7 +117,7 @@ class Sidebar extends React.Component {
                 >
                   <i className="nav-icon fas fa-money-bill-alt"></i>
                   <p>
-                  Manage Inventory 
+                  Manage Purchase 
                     <i className="right fas fa-angle-left"></i>
                   </p>
                 </div>
@@ -132,7 +132,7 @@ class Sidebar extends React.Component {
                       }
                     >
                       <i className="nav-icon fa fa-plus"></i>
-                      <p>Add Product</p>
+                      <p>Purchase Product</p>
                     </Link>
                   </li>
                   <li className="nav-item">
@@ -145,7 +145,7 @@ class Sidebar extends React.Component {
                       }
                     >
                       <i className="nav-icon fa fa-clipboard-list"></i>
-                      <p>Product List</p>
+                      <p>Purchase History</p>
                     </Link>
                   </li>
                 </ul>
@@ -182,7 +182,7 @@ class Sidebar extends React.Component {
                       }
                     >
                       <i className="fa fa-warehouse nav-icon"></i>
-                      <p>Product Stock List</p>
+                      <p>Products/Stock</p>
                     </Link>
                   </li>
 
@@ -196,13 +196,13 @@ class Sidebar extends React.Component {
                       }
                     >
                       <i className="fa fa-tags nav-icon"></i>
-                      <p>Set Product Price</p>
+                      <p>Products Selling Price</p>
                     </Link>
                   </li>
 
                 </ul>
               </li>
-              <li className="nav-header">Operations</li>
+              <li className="nav-header">Sale Management</li>
              
 
               <li className="nav-item ">
@@ -257,7 +257,7 @@ class Sidebar extends React.Component {
                   }
                 >
                   <i className="nav-icon fa fa-layer-group"></i>
-                  <p>Sold Out Product</p>
+                  <p>Sale History</p>
                 </Link>
               </li>
 
@@ -603,7 +603,7 @@ class Sidebar extends React.Component {
                 </ul>
               </li> */}
 
-              <li className="nav-header">Emergency</li>
+              <li className="nav-header">Extra Features</li>
               {/* <li className="nav-item ">
                 <Link to='/temp-brands' className={(props.pathname === "/temp-brands") ? "nav-link active" : "nav-link "}  >
                   <i className="nav-icon fas fa-user"></i>
@@ -619,7 +619,7 @@ class Sidebar extends React.Component {
               <li className="nav-item ">
                 <Link to='/my-products' className={(props.pathname === "/my-products") ? "nav-link active" : "nav-link "}  >
                   <i className="nav-icon fas fa-user"></i>
-                  <p>My Products</p>
+                  <p>Product Builder</p>
                 </Link>
               </li>
 

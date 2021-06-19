@@ -9,6 +9,7 @@ function Table(props) {
     <div className="row">
       <NoRecord data_count={data.length} />
       {data.map((item, index) => {
+        const total = Number(item.quantity) * Number(item.price);
         return (
           <div className="col-12 col-md-6 p-3 " key={index.toString()}>
             <div className="card shadow">
@@ -34,10 +35,14 @@ function Table(props) {
                   </p>
                   <p>
                     {" "}
-                    <strong>Purchased Quantity: </strong> {item.quantity}{" "}
+                    <strong>Purchased Quantity: </strong> {item.quantity} Pcs @ Rs. {item.price} /- per pcs.
                   </p>
                   <p>
-                    <strong>Purchased Date: </strong>
+                    {" "}
+                    <strong>Total Amount: </strong> Rs. {total} /-
+                  </p>
+                  <p>
+                    <strong>Purchased On: </strong>
                     <Moment local format="D MMM, YYYY" date={item.created_at} />
                   </p>
                 </div>
