@@ -22,6 +22,8 @@ class MyProductList extends Component {
         show: false,
         data: null,
       },
+      categories : [],
+      categories_fetch_error: ''
     };
   }
 
@@ -109,6 +111,27 @@ class MyProductList extends Component {
 
   componentDidMount() {
     this.getData();
+    axios
+      .get(UrlService.GetCategoriestUrl(), {
+        headers: auth.apiHeader(),
+      })
+      .then((response) => {
+        if (response.data.success) {
+          this.setState({
+            categories:response.data.data
+          })
+        } else {
+          this.setState({
+            categories_fetch_error: response.data.message
+          })
+        }
+      })
+      .catch((err) => {
+        this.setState({
+          categories_fetch_error: "Opps! Unable to load categories"
+        })
+        
+      });
   }
 
   render() {
@@ -117,11 +140,17 @@ class MyProductList extends Component {
         pathname={this.props.location.pathname}
         page="My Custom Product Builder"
       >
-        <AddProduct onSuccess={this.getData} />
+        <AddProduct 
+          onSuccess={this.getData} 
+          categories={this.state.categories} 
+          categories_fetch_error={this.state.categories_fetch_error}
+        />
         <EditProduct
           edit={this.state.edit}
           hideEditModal={this.hideEditModal}
           onSuccess={this.getData}
+          categories={this.state.categories} 
+          categories_fetch_error={this.state.categories_fetch_error} 
         />
 
         <div className="">

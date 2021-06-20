@@ -59,36 +59,12 @@ function ImagePreview({ cameraImage, fileImage, removeImage }) {
 
 function AddProductModal(props) {
   const [loader, setLoader] = useState(false);
-  const [apiError, setApiError] = useState("");
+  const [apiError, setApiError] = useState(props.categories_fetch_error);
   const [imageError, setImageError] = useState("");
   const [camera, setCamera] = useState(false);
   const [cameraImage, setCameraImage] = useState("");
   const closeModel = useRef(null);
   const notify = (message) => toast.success(message);
-
-  const [categories, setCategories] = useState([]);
-
-  useEffect(() => {
-    setLoader(true);
-    axios
-      .get(UrlService.GetCategoriestUrl(), {
-        headers: auth.apiHeader(),
-      })
-      .then((response) => {
-        console.log(response.data);
-        if (response.data.success) {
-          setCategories(response.data.data);
-        } else {
-          setApiError(response.data.message);
-        }
-      })
-      .catch((err) => {
-        setApiError("Opps! Unable to load categories");
-      })
-      .finally(() => {
-        setLoader(false);
-      });
-  }, []);
 
   const initialValues = {
     product: "",
@@ -196,7 +172,7 @@ function AddProductModal(props) {
                 onSubmit={onSubmit}
                 onReset={onReset}
               >
-                {(props) => {
+                {(formikProps) => {
                   return (
                     <React.Fragment>
                       <Form>
@@ -304,7 +280,7 @@ function AddProductModal(props) {
                                 id="category"
                               >
                                 <option value=""> Select Category </option>
-                                {categories.map((category) => {
+                                {props.categories.map((category) => {
                                   return (
                                     <option
                                       value={category.id}
@@ -356,13 +332,13 @@ function AddProductModal(props) {
                               Product Image
                             </label>
                             <div className="col-sm-9">
-                              {cameraImage || props.values.image ? (
+                              {cameraImage || formikProps.values.image ? (
                                 <ImagePreview
                                   cameraImage={cameraImage}
-                                  fileImage={props.values.image}
+                                  fileImage={formikProps.values.image}
                                   removeImage={() => {
                                     setCameraImage("");
-                                    props.setFieldValue("image", null);
+                                    formikProps.setFieldValue("image", null);
                                   }}
                                 />
                               ) : (
@@ -376,7 +352,7 @@ function AddProductModal(props) {
                                       name="image"
                                       id="image"
                                       onChange={(event) => {
-                                        props.setFieldValue(
+                                        formikProps.setFieldValue(
                                           "image",
                                           event.currentTarget.files[0]
                                         );
