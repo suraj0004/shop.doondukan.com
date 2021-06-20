@@ -13,7 +13,7 @@ export const ImagePreview = ({
 
   return (
     <div className={"demo-image-preview " + classNameFullscreen}>
-      <img src={dataUri} />
+      <img src={dataUri} alt="Preview" />
       <div className="" id="img-priview-bottom-btn" >
         <div className="row text-center">
           <div className="col-6">

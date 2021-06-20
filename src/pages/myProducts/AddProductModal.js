@@ -38,12 +38,12 @@ function ImagePreview({ cameraImage, fileImage, removeImage }) {
         setSrc(res);
       });
     }
-  }, []);
+  }, [cameraImage,fileImage]);
 
   return (
     <div className="text-center">
       <div className="img-responsive">
-        <img src={src} className="img-fluid" width="250px" />
+        <img src={src} className="img-fluid" width="250px" alt="Product Preview" />
       </div>
       <button className="btn btn-danger mt-2" onClick={removeImage}>
         Remove Image <i className="fas fa-times"></i>
