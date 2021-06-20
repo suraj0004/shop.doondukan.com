@@ -7,7 +7,7 @@ import UrlService from "../../services/UrlService";
 import PageLoader from "../../components/PageLoader";
 
 import ConfirmBill from "./ConfirmBill";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 class AddSaleReturn extends Component {
@@ -575,7 +575,7 @@ class AddSaleReturn extends Component {
             </div>
           </React.Fragment>
         )}
-        <ToastContainer />
+      
       </Layout>
     );
   }
