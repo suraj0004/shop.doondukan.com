@@ -4,7 +4,7 @@ import "moment-timezone";
 import NoRecord from "../../components/NoRecord";
 
 function Table(props) {
-  const { data, currentPage, perPage } = props;
+  const { data, currentPage, perPage, showEditModal } = props;
 
   return (
     <div className="row">
@@ -16,6 +16,7 @@ function Table(props) {
               <div className="card-header">
                 {" "}
                 <strong> #{(currentPage - 1) * perPage + (index + 1)} </strong>
+                <button className="btn btn-info float-right" onClick={() => showEditModal(product)}> <i className="fa fa-edit"></i> </button>
               </div>
               <div className="card-body row">
                 <div className="col-sm-4 text-center img-responsive">

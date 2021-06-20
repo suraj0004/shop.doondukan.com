@@ -121,7 +121,7 @@ class MyProductList extends Component {
         <EditProduct
           edit={this.state.edit}
           hideEditModal={this.hideEditModal}
-          handleEditProduct={this.handleEditProduct}
+          onSuccess={this.getData}
         />
 
         <div className="">
