@@ -38,12 +38,17 @@ function ImagePreview({ cameraImage, fileImage, removeImage }) {
         setSrc(res);
       });
     }
-  }, [cameraImage,fileImage]);
+  }, [cameraImage, fileImage]);
 
   return (
     <div className="text-center">
       <div className="img-responsive">
-        <img src={src} className="img-fluid" width="250px" alt="Product Preview" />
+        <img
+          src={src}
+          className="img-fluid"
+          width="250px"
+          alt="Product Preview"
+        />
       </div>
       <button className="btn btn-danger mt-2" onClick={removeImage}>
         Remove Image <i className="fas fa-times"></i>
@@ -105,11 +110,7 @@ function AddProductModal(props) {
       price: values.price,
     };
     if (values.image && !cameraImage) {
-      const validImageExtension = [
-        "image/jpeg",
-        "image/jpg",
-        "image/png",
-      ]
+      const validImageExtension = ["image/jpeg", "image/jpg", "image/png"];
       console.log(values.image);
       if (!validImageExtension.includes(values.image.type)) {
         setImageError("Product image should be JPG or PNG.");
@@ -131,8 +132,6 @@ function AddProductModal(props) {
       actions.setSubmitting(false);
       return;
     }
-
-    console.log(payload);
     setLoader(true);
     axios
       .post(UrlService.AddCustomeProductUrl(), payload, {
@@ -140,10 +139,11 @@ function AddProductModal(props) {
       })
       .then((res) => {
         const response = res.data;
+        console.log(response);
         if (response.success) {
           actions.resetForm();
           notify(response.message);
-          props.handleAddProduct(response.data);
+          props.onSuccess();
         } else {
           setApiError(response.message);
         }
