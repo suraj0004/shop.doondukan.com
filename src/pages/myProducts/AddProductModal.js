@@ -105,9 +105,14 @@ function AddProductModal(props) {
       price: values.price,
     };
     if (values.image && !cameraImage) {
+      const validImageExtension = [
+        "image/jpeg",
+        "image/jpg",
+        "image/png",
+      ]
       console.log(values.image);
-      if (!values.image.type.includes("image")) {
-        setImageError("Product image should be one of JPG, PNG, etc. ");
+      if (!validImageExtension.includes(values.image.type)) {
+        setImageError("Product image should be JPG or PNG.");
         actions.setSubmitting(false);
         return;
       }
