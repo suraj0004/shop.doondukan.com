@@ -1,276 +1,297 @@
-import React, { Component } from 'react';
-import axios from 'axios';
-import UrlService from '../../services/UrlService';
-import auth from '../../services/AuthService';
-import PageLoader from '../../components/PageLoader';
-import CookieService from '../../services/CookieService';
+import React, { Component } from "react";
+import axios from "axios";
+import UrlService from "../../services/UrlService";
+import auth from "../../services/AuthService";
+import PageLoader from "../../components/PageLoader";
+import CookieService from "../../services/CookieService";
 
 class AccountSettingForm extends Component {
-  
   constructor(props) {
     super(props);
     this.state = {
       data: props.data,
-      response : "",
-      responseClass : "text-danger",
-      isLoader : false,
+      response: "",
+      responseClass: "text-danger",
+      isLoader: false,
     };
+    this.imageRef = React.createRef();
   }
 
   setUserImage = (data) => {
     let date = new Date();
     const expiryAfterDays = 7;
-    date.setTime( date.getTime()  + ( 1000 * 60 * 60 * 24 * expiryAfterDays) );
-    let options = { path : '/',expires : date };
-    const image = data.id + '/' +data.image;
-    CookieService.set('image',image,options);
-  }
-
-  
+    date.setTime(date.getTime() + 1000 * 60 * 60 * 24 * expiryAfterDays);
+    let options = { path: "/", expires: date };
+    const image = data.id + "/" + data.image;
+    CookieService.set("image", image, options);
+  };
 
   handleInputChange = (event) => {
-
     var user = this.state.data;
-   var response = "", responseClass = "text-danger";
+    var response = "",
+      responseClass = "text-danger";
     switch (event.target.name) {
-      case 'name':
+      case "name":
         user.name = event.target.value;
         break;
-      case 'email':
+      case "email":
         user.email = event.target.value;
         break;
-      case 'mobile':
+      case "mobile":
         user.mobile = event.target.value;
         break;
-      case 'password':
+      case "password":
         user.password = event.target.value;
-        if( user.c_password && user.password !== user.c_password){
+        if (user.c_password && user.password !== user.c_password) {
           response = "Confirm Password is incorrect";
         }
-        break; 
-      case 'c_password':
-          user.c_password = event.target.value;
-          if(user.password !== user.c_password){
-            response = "Confirm Password is incorrect";
-          }
-       break; 
-      case 'image':
+        break;
+      case "c_password":
+        user.c_password = event.target.value;
+        if (user.password !== user.c_password) {
+          response = "Confirm Password is incorrect";
+        }
+        break;
+      case "image":
         user.image = event.target.files[0];
-        break; 
+        break;
       default:
         break;
     }
 
     this.setState({
-      data : user,
-      response : response,
-      responseClass : responseClass
+      data: user,
+      response: response,
+      responseClass: responseClass,
     });
-  }
-
+  };
 
   handleSubmit = (event) => {
     event.preventDefault();
-  var user = this.state.data;
-    if(user.name === "" || user.name === null ){
-
+    var user = this.state.data;
+    if (user.name === "" || user.name === null) {
       this.setState({
-        response : "Name Can't be empty.",
-        responseClass : "text-danger",
+        response: "Name Can't be empty.",
+        responseClass: "text-danger",
       });
       return;
     }
 
-    if(user.email === "" || user.email === null ){
-
+    if (user.email === "" || user.email === null) {
       this.setState({
-        response : "Enail Can't be empty.",
-        responseClass : "text-danger",
+        response: "Enail Can't be empty.",
+        responseClass: "text-danger",
       });
-    return;
-  }
+      return;
+    }
 
-  if(user.mobile === "" || user.mobile === null ){
+    if (user.mobile === "" || user.mobile === null) {
+      this.setState({
+        response: "Mobile Can't be empty.",
+        responseClass: "text-danger",
+      });
+      return;
+    }
 
-    this.setState({
-      response : "Mobile Can't be empty.",
-      responseClass : "text-danger",
-    });
-  return;
-}
+    if (user.password && user.password !== user.c_password) {
+      this.setState({
+        response: "Confirm Password is incorrect",
+        responseClass: "text-danger",
+      });
+      return;
+    }
 
-if( (user.password) && user.password !== user.c_password  ){
-  
-  this.setState({
-    response : "Confirm Password is incorrect",
-    responseClass : "text-danger",
-  });
-return;
-}
-
-
-
-    this.setState({
-      isLoader:true,
-      response : "",
-    }, () => {
-
-      const user = this.state.data;
-      var data = new FormData();
-      data.append("name",user.name);
-      data.append("email",user.email);
-      data.append("phone",user.mobile);
-      data.append("password", user.password );
-      data.append("c_password", user.c_password );
-      if(user.image){
-      data.append("image", user.image, user.image.name );
+    this.setState(
+      {
+        isLoader: true,
+        response: "",
+      },
+      () => {
+        const user = this.state.data;
+        var data = new FormData();
+        data.append("name", user.name);
+        data.append("email", user.email);
+        data.append("phone", user.mobile);
+        data.append("password", user.password);
+        data.append("c_password", user.c_password);
+        if (user.image) {
+          data.append("image", user.image, user.image.name);
+        }
+        axios
+          .post(UrlService.profileUserSettingUrl(), data, {
+            headers: auth.apiHeader(),
+          })
+          .then((res) => {
+            if (res.data.success) {
+              var user = this.state.data;
+              user.password = "";
+              user.c_password = "";
+              user.image = null;
+              this.setUserImage(res.data.data);
+              this.setState({
+                isLoader: false,
+                data: user,
+                response: "Data Saved Successfully",
+                responseClass: "text-success",
+              });
+            } else {
+              this.setState({
+                isLoader: false,
+                response: res.data.message,
+                responseClass: "text-danger",
+              });
+            }
+          })
+          .catch((err) => {
+            err = err.response;
+            if (err.status === 401 || err.statusText === "Unauthorized") {
+              auth.afterLogout();
+              this.props.history.push("/login");
+            } else if (err.status === 404) {
+              this.setState({
+                response:
+                  "Opps! Something went wrong, Please call to adminstrator at +91-8954836965",
+              });
+            } else {
+              this.setState({
+                response: err.data.message,
+              });
+            }
+          });
       }
-      axios.post( UrlService.profileUserSettingUrl(), data , {
-        headers : auth.apiHeader()
-      }).then(res => {
-         if(res.data.success){
-            var user = this.state.data;
-            user.password = "";
-            user.c_password = "";
-            user.image = null;
-            this.setUserImage(res.data.data);
-          this.setState({
-            isLoader: false,
-            data : user,
-            response : "Data Saved Successfully",
-            responseClass : "text-success",
-          });
+    );
+  };
 
-         }else{
-          this.setState({
-            isLoader: false,
-            response : res.data.message,
-            responseClass : "text-danger",
-          });
-
-         }
-      }).catch(err => {
-        err = err.response;
-        if(err.status === 401 || err.statusText === "Unauthorized" )
-         {
-               auth.afterLogout();
-               this.props.history.push("/login");
-         }else if(err.status === 404){
-           this.setState({
-             response : "Opps! Something went wrong, Please call to adminstrator at +91-8954836965",
-         });
-          }else{
-          this.setState({
-            response : err.data.message,
-        });
-         }
-      })
-    });
-
-
-  }
-
-
-
-
-
-
-
-
+  setErrorImage = () => {
+    this.imageRef.current.src = "/asset/dist/img/user2-160x160.jpg";
+  };
 
   render() {
-    const {response,responseClass,data} = this.state;
-    const {name,email,mobile,password,c_password,image} = data;
-    return (
-        this.state.isLoader
-        ?<PageLoader error={response}/>
-        :<form className="form-horizontal" onSubmit={this.handleSubmit} >
-        <div className={responseClass}> {response} </div>
-    <div className="form-group row">
-      <label htmlFor="username" className="col-sm-2 col-form-label">Owner Name</label>
-      <div className="col-sm-10">
-        <input 
-           type="text" 
-           className="form-control" 
-           id="username" 
-           name="name"
-           placeholder="Name"
-           value={name}
-           onChange={this.handleInputChange}
-           />
-      </div>
-    </div>
-    <div className="form-group row">
-      <label htmlFor="useremail" className="col-sm-2 col-form-label">Owner Email</label>
-      <div className="col-sm-10">
-        <input  
-          type="email" 
-          className="form-control" 
-          id="useremail" 
-          name="email"
-          placeholder="Email"
-          value={email}
-          onChange={this.handleInputChange}
+    const { response, responseClass, data } = this.state;
+    const { name, email, mobile, password, c_password, image, userImage } =
+      data;
+    return this.state.isLoader ? (
+      <PageLoader error={response} />
+    ) : (
+      <form className="form-horizontal" onSubmit={this.handleSubmit}>
+        <div className="text-center p-3 mb-3 img-responsive">
+          <img
+            className="profile-user-img img-fluid img-circle"
+            src={UrlService.userImageUrl() + userImage}
+            ref={this.imageRef}
+            onError={() => this.setErrorImage()}
+            alt="User profile"
           />
-      </div>
-    </div>
-    <div className="form-group row">
-      <label htmlFor="usermobile" className="col-sm-2 col-form-label">Owner Mobile</label>
-      <div className="col-sm-10">
-        <input 
-           type="number" 
-           className="form-control" 
-           id="usermobile"
-           name="mobile" 
-           placeholder="Mobile Number"
-           value={mobile}
-           onChange={this.handleInputChange}
-           />
-      </div>
-    </div>
+        </div>
+        <div className={responseClass}> {response} </div>
+        <div className="form-group row">
+          <label htmlFor="username" className="col-sm-2 col-form-label">
+            Owner Name
+          </label>
+          <div className="col-sm-10">
+            <input
+              type="text"
+              className="form-control"
+              id="username"
+              name="name"
+              placeholder="Name"
+              value={name}
+              onChange={this.handleInputChange}
+            />
+          </div>
+        </div>
+        <small>*Email required for order notification</small>
+        <div className="form-group row">
+          <label htmlFor="useremail" className="col-sm-2 col-form-label">
+            Owner Email
+          </label>
+          <div className="col-sm-10">
+            <input
+              type="email"
+              className="form-control"
+              id="useremail"
+              name="email"
+              placeholder="Email"
+              value={email}
+              onChange={this.handleInputChange}
+            />
+          </div>
+        </div>
 
-    <div className="form-group row">
-      <label htmlFor="newpassword" className="col-sm-2 col-form-label">New password</label>
-      <div className="col-sm-10">
-        <input 
-           type="password" 
-           className="form-control" 
-           id="newpassword"
-           name="password" 
-           placeholder="New Password "
-           value={password}
-           onChange={this.handleInputChange}
-           />
-      </div>
-    </div>
+        <small>*Mobile required for order notification</small>
+        <div className="form-group row">
+          <label htmlFor="usermobile" className="col-sm-2 col-form-label">
+            Owner Mobile
+          </label>
+          <div className="col-sm-10">
+            <input
+              type="number"
+              className="form-control"
+              id="usermobile"
+              name="mobile"
+              placeholder="Mobile Number"
+              value={mobile}
+              onChange={this.handleInputChange}
+            />
+          </div>
+        </div>
 
-    <div className="form-group row">
-      <label htmlFor="c_password" className="col-sm-2 col-form-label">Confirm password</label>
-      <div className="col-sm-10">
-        <input 
-           type="password" 
-           className="form-control" 
-           id="c_password"
-           name="c_password" 
-           placeholder="Confirm Password "
-           value={c_password}
-           onChange={this.handleInputChange}
-           />
-      </div>
-    </div>
+        <div className="form-group row">
+          <label htmlFor="newpassword" className="col-sm-2 col-form-label">
+            New password
+          </label>
+          <div className="col-sm-10">
+            <input
+              type="password"
+              className="form-control"
+              id="newpassword"
+              name="password"
+              placeholder="New Password "
+              value={password}
+              onChange={this.handleInputChange}
+            />
+          </div>
+        </div>
 
-    <div className="form-group row">
-      <label htmlFor="userimage" className="col-sm-2 col-form-label">Owner Image</label>
-      <div className="col-sm-10">
-      <div className="custom-file">
-                  <input type="file" className="custom-file-input" id="userimage" name="image" onChange={this.handleInputChange} />
-                  <label className="custom-file-label" htmlFor="userimage"> {(image === null)?"Choose file":image.name } </label>
-                </div>
-      </div>
-    </div>
-    
-  
-    {/* <div className="form-group row">
+        <div className="form-group row">
+          <label htmlFor="c_password" className="col-sm-2 col-form-label">
+            Confirm password
+          </label>
+          <div className="col-sm-10">
+            <input
+              type="password"
+              className="form-control"
+              id="c_password"
+              name="c_password"
+              placeholder="Confirm Password "
+              value={c_password}
+              onChange={this.handleInputChange}
+            />
+          </div>
+        </div>
+
+        <div className="form-group row">
+          <label htmlFor="userimage" className="col-sm-2 col-form-label">
+            Owner Image
+          </label>
+          <div className="col-sm-10">
+            <div className="custom-file">
+              <input
+                type="file"
+                className="custom-file-input"
+                id="userimage"
+                name="image"
+                onChange={this.handleInputChange}
+              />
+              <label className="custom-file-label" htmlFor="userimage">
+                {" "}
+                {image === null ? "Choose file" : image.name}{" "}
+              </label>
+            </div>
+          </div>
+        </div>
+
+        {/* <div className="form-group row">
       <div className="offset-sm-2 col-sm-10">
         <div className="checkbox">
           <label>
@@ -279,12 +300,12 @@ return;
         </div>
       </div>
     </div> */}
-    <div className="form-group text-center">
-      
-        <button type="submit" className="btn btn-primary btn-lg">Submit</button>
-      
-    </div>
-  </form>
+        <div className="form-group text-center">
+          <button type="submit" className="btn btn-primary btn-lg">
+            Submit
+          </button>
+        </div>
+      </form>
     );
   }
 }

@@ -477,7 +477,7 @@ class GenerateBill extends Component {
           >
             <div className="card-header">
               <h3 className="card-title">
-                <strong>Generate Bill</strong>
+                <strong>Generate Offline Order</strong>
               </h3>
             </div>
 

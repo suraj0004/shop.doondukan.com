@@ -131,7 +131,7 @@ class SaleList extends Component {
 
   render() {
     return (
-      <Layout pathname={this.props.location.pathname} page="Sale List">
+      <Layout pathname={this.props.location.pathname} page="Sale History">
         {this.state.isLoader ? (
           <PageLoader error={this.state.response} />
         ) : (

@@ -1,48 +1,65 @@
-import React from 'react';
-import Moment from 'react-moment';
-import 'moment-timezone';
+import React from "react";
+import Moment from "react-moment";
+import "moment-timezone";
+import NoRecord from "../../components/NoRecord";
 
 function Table(props) {
-    const data = props.data ? props.data : [];
+  const { data, currentPage, perPage, showEditModal } = props;
 
-    return (
-        <table className="table" id="my_table">
-  <thead className="thead-dark">
-    <tr>
-      <th scope="col"  className="all">#</th>
-      <th scope="col" className="all">Product</th>
-      <th scope="col" className="none">Weight</th>
-      <th scope="col" className="none">Added On</th>
-      <th scope="col" className="none">Status</th>
-      <th scope="col" className="none">Action</th>
-    </tr>
-  </thead>
-  <tbody>
-      {
-          data.map((row,index) => {
-              const status = row.deleted_at?<span className="badge badge-success">Moved to Primary</span>:<span className="badge badge-warning">Added to Custom Product List</span>;
-              return (
-                <tr key={(row.id).toString()}>
-                <th scope="row"> {index + 1} </th>
-                <td>{ row.name }</td>
-                <td>  {row.weight + " " + row.weight_type} </td>
-                <td>   <Moment 
-                     local
-                     format="D MMM, YYYY h:mm a"
-                        date={ row.created_at }
-                     /> 
-                </td>
-                <td>  {status} </td>
-                <td> <button type="button" className="btn btn-info" onClick={() => props.showEditModal(row)}> <i className="fa fa-edit"></i> </button> </td>
-              </tr>
-              )
-          })
-      }
-  
-   
-  </tbody>
-</table>
-    );
+  return (
+    <div className="row">
+      <NoRecord data_count={data.length} />
+      {data.map((product, index) => {
+        return (
+          <div className="col-12 col-md-6 p-3 " key={product.id.toString()}>
+            <div className="card shadow">
+              <div className="card-header">
+                {" "}
+                <strong> #{(currentPage - 1) * perPage + (index + 1)} </strong>
+                <button className="btn btn-info float-right" onClick={() => showEditModal(product)}> <i className="fa fa-edit"></i> </button>
+              </div>
+              <div className="card-body row">
+                <div className="col-sm-4 text-center img-responsive">
+                  <img
+                    src={product.image}
+                    className="img-fluid"
+                    alt={product.name}
+                  />
+                </div>
+                <div className="col-sm-8 text-left">
+                  <p>
+                    <strong>Product: </strong>
+                    {product.name +
+                      " | " +
+                      product.weight +
+                      product.weight_type}{" "}
+                  </p>
+                  <p>
+                    <strong>Category: </strong>{" "}
+                    {product?.category?.category_name
+                      ? product.category.category_name
+                      : " -- "}
+                  </p>
+                  <p>
+                    <strong>Cost/Purchase Price: </strong> Rs. {product.price}{" "}
+                    /-
+                  </p>
+                  <p>
+                    <strong>Created On: </strong>
+                    <Moment
+                      local
+                      format="D MMM, YYYY"
+                      date={product.created_at}
+                    />
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  );
 }
 
 export default Table;
