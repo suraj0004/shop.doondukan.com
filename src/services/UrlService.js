@@ -194,6 +194,11 @@ class UrlService {
     return this.baseUrl + apiUrl;
   }
 
+  GetCategoriestUrl() {
+    const apiUrl = "/retail/get-categories";
+    return this.baseUrl + apiUrl;
+  }
+
   AddCustomeProductUrl() {
     const apiUrl = "/retail/add-user-custom-product";
     return this.baseUrl + apiUrl;

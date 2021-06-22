@@ -1,0 +1,30 @@
+.demo-image-preview {
+  position: relative;
+  text-align: center;
+}
+
+.demo-image-preview > img {
+  width: 768px;
+}
+
+@media(max-width:768px){
+  .demo-image-preview > img {
+    width: 100%;
+  }
+}
+
+/* fullscreen enable by props */
+.demo-image-preview-fullscreen > img {
+  width: 100vw;
+  height:100vh;
+}
+
+#img-priview-bottom-btn{
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 5px 0px 5px 0px;
+  background-color: black;
+  opacity: 0.7;
+}

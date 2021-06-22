@@ -6,6 +6,7 @@ import Footer from "../components/Footer";
 import Sidebar from "../components/Sidebar";
 import PageHeader from "../components/PageHeader";
 import PageLoader from "../components/PageLoader";
+import { ToastContainer } from "react-toastify";
 class RetailLayout extends Component {
   constructor(props) {
     super(props);
@@ -56,6 +57,7 @@ class RetailLayout extends Component {
               </section>
             </div>
             <Footer />
+            <ToastContainer />
           </React.Fragment>
         )}
       </div>
