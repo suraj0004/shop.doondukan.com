@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import { ClipLoader } from "react-spinners";
 import axios from "axios";
 import UrlService from "../services/UrlService";
-import  { Redirect } from 'react-router-dom'
 const Loader = () => {
   return <ClipLoader loading color="#0069d9" />;
 };
