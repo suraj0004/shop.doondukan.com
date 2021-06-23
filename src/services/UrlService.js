@@ -261,5 +261,9 @@ class UrlService {
     const apiUrl = "/send-otp";
     return this.baseUrl + apiUrl;
   }
+  resetPassword() {
+    const apiUrl = "/forgot-password";
+    return this.baseUrl + apiUrl;
+  }
 }
 export default new UrlService();
