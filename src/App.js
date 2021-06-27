@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import "./App.css";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { ProtectedRoutes } from "./ProtectedRoutes";
+import { WithoutAuthRoutes } from "./WithoutAuthRoutes";
+import { handleSession } from "./helpers/Helpers";
 
 import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
@@ -36,6 +38,10 @@ import Sign from "./pages/Signup";
 import CatalogBuilder from "./pages/Catalog";
 
 class App extends Component {
+
+  componentDidMount(){
+    handleSession()
+  }
  
   render() {
     return (
@@ -150,8 +156,8 @@ class App extends Component {
             component={CatalogBuilder}
           />
 
-          <Route exact path="/login" component={Login} />
-          <Route exact path="/sign-up" component={Sign} />
+          <WithoutAuthRoutes exact path="/login" component={Login} />
+          <WithoutAuthRoutes exact path="/sign-up" component={Sign} />
           <Route
             path="*"
             component={() => {

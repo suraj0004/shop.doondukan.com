@@ -1,135 +1,135 @@
-import axios from 'axios';
-import CookieService from './CookieService';
-import UrlService from './UrlService';
+import axios from "axios";
+import CookieService from "./CookieService";
+import UrlService from "./UrlService";
 
 class AuthService {
-   constructor(){
-       const token = CookieService.get('token');
-       if(token === undefined){
-        this.authenticated = false;
-       }
-       else{
-        this.authenticated = true;
-        this.isValidToken( (res) => {
-            this.authenticated = !res;
-            if(this.authenticated  === false){
-                this.afterLogout();
-            }
-        } );
-       }
-       
-   }
+  constructor() {
+    const token = CookieService.get("token");
+    if (token === undefined) {
+      this.authenticated = false;
+    } else {
+      this.authenticated = true;
+      this.isValidToken((res) => {
+        this.authenticated = !res;
+        if (this.authenticated === false) {
+          this.afterLogout();
+        }
+      });
+    }
+  }
 
-    login(postData,callback){
-       
-       try {
-            axios.post( UrlService.loginUrl() , postData, {
-                headers : {
-                  "Accept" : "application/json",
-                  "Content-Type" : "application/json",
+  login(postData, callback) {
+    try {
+      axios
+        .post(UrlService.loginUrl(), postData, {
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+        })
+        .then((response) => {
+          callback(response.data);
+        })
+        .catch((error) => {
+          console.log(error);
+          callback(error.response.data);
+        });
+    } catch (error) {
+      console.log(error);
+      callback({ success: false, message: error.message });
+    }
+  }
 
-                }
-            })
-            .then( (response) => {
-                
-                 callback(response.data);
+  afterLogin(response, remember) {
+    let date = new Date();
+    let expiry;
+    if (remember) {
+      const expiryAfterDays = 15;
+      expiry = 1000 * 60 * 60 * 24 * expiryAfterDays;
+    } else {
+      const expiryAfterHours = 6;
+      expiry = 1000 * 60 * 60 * expiryAfterHours;
+    }
+    date.setTime(date.getTime() + expiry);
+    const options = { path: "/", expires: date };
 
-            } )
-            .catch( (error) => {
-              console.log(error);
-                callback(error.response.data);
-                
-            } );
-          
-       } catch (error) {
-        console.log(error);
-           callback( {success: false, message: error.message } );
-       }
-       
-   }
+    CookieService.set("token", response.data.accessToken, options);
+    CookieService.set("remember", remember ? 1 : 0, options);
+    CookieService.set("name", response.data.name, options);
+    const image = response.data.id + "/" + response.data.image;
+    CookieService.set("image", image, options);
+    this.authenticated = true;
+    return true;
+  }
 
-   afterLogin(response, remember){
-       var options;
-       if(remember){
+  logout(cb) {
+    try {
+      axios
+        .post(
+          UrlService.logoutUrl(),
+          {},
+          {
+            headers: this.apiHeader(),
+          }
+        )
+        .then((res) => {
+          // console.log(res.data);
 
-            let date = new Date();
-            const expiryAfterDays = 7;
-            date.setTime( date.getTime()  + ( 1000 * 60 * 60 * 24 * expiryAfterDays) );
-            options = { path : '/',expires : date };
-         
-       }else{
-            options = { path : '/' };
-       }
-       console.log(response)
-       CookieService.set('token',response.data.accessToken,options);
-       CookieService.set('name',response.data.name,options);
-       const image = response.data.id + '/' +response.data.image;
-       CookieService.set('image',image,options);
-       this.authenticated = true;
-       return true;
-   }
+          if (res.data.success) {
+            cb(true);
+          } else {
+            cb(false);
+          }
+        })
+        .catch((err) => {
+          console.log(err.response.data);
 
-   logout(cb){
-       try {
-        
-           axios.post( UrlService.logoutUrl() ,{} ,{
-               headers : this.apiHeader()
-           })
-           .then( (res) => {
-            // console.log(res.data);
+          if (err.response.data.message === "Unauthenticated.") {
+            cb(true);
+          } else {
+            cb(false);
+          }
+        });
+    } catch (error) {
+      console.log(error.message);
+      cb(false);
+    }
+  }
 
-            if(res.data.success){
-               cb(true);
-            }else{
-               cb(false);
-            }
-            
-           })
-           .catch( (err) => {
-               console.log(err.response.data);
+  afterLogout() {
+    this.authenticated = false;
+    CookieService.remove("token");
+    CookieService.remove("remember");
+    CookieService.remove("name");
+    CookieService.remove("image");
+  }
 
-               if(err.response.data.message === "Unauthenticated."){
-                   cb(true);
-               }
-               else{
-                  cb(false);
-               }
-           } )
-       } catch (error) {
-        console.log(error.message);
-           cb(false);
-       }
-   }
+  isAuthenticated() {
+    return this.authenticated;
+  }
 
-   afterLogout(){
-       this.authenticated = false;
-       CookieService.remove("token");
-   }
-
-   isAuthenticated(){
-       return this.authenticated;
-   }
-
-   isValidToken(cb){
-      axios.get( UrlService.authUrl(), {
-          headers : this.apiHeader()
-      }  ).then( (res) => {
+  isValidToken(cb) {
+    axios
+      .get(UrlService.authUrl(), {
+        headers: this.apiHeader(),
+      })
+      .then((res) => {
         //   console.log(res);
-          cb(false);
+        cb(false);
+      })
+      .catch((err) => {
+        console.log(err);
+        cb(true);
+      });
+  }
 
-      } ).catch( (err) => {
-          console.log(err);
-          cb(true);
-      } );
-   }
-
-   apiHeader(){
+  apiHeader() {
     const headers = {
-        'Authorization': 'Bearer ' + CookieService.get("token") 
-      };
+      Authorization: "Bearer " + CookieService.get("token"),
+    };
 
-      return headers;
-   }
+    return headers;
+  }
 }
 
 export default new AuthService();

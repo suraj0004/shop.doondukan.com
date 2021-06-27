@@ -7,11 +7,14 @@ import Sidebar from "../components/Sidebar";
 import PageHeader from "../components/PageHeader";
 import PageLoader from "../components/PageLoader";
 import { ToastContainer } from "react-toastify";
+import { handleSession } from "../helpers/Helpers";
+
 class RetailLayout extends Component {
   constructor(props) {
     super(props);
     this.state = {
       isLoader: false,
+      intervalId: null,
     };
   }
 
@@ -35,6 +38,17 @@ class RetailLayout extends Component {
       }
     );
   };
+
+  componentDidMount() {
+    var intervalId = setInterval(handleSession, 1800000); // every 30 min
+    // store intervalId in the state so it can be accessed later:
+    this.setState({ intervalId: intervalId });
+  }
+
+  componentWillUnmount() {
+    // use intervalId from the state to clear the interval
+    clearInterval(this.state.intervalId);
+  }
 
   render() {
     return (
