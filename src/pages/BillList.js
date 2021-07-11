@@ -14,7 +14,7 @@ class BillList extends Component {
     super(props);
     this.state = {
       data: null,
-      status: "",
+      type: "",
       search : "",
       isLoader: true,
       response: ""
@@ -38,7 +38,7 @@ class BillList extends Component {
         headers: auth.apiHeader(),
         params: {
           page : page,
-          status: this.state.status,
+          type: this.state.type,
           search : search,
         },
       }).then(res => {
@@ -49,7 +49,7 @@ class BillList extends Component {
             response : "",
           })
         } else {
-          if(this.state.status === "" && this.state.search === ""){
+          if(this.state.type === "" && this.state.search === ""){
             this.setState({
               response: res.data.message
             });
@@ -125,7 +125,7 @@ handleSearch = () =>{
     return (
       <Layout
         pathname={this.props.location.pathname}
-        page="All Bills">
+        page="Invoice">
         {
           (this.state.isLoader)
             ? <PageLoader error={this.state.response} />
@@ -135,11 +135,11 @@ handleSearch = () =>{
                 <div className="form-group" style={{ width: "125px" }} >
                                 <select 
                                   className="custom-select" 
-                                  value={this.state.status}
+                                  value={this.state.type}
                                   onChange={this.handleStatusChange} >
                                     <option value="">All</option>
-                                    <option value="paid">Paid</option>
-                                    <option value="unpaid">Un Paid</option>
+                                    <option value="online">Online</option>
+                                    <option value="offline">Offline</option>
                                 </select>
                    </div>
                 </div>
@@ -157,7 +157,7 @@ handleSearch = () =>{
                   <input 
                      type="text" 
                      className="form-control"
-                     placeholder="Search Bill No." 
+                     placeholder="Search Invoice No." 
                      value={this.state.search}
                      onChange={this.handleSearchChange}
                      />

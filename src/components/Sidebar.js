@@ -244,7 +244,7 @@ class Sidebar extends React.Component {
                   }
                 >
                   <i className="nav-icon fa fa-file-invoice-dollar"></i>
-                  <p>All Bills</p>
+                  <p>Invoice</p>
                 </Link>
               </li>
               <li className="nav-item">

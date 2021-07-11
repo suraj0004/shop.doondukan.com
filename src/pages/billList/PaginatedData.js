@@ -9,7 +9,7 @@ function PaginatedData(props) {
         return <Card key={bill.id} bill={bill} />
     });
     return (
-        <div className="card card-solid">
+        <div className="">
             {
                 (props.response !== '')
                 ?<h5 className="text-danger text-center mt-3"> {props.response}</h5>
