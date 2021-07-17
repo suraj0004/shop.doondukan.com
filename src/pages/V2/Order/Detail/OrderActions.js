@@ -70,18 +70,6 @@ const OrderActions = ({ status, id, orderStatusUpdated }) => {
         </>
       );
     }
-    if (status === 2) {
-      return (
-        <>
-          <button
-            className="btn btn-success mr-2 font-weight-bold"
-            onClick={downloadInvoice}
-          >
-            Click to Download Invoice / Bill
-          </button>
-        </>
-      );
-    }
   };
 
   return (
