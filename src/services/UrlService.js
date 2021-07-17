@@ -9,6 +9,11 @@ class UrlService {
     return this.baseUrl + apiUrl;
   }
 
+  orderDetailUrl(){
+    const apiUrl = "/retail/get/orders/detail/";
+    return this.baseUrl + apiUrl;
+  }
+
   updateOrderStatus(id) {
     const apiUrl = "/retail/shop/order";
     return this.baseUrl + apiUrl;

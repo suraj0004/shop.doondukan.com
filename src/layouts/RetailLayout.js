@@ -63,7 +63,7 @@ class RetailLayout extends Component {
             <Header handleLogout={this.handleLogout} />
             <Sidebar pathname={this.props.pathname} />
             <div className="content-wrapper">
-              <PageHeader page={this.props.page} />
+              <PageHeader page={this.props.page} history={this.props.history} />
               <section className="content">
                 <div className="row">
                   <div className="col-12">{this.props.children}</div>
