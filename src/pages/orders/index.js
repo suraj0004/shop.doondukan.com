@@ -13,6 +13,7 @@ class orders extends Component {
     super(props);
     this.state = {
       data: null,
+      meta: null,
       status: "0",
       search: "",
       isLoader: true,
@@ -100,6 +101,7 @@ class orders extends Component {
           this.setState(
             {
               data: res.data.data,
+              meta: res.data.meta,
               isLoader: false,
               response: "",
             },
@@ -179,9 +181,9 @@ class orders extends Component {
             <div className="card-footer">
                 <nav aria-label="Contacts Page Navigation">
                     <Pagination
-                        activePage={this.state.data.current_page}
-                        itemsCountPerPage={this.state.data.per_page}
-                        totalItemsCount={this.state.data.total}
+                        activePage={this.state.meta.current_page}
+                        itemsCountPerPage={this.state.meta.per_page}
+                        totalItemsCount={this.state.meta.total}
                         onChange={(pageNumber) => this.getOrders(pageNumber)}
                         innerClass="pagination justify-content-center m-0"
                         itemClass="page-item"
