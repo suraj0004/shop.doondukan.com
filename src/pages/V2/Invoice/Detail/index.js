@@ -40,8 +40,8 @@ class InvoiceDetail extends Component {
               meta:{
                 invoice_number: (res.data.data.id).toString().padStart('4', '0'),
                 date: res.data.data.created_at,
-                type: res.data.data.type,
-                status: res.data.data.status,
+                type: res.data.data.order_type,
+                status: 'Completed',
               },
               discount:{
                 type: res.data.data.discount_type,
@@ -85,7 +85,7 @@ class InvoiceDetail extends Component {
         {this.state.loading || !this.state.data.products.length ? (
           <PageLoader error={this.state.error} />
         ) : (
-          <Detail data={this.state.data} discount={this.state.discount} />
+          <Detail data={this.state.data} />
         )}
       </Layout>
     );

@@ -323,7 +323,7 @@ class GenerateBill extends Component {
           })
           .then((res) => {
             if (res.data.success) {
-              this.props.history.push("/invoice/" + res.data.data);
+              this.props.history.push("/invoice/detail/" + res.data.data);
             } else {
               this.setState({
                 response: res.data.message,

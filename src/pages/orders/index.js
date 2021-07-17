@@ -124,7 +124,7 @@ class orders extends Component {
 
   render() {
     return (
-      <Layout pathname={this.props.location.pathname} page="Order Management">
+      <Layout pathname={this.props.location.pathname} page="Online Order Management">
         <div className="row">
           <div className="col-md-6">
             <div className="form-group" style={{ width: "125px" }}>

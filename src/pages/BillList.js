@@ -44,7 +44,7 @@ class BillList extends Component {
       }).then(res => {
         if (res.data.success) {
           this.setState({
-            data: res.data.data,
+            data: res.data,
             isLoader: false,
             response : "",
           })
@@ -95,9 +95,9 @@ class BillList extends Component {
 
   }
 
-  handleStatusChange = (event) => {
+  handleTypeChange = (event) => {
     this.setState({
-        status : event.target.value,
+        type : event.target.value,
         response : "",
         // isLoader : true
     },()=>{
@@ -136,7 +136,7 @@ handleSearch = () =>{
                                 <select 
                                   className="custom-select" 
                                   value={this.state.type}
-                                  onChange={this.handleStatusChange} >
+                                  onChange={this.handleTypeChange} >
                                     <option value="">All</option>
                                     <option value="online">Online</option>
                                     <option value="offline">Offline</option>

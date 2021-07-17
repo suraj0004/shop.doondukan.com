@@ -3,7 +3,8 @@ import Pagination from 'react-js-pagination';
 import Card from './Card';
 function PaginatedData(props) {
 
-    var { data, current_page, per_page, total } = props.data;
+    const { data, meta } = props.data;
+    const {current_page, per_page, total} = meta;
 
     const cards =   data.map((bill) => {
         return <Card key={bill.id} bill={bill} />
