@@ -15,6 +15,10 @@ class Profile extends Component {
         name: "",
         open_at: "",
         close_at: "",
+        order_delivery_medium : '',
+        minimum_order_amount : '',
+        order_within_km : '',
+        delivery_charges : '',
         address: "",
         about: "",
         logo: null,
@@ -52,8 +56,8 @@ class Profile extends Component {
               this.setState({
                 shop: {
                   name:
-                    res.data.data.store && res.data.data.store.name
-                      ? res.data.data.store.name
+                    res.data.data.store && res.data.data.store.shop_name
+                      ? res.data.data.store.shop_name
                       : "",
                   open_at:
                     res.data.data.store && res.data.data.store.open_at
@@ -63,6 +67,19 @@ class Profile extends Component {
                     res.data.data.store && res.data.data.store.close_at
                       ? res.data.data.store.close_at
                       : "",
+                  order_delivery_medium: res.data.data?.store?.delivery_medium
+                    ? res.data.data.store.delivery_medium
+                    : "",
+                  minimum_order_amount: res.data.data?.store
+                    ?.minimum_order_amount
+                    ? res.data.data.store.minimum_order_amount
+                    : "",
+                  order_within_km: res.data.data?.store?.order_within_km
+                    ? res.data.data.store.order_within_km
+                    : "",
+                  delivery_charges: res.data.data?.store?.delivery_charges
+                    ? res.data.data.store.delivery_charges
+                    : "",
                   address:
                     res.data.data.store && res.data.data.store.address
                       ? res.data.data.store.address
