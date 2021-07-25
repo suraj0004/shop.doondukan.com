@@ -6,7 +6,7 @@ import Moment from "react-moment";
 import "moment-timezone";
 
 const Detail = ({ data }) => {
-  const { products, buyer, meta, discount, shipping_address } = data;
+  const { products, buyer, meta, shipping_address } = data;
   let grand_total = 0;
 
   const getStatus = (status) => {

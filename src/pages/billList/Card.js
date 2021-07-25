@@ -5,9 +5,6 @@ import "moment-timezone";
 
 function Card(props) {
   const {
-    customer_name,
-    customer_email,
-    customer_mobile,
     id,
     sales_count,
     sales_price,

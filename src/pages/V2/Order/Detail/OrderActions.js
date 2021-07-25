@@ -37,8 +37,6 @@ const OrderActions = ({ status, id, orderStatusUpdated }) => {
     updateState(2);
   };
 
-  const downloadInvoice = () => {};
-
   const getActionsBtn = () => {
     if (status === 0) {
       return (
