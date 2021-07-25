@@ -35,7 +35,7 @@ class InvoiceDetail extends Component {
               products: res.data.data.main_sale_product,
               buyer:{
                 name: res.data.data.customer_name,
-                name: res.data.data.customer_mobile
+                phone: res.data.data.customer_mobile
               },
               meta:{
                 invoice_number: (res.data.data.id).toString().padStart('4', '0'),

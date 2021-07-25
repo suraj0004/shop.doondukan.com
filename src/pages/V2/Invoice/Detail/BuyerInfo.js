@@ -4,7 +4,7 @@ const BuyerInfo = ({buyer}) => {
     return (
         <div className="pb-5 pt-3">
             <h5 className=" text-secondary font-weight-bold"> Customer Information </h5>
-            <table>
+            <table className="table table-striped">
                 <tbody>
                     <tr>
                         <th>Name:</th>

@@ -254,9 +254,9 @@ class ShopSettingForm extends Component {
               <option value=""> -- Select Delivery Type -- </option>
               <option value="user-self-collected">User Self Pick up</option>
               <option value="shop-delivery">Shop Home Delivery</option>
-              <option value="delivery-partner">
+              {/* <option value="delivery-partner">
                 DoonDukan Delivery Partner
-              </option>
+              </option> */}
             </select>
           </div>
         </div>

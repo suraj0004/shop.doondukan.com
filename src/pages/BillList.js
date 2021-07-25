@@ -14,7 +14,7 @@ class BillList extends Component {
     super(props);
     this.state = {
       data: null,
-      type: "",
+      type: "offline",
       search : "",
       isLoader: true,
       response: ""
@@ -125,14 +125,14 @@ handleSearch = () =>{
     return (
       <Layout
         pathname={this.props.location.pathname}
-        page="Invoice">
+        page="Offline Invoice">
         {
           (this.state.isLoader)
             ? <PageLoader error={this.state.response} />
             : <React.Fragment>
               <div className="row">
                 <div className="col-md-6">
-                <div className="form-group" style={{ width: "125px" }} >
+                {/* <div className="form-group" style={{ width: "125px" }} >
                                 <select 
                                   className="custom-select" 
                                   value={this.state.type}
@@ -141,7 +141,7 @@ handleSearch = () =>{
                                     <option value="online">Online</option>
                                     <option value="offline">Offline</option>
                                 </select>
-                   </div>
+                   </div> */}
                 </div>
 
                 <div className="col-md-6">
