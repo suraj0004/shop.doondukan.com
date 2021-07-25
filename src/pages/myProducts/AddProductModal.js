@@ -359,7 +359,7 @@ function AddProductModal(props) {
                                       }}
                                     />
                                   </div>
-                                  <div className="text-center col-lg-2">
+                                  {/* <div className="text-center col-lg-2">
                                     {" "}
                                     Or
                                   </div>
@@ -372,7 +372,7 @@ function AddProductModal(props) {
                                       Open Camera{" "}
                                       <i className="fas fa-camera"></i>
                                     </button>
-                                  </div>{" "}
+                                  </div>{" "} */}
                                 </div>
                               )}
                               <div className="text-center">

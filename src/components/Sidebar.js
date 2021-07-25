@@ -202,7 +202,7 @@ class Sidebar extends React.Component {
 
                 </ul>
               </li>
-              <li className="nav-header">Sale Management</li>
+              <li className="nav-header">Online Order Management</li>
              
 
               <li className="nav-item ">
@@ -215,10 +215,13 @@ class Sidebar extends React.Component {
                   }
                 >
                   <i className="nav-icon fas fa-list-ul"></i>
-                  <p>Online Order </p>
+                  <p>Online Orders </p>
                 </Link>
               </li>
 
+              
+
+              <li className="nav-header">Offline Order Management</li>
               <li className="nav-item ">
                 <Link
                   to="/generateBill"
@@ -229,11 +232,9 @@ class Sidebar extends React.Component {
                   }
                 >
                   <i className="nav-icon fas fa-cash-register"></i>
-                  <p>Generate Offline Order</p>
+                  <p>Generate Offline Invoice</p>
                 </Link>
               </li>
-
-              <li className="nav-header">Completed Orders</li>
               <li className="nav-item">
                 <Link
                   to="/billList"
@@ -244,10 +245,10 @@ class Sidebar extends React.Component {
                   }
                 >
                   <i className="nav-icon fa fa-file-invoice-dollar"></i>
-                  <p>All Bills</p>
+                  <p>Offline Invoices</p>
                 </Link>
               </li>
-              <li className="nav-item">
+              {/* <li className="nav-item">
                 <Link
                   to="/saleList"
                   className={
@@ -259,7 +260,7 @@ class Sidebar extends React.Component {
                   <i className="nav-icon fa fa-layer-group"></i>
                   <p>Sale History</p>
                 </Link>
-              </li>
+              </li> */}
 
               {/* <li className="nav-header">Return Management</li>
 

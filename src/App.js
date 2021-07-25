@@ -36,6 +36,8 @@ import AddSaleReturn from "./pages/addSaleReturn";
 import SaleReturnList from "./pages/saleReturnList";
 import Sign from "./pages/Signup";
 import CatalogBuilder from "./pages/Catalog";
+import InvoiceDetail from "./pages/V2/Invoice/Detail/"
+import OrderDetail from "./pages/V2/Order/Detail";
 
 class App extends Component {
 
@@ -65,6 +67,8 @@ class App extends Component {
           <ProtectedRoutes exact path="/billList" component={BillList} />
           <ProtectedRoutes exact path="/saleList" component={SaleList} />
           <ProtectedRoutes exact path="/invoice/:id" component={Invoice} />
+          <ProtectedRoutes exact path="/invoice/detail/:id" component={InvoiceDetail} />
+          <ProtectedRoutes exact path="/order/detail/:id" component={OrderDetail} />
           <ProtectedRoutes exact path="/profile" component={Profile} />
 
           <ProtectedRoutes

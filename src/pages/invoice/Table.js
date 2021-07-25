@@ -2,7 +2,7 @@ import React from 'react';
 
 function Table(props) {
   
-  const {main,temp} = props;
+  const {main} = props;
   const main_data = main.map( (row,index) => {
     let quantity=0;
     if(row.deleted_at){
@@ -23,25 +23,6 @@ function Table(props) {
    );
   } );
 
-  const temp_data = temp.map( (row,index) => {
-    let quantity=0;
-    if(row.deleted_at){
-      quantity = Number(row.return_quantity);
-    }else if(row.return_quantity){
-      quantity = Number(row.return_quantity) + Number(row.quantity);
-    }else{
-      quantity =  Number(row.quantity);
-    }
-    return(
-     <tr key={row.id}>
-       <td> {index + 1} </td>
-     <td> {row.temp_product.name + " | " + row.temp_product.weight+row.temp_product.weight_type + " | " + (row.temp_product.brand?row.temp_product.brand.brand_name:"") } </td>
-     <td> {quantity} Pcs. </td>
-    <td> Rs. {row.price} /- per Pcs. </td>
-     <td> Rs. {row.price * quantity} /-</td>
-   </tr>
-    );
-   } );
     return (
         <div className="row">
         <div className="col-12 table-responsive">
@@ -58,7 +39,6 @@ function Table(props) {
             <tbody>
             
           {main_data}
-          {temp_data}
             </tbody>
           </table>
         </div>

@@ -14,7 +14,7 @@ class BillList extends Component {
     super(props);
     this.state = {
       data: null,
-      status: "",
+      type: "offline",
       search : "",
       isLoader: true,
       response: ""
@@ -38,18 +38,18 @@ class BillList extends Component {
         headers: auth.apiHeader(),
         params: {
           page : page,
-          status: this.state.status,
+          type: this.state.type,
           search : search,
         },
       }).then(res => {
         if (res.data.success) {
           this.setState({
-            data: res.data.data,
+            data: res.data,
             isLoader: false,
             response : "",
           })
         } else {
-          if(this.state.status === "" && this.state.search === ""){
+          if(this.state.type === "" && this.state.search === ""){
             this.setState({
               response: res.data.message
             });
@@ -95,9 +95,9 @@ class BillList extends Component {
 
   }
 
-  handleStatusChange = (event) => {
+  handleTypeChange = (event) => {
     this.setState({
-        status : event.target.value,
+        type : event.target.value,
         response : "",
         // isLoader : true
     },()=>{
@@ -125,23 +125,23 @@ handleSearch = () =>{
     return (
       <Layout
         pathname={this.props.location.pathname}
-        page="All Bills">
+        page="Offline Invoice">
         {
           (this.state.isLoader)
             ? <PageLoader error={this.state.response} />
             : <React.Fragment>
               <div className="row">
                 <div className="col-md-6">
-                <div className="form-group" style={{ width: "125px" }} >
+                {/* <div className="form-group" style={{ width: "125px" }} >
                                 <select 
                                   className="custom-select" 
-                                  value={this.state.status}
-                                  onChange={this.handleStatusChange} >
+                                  value={this.state.type}
+                                  onChange={this.handleTypeChange} >
                                     <option value="">All</option>
-                                    <option value="paid">Paid</option>
-                                    <option value="unpaid">Un Paid</option>
+                                    <option value="online">Online</option>
+                                    <option value="offline">Offline</option>
                                 </select>
-                   </div>
+                   </div> */}
                 </div>
 
                 <div className="col-md-6">
@@ -157,7 +157,7 @@ handleSearch = () =>{
                   <input 
                      type="text" 
                      className="form-control"
-                     placeholder="Search Bill No." 
+                     placeholder="Search Invoice No." 
                      value={this.state.search}
                      onChange={this.handleSearchChange}
                      />
