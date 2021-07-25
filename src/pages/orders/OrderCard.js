@@ -6,6 +6,11 @@ import { Link } from "react-router-dom";
 
 
 function OrderCard(props) {
+
+  const getDeliveryType = (type) => {
+    if(type === 'user-self-collected') return 'Pick Up';
+    else return 'Home Delivery'
+  }
   return (
     <>
       {props.data.map((order, index) => {
@@ -39,22 +44,8 @@ function OrderCard(props) {
                 <strong>Total Price: </strong> {Number(order.order_amount).toFixed(2)}
                 </p>
                 <p>
-                <strong> Pickup Time : </strong>
-                        <strong>
-                          <Moment
-                            local
-                            format="D MMM, YYYY h:mm a"
-                            date={order.from_time}
-                          />
-                        </strong>
-                        {" "}to{" "}
-                        <strong>
-                          <Moment
-                            local
-                            format="D MMM, YYYY h:mm a"
-                            date={order.to_time}
-                          />
-                        </strong>
+                <strong> Delivery Type : </strong>
+                {getDeliveryType(order.delivery_type)}
                 </p>
               </div>
             </div>

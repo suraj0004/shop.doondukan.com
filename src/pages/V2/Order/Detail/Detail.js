@@ -6,7 +6,7 @@ import Moment from "react-moment";
 import "moment-timezone";
 
 const Detail = ({ data }) => {
-  const { products, buyer, meta, discount } = data;
+  const { products, buyer, meta, discount, shipping_address } = data;
   let grand_total = 0;
 
   const getStatus = (status) => {
@@ -15,6 +15,7 @@ const Detail = ({ data }) => {
       if(status === 2) return <span className="badge badge-success"> completed </span>
       if(status === 3) return <span className="badge badge-danger"> cancled </span>
   }
+
   return (
     <section className="container">
       <div className="row">
@@ -45,7 +46,7 @@ const Detail = ({ data }) => {
             <GrandTotal grand_total={grand_total} />
           </div>
           <hr />
-          <BuyerInfo buyer={buyer} />
+          <BuyerInfo buyer={buyer} shipping_address={shipping_address} meta={meta} />
         </div>
       </div>
     </section>

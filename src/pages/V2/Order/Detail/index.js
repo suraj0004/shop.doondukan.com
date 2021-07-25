@@ -37,11 +37,15 @@ class OrderDetail extends Component {
             data:{
               products: res.data.data.orderitem,
               buyer:res.data.data.buyer,
+              shipping_address: res.data.data.shipping_address,
               meta:{
                 order_number: res.data.data.order_no,
                 date: res.data.data.created_at,
                 type: "Online",
                 status: res.data.data.status,
+                delivery_type: res.data.data.delivery_type,
+                from_time: res.data.data.from_time,
+                to_time: res.data.data.to_time,
               }
             },
             loading: false
