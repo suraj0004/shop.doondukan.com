@@ -82,7 +82,7 @@ function EditProductModal(props) {
       : "",
     weight: props.edit.data?.weight ? props.edit.data.weight : "",
     category: props.edit.data?.category?.id ? props.edit.data.category.id : "",
-    price: props.edit.data?.price ? props.edit.data.price : "",
+    price: props.edit.data?.price ? props.edit.data.price : 0,
     image: null,
   };
 
@@ -154,7 +154,6 @@ function EditProductModal(props) {
     weight: Yup.number().required("Weight is Required !"),
     weight_type: Yup.string().required("Weight Type is Required !"),
     category: Yup.number().required("Category is Required !"),
-    price: Yup.number().required("Price is Required !"),
   });
 
   const onImageCapture = (imageDataUri) => {

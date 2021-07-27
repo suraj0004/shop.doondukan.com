@@ -71,7 +71,7 @@ function AddProductModal(props) {
     weight_type: "",
     weight: "",
     category: "",
-    price: "",
+    price: 0,
     image: null,
   };
 
@@ -141,7 +141,6 @@ function AddProductModal(props) {
     weight: Yup.number().required("Weight is Required !"),
     weight_type: Yup.string().required("Weight Type is Required !"),
     category: Yup.number().required("Category is Required !"),
-    price: Yup.number().required("Price is Required !"),
   });
 
   const onImageCapture = (imageDataUri) => {

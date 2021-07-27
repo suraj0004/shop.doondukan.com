@@ -40,10 +40,14 @@ function Table(props) {
                       ? product.category.category_name
                       : " -- "}
                   </p>
-                  <p>
-                    <strong>Cost/Purchase Price: </strong> Rs. {product.price}{" "}
-                    /-
-                  </p>
+                  {
+                    Number(product.price)
+                    ?<p>
+                      <strong>Cost/Purchase Price: </strong> Rs. {product.price}{" "}/-
+                    </p>
+                    :null
+                  }
+                  
                   <p>
                     <strong>Created On: </strong>
                     <Moment
