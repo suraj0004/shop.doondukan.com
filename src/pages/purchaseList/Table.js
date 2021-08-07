@@ -33,14 +33,27 @@ function Table(props) {
                       item.product.weight +
                       item.product.weight_type}{" "}
                   </p>
-                  <p>
-                    {" "}
-                    <strong>Purchased Quantity: </strong> {item.quantity} Pcs @ Rs. {item.price} /- per pcs.
-                  </p>
-                  <p>
-                    {" "}
-                    <strong>Total Amount: </strong> Rs. {total} /-
-                  </p>
+
+                  {Number(item.price) ? (
+                    <>
+                      <p>
+                        <strong>Purchased Quantity: </strong> {item.quantity}{" "}
+                        Pcs @ Rs. {item.price} /- per pcs.
+                      </p>
+                      <p>
+                        {" "}
+                        <strong>Total Amount: </strong> Rs. {total} /-
+                      </p>
+                    </>
+                  ) : (
+                    <>
+                      <p>
+                        <strong>Purchased Quantity: </strong> {item.quantity}{" "}
+                        Pcs.
+                      </p>
+                    </>
+                  )}
+
                   <p>
                     <strong>Purchased On: </strong>
                     <Moment local format="D MMM, YYYY" date={item.created_at} />
