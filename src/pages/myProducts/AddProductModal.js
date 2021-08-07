@@ -71,7 +71,7 @@ function AddProductModal(props) {
     weight_type: "",
     weight: "",
     category: "",
-    price: 0,
+    price: "",
     image: null,
   };
 
@@ -314,10 +314,11 @@ function AddProductModal(props) {
                                 id="price"
                               />
                               <small>
-                                {" "}
-                                Note: This is not selling price. Purchase Price
-                                is the amount you paid for the product. You can
-                                also modify this later.
+                                Note: Enter 0 ( zero ) in case of privacy.
+                                <br />
+                                This is not selling price. Purchase Price is the
+                                amount you paid for the product. You can also
+                                modify this later.
                               </small>
                               <ErrorMessage name="price" component={ErrorMsg} />
                             </div>

@@ -60,14 +60,12 @@ function ImagePreview({ cameraImage, fileImage, removeImage }) {
 }
 
 function EditProductModal(props) {
-
   const [loader, setLoader] = useState(false);
   const [apiError, setApiError] = useState(props.categories_fetch_error);
   const [imageError, setImageError] = useState("");
   const [camera, setCamera] = useState(false);
   const [cameraImage, setCameraImage] = useState("");
   const notify = (message) => toast.success(message);
-
 
   useEffect(() => {
     if (props.edit.data?.image) {
@@ -291,8 +289,9 @@ function EditProductModal(props) {
                           id="price"
                         />
                         <small>
-                          {" "}
-                          Note: This is not selling price. Purchase Price is the
+                          Note: Enter 0 ( zero ) in case of privacy.
+                          <br />
+                          This is not selling price. Purchase Price is the
                           amount you paid for the product. You can also modify
                           this later.
                         </small>
