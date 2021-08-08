@@ -24,17 +24,6 @@ const Catalog = (props) => {
       .then((response) => {
         if (response.data.success) {
           setCategories(response.data.data);
-          let category_ids = [];
-          let product_ids = [];
-          response.data.data.forEach((category) => {
-            category_ids.push(category.id);
-            category.products.forEach((product) => {
-              product_ids.push(product.id);
-            });
-          });
-          setSelectedProducts(product_ids);
-          setSelectedCategories(category_ids);
-          // toast.success(response.data.message);
         } else {
           toast.error(response.data.message);
         }
