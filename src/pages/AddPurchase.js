@@ -1,17 +1,17 @@
 import React, { Component } from "react";
 import axios from "axios";
-import Select from "react-select";
 import Layout from "../layouts/RetailLayout";
 import auth from "../services/AuthService";
 import UrlService from "../services/UrlService";
 import PageLoader from "../components/PageLoader";
 import { Link } from "react-router-dom";
+import { AsyncPaginate } from "react-select-async-paginate";
+
 class AddPurchase extends Component {
   constructor(props) {
     super(props);
     this.state = {
       selectedOption: null,
-      options: [],
       price_type: "",
       price: "",
       selling_price: "",
@@ -19,57 +19,47 @@ class AddPurchase extends Component {
       total: 0,
       response: "",
       responseClass: "text-danger",
-      isLoader: true,
+      isLoader: false,
     };
   }
-  componentDidMount() {
-    axios
-      .get(UrlService.globalProductListUrl(), {
-        headers: auth.apiHeader(),
-      })
-      .then((res) => {
-        if (res.data.success) {
-          const data = res.data.data;
-          let options_main = data.main.map((item) => {
-            let option = {
-              value: "",
-              label: "",
-            };
-            option.value = `${item.id},main,${item.price}`;
-            option.label =
-              item.name + " | " + item.weight + " " + item.weight_type;
-            return option;
-          });
 
-          this.setState({
-            options: options_main,
-            // options : options_main,
-            isLoader: false,
-          });
-        } else {
-          this.setState({
-            response: res.data.message,
-          });
+  loadProductOptions = async (search, loadedOptions, { page }) => {
+    const endpoint = UrlService.globalProductListUrl() + `?page=${page}`;
+    const response = await axios
+      .post(
+        endpoint,
+        {
+          search,
+        },
+        {
+          headers: auth.apiHeader(),
         }
-      })
-      .catch((err) => {
-        console.log(err);
-        err = err.response;
-        if (err.status === 401 || err.statusText === "Unauthorized") {
-          auth.afterLogout();
-          this.props.history.push("/login");
-        } else if (err.status === 404) {
-          this.setState({
-            response:
-              "Opps! Something went wrong, Please call to adminstrator at +91-8954836965",
-          });
-        } else {
-          this.setState({
-            response: err.data.message,
-          });
-        }
-      });
-  }
+      )
+      .then((res) => res.data);
+
+    if (response.success) {
+      return {
+        options: response.data.data.map((item) => {
+          return {
+            value: `${item.id},main,${item.price}`,
+            label: `${item.name} | ${item.weight} | ${item.weight_type}`,
+          };
+        }),
+        hasMore: response.data.last_page !== response.data.current_page,
+        additional: {
+          page: page + 1,
+        },
+      };
+    } else {
+      return {
+        options: [],
+        hasMore: false,
+        additional: {
+          page: 1,
+        },
+      };
+    }
+  };
 
   calculateTotalPrice(price_type, price, quantity) {
     var total = 0;
@@ -237,7 +227,7 @@ class AddPurchase extends Component {
   };
 
   render() {
-    const { selectedOption, options } = this.state;
+    const { selectedOption } = this.state;
     return (
       <Layout pathname={this.props.location.pathname} page="">
         {this.state.isLoader ? (
@@ -291,10 +281,14 @@ class AddPurchase extends Component {
                       <span className="text-danger">*</span> Purchased Product
                     </label>
                     <div className="col-sm-9" id="prduct">
-                      <Select
+                      <AsyncPaginate
                         value={selectedOption}
+                        loadOptions={this.loadProductOptions}
+                        debounceTimeout={500}
                         onChange={this.handleChange}
-                        options={options}
+                        additional={{
+                          page: 1,
+                        }}
                       />
                     </div>
                   </div>
@@ -325,8 +319,8 @@ class AddPurchase extends Component {
                       className="col-sm-3 col-form-label"
                     >
                       {" "}
-                      <span className="text-danger">*</span> Product Selling Price
-                      (Per Piece)
+                      <span className="text-danger">*</span> Product Selling
+                      Price (Per Piece)
                     </label>
                     <div className="col-sm-9">
                       <input
