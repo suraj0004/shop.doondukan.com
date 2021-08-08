@@ -28,10 +28,10 @@ function OrderCard(props) {
               </div>
               <div className="col-sm-8 text-left">
                 <p>
-                <strong> Buyer Name : </strong> {order.buyer.name}
+                <strong> Buyer Name : </strong> {order?.buyer?.name?order.buyer.name:'NA'}
                 </p>
                 <p>
-                <strong> Phone Number : </strong> {order.buyer.phone}
+                <strong> Phone Number : </strong> {order?.buyer?.phone?order.buyer.phone:'NA'}
                 </p>
                 <p>
                   <strong>Total Item: </strong>
