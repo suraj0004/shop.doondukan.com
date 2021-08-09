@@ -93,8 +93,8 @@ function AddProductModal(props) {
         actions.setSubmitting(false);
         return;
       }
-      if (values.image.size > 5242880) {
-        setImageError("Product image should less than 5 MB.");
+      if (values.image.size > 10485760) {
+        setImageError("Product image should less than 10 MB.");
         actions.setSubmitting(false);
         return;
       }
