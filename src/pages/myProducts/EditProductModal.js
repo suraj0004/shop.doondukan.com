@@ -12,6 +12,8 @@ import auth from "../../services/AuthService";
 import UrlService from "../../services/UrlService";
 import { Modal } from "react-bootstrap";
 
+import { compressImgae } from "../../helpers/Helpers";
+
 function ErrorMsg(props) {
   return <div className="text-danger">{props.children}</div>;
 }
@@ -103,12 +105,22 @@ function EditProductModal(props) {
         actions.setSubmitting(false);
         return;
       }
-      if (values.image.size > 5242880) {
-        setImageError("Product image should less than 5 MB.");
+      if (values.image.size > 52428800) {
+        setImageError("Product image should less than 50 MB.");
         actions.setSubmitting(false);
         return;
       }
-      payload.image = await imageToBase64(values.image);
+      setLoader(true);
+      payload.image = await compressImgae(values.image);
+      if (!payload.image) {
+        setImageError(
+          "Opps! Error while uploading image. please select different image."
+        );
+        actions.setSubmitting(false);
+        setLoader(false);
+        return;
+      }
+      payload.image = await imageToBase64(payload.image);
     } else if (cameraImage && !values.image) {
       payload.image =
         cameraImage === props.edit.data.image ? null : cameraImage;
@@ -334,7 +346,7 @@ function EditProductModal(props) {
                                 }}
                               />
                             </div>
-                            <div className="text-center col-lg-2"> Or</div>
+                            {/* <div className="text-center col-lg-2"> Or</div>
                             <div className="text-center col-lg-5">
                               <button
                                 type="button"
@@ -343,7 +355,7 @@ function EditProductModal(props) {
                               >
                                 Open Camera <i className="fas fa-camera"></i>
                               </button>
-                            </div>{" "}
+                            </div> */}
                           </div>
                         )}
                         <div className="text-center">

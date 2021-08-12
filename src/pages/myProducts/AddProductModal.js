@@ -10,6 +10,8 @@ import Camera from "./Camera";
 import auth from "../../services/AuthService";
 import UrlService from "../../services/UrlService";
 
+import { compressImgae } from "../../helpers/Helpers";
+
 function ErrorMsg(props) {
   return <div className="text-danger">{props.children}</div>;
 }
@@ -87,18 +89,27 @@ function AddProductModal(props) {
     };
     if (values.image && !cameraImage) {
       const validImageExtension = ["image/jpeg", "image/jpg", "image/png"];
-      console.log(values.image);
       if (!validImageExtension.includes(values.image.type)) {
         setImageError("Product image should be JPG or PNG.");
         actions.setSubmitting(false);
         return;
       }
-      if (values.image.size > 10485760) {
-        setImageError("Product image should less than 10 MB.");
+      if (values.image.size > 52428800) {
+        setImageError("Product image should less than 50 MB.");
         actions.setSubmitting(false);
         return;
       }
-      payload.image = await imageToBase64(values.image);
+      setLoader(true);
+      payload.image = await compressImgae(values.image);
+      if (!payload.image) {
+        setImageError(
+          "Opps! Error while uploading image. please select different image."
+        );
+        actions.setSubmitting(false);
+        setLoader(false);
+        return;
+      }
+      payload.image = await imageToBase64(payload.image);
     } else if (cameraImage && !values.image) {
       payload.image = cameraImage;
     } else {
