@@ -8,6 +8,7 @@
     "@testing-library/user-event": "^7.2.1",
     "axios": "^0.21.1",
     "bootstrap": "^4.6.0",
+    "browser-image-compression": "^1.0.15",
     "formik": "^2.1.4",
     "moment": "^2.26.0",
     "moment-timezone": "^0.5.31",
