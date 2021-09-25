@@ -126,7 +126,7 @@ class PurchaseList extends Component {
             sortType={this.state.sortType}
             searchKey={this.state.searchKey}
             handleSearchChange={this.handleSearchChange}
-            handleSearch={this.getData}
+            handleSearch={() => this.getData(1)}
             handlePurchaseDateChange={this.handlePurchaseDateChange}
             handleSortTypeChange={this.handleSortTypeChange}
 
