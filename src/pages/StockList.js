@@ -107,7 +107,7 @@ class StockList extends Component {
             sortType={this.state.sortType}
             searchKey={this.state.searchKey}
             handleSearchChange={this.handleSearchChange}
-            handleSearch={this.getData}
+            handleSearch={() => this.getData(1)}
             handleStockFilterChange={this.handleStockFilterChange}
             handleSortTypeChange={this.handleSortTypeChange}
 
